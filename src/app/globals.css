@@ -106,8 +106,8 @@ body {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -123,7 +123,6 @@ body {
   background: #1a4a8f;
 }
 
-/* Firefox scrollbar */
 * {
   scrollbar-width: thin;
   scrollbar-color: #012b67 #f3f4f6;
@@ -138,127 +137,109 @@ body {
   }
 }
 
-/* Section animation classes */
+/* ─── Animations ─── */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes lineExpand {
-  from {
-    width: 0;
-  }
-  to {
-    width: 60px;
-  }
+  from { width: 0; }
+  to { width: 80px; }
 }
 
-/* Utility classes */
-.animate-fade-up {
-  animation: fadeUp 0.6s ease-out forwards;
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
-.animate-line-expand {
-  animation: lineExpand 0.8s ease-out forwards;
+@keyframes videoOverlayPulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.55; }
 }
 
-/* Decorative accent line */
+.animate-fade-up { animation: fadeUp 0.7s ease-out forwards; }
+.animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+.animate-scale-in { animation: scaleIn 0.5s ease-out forwards; }
+.animate-slide-down { animation: slideDown 0.5s ease-out forwards; }
+.animate-line-expand { animation: lineExpand 0.8s ease-out forwards; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+
+/* ─── Accent Line ─── */
 .accent-line {
-  width: 60px;
+  width: 80px;
   height: 3px;
-  background: #012b67;
+  background: linear-gradient(90deg, #012b67, #1a4a8f);
   border-radius: 2px;
 }
-
-.accent-line-center {
-  margin-left: auto;
-  margin-right: auto;
+.accent-line-center { margin-left: auto; margin-right: auto; }
+.accent-line-white {
+  background: linear-gradient(90deg, rgba(255,255,255,0.9), rgba(255,255,255,0.5));
 }
 
-/* Hero gradient overlay */
+/* ─── Hero ─── */
 .hero-gradient {
-  background: linear-gradient(135deg, #012b67 0%, #011d47 40%, #1a4a8f 100%);
+  background: linear-gradient(135deg, #012b67 0%, #011d47 50%, #0a3d8f 100%);
 }
 
-/* Page transition */
-.page-enter {
-  opacity: 0;
-  transform: translateY(10px);
+.hero-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(1, 43, 103, 0.5) 0%,
+    rgba(1, 43, 103, 0.7) 50%,
+    rgba(1, 43, 103, 0.85) 100%
+  );
 }
 
-.page-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+/* ─── Header Transitions ─── */
+.header-transparent {
+  background: transparent;
+  border-bottom-color: transparent;
 }
 
-/* Nav hover effect */
+.header-transparent .nav-link,
+.header-transparent .header-logo {
+  color: white;
+}
+
+.header-scrolled {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* ─── Navigation ─── */
 .nav-link {
   position: relative;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
+  letter-spacing: -0.01em;
 }
 
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: -2px;
   right: 0;
   width: 0;
   height: 2px;
   background: #012b67;
-  transition: width 0.3s ease;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-link:hover::after,
@@ -266,27 +247,117 @@ body {
   width: 100%;
 }
 
-/* Card hover */
-.card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.header-transparent .nav-link::after {
+  background: white;
 }
 
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(1, 43, 103, 0.15);
+/* ─── Card Styles ─── */
+.card-modern {
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Custom focus ring */
+.card-modern:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -12px rgba(1, 43, 103, 0.18);
+}
+
+.card-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Image Overlay ─── */
+.img-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(1, 43, 103, 0.7) 100%);
+  transition: opacity 0.4s ease;
+}
+
+.img-overlay:hover::after {
+  opacity: 0.85;
+}
+
+/* ─── Section Divider ─── */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #e5e7eb 30%, #e5e7eb 70%, transparent);
+}
+
+/* ─── Focus Styles ─── */
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
   border-color: #012b67;
-  box-shadow: 0 0 0 3px rgba(1, 43, 103, 0.1);
+  box-shadow: 0 0 0 3px rgba(1, 43, 103, 0.08);
 }
 
-/* Text selection */
+/* ─── Text Selection ─── */
 ::selection {
   background: #e8eef5;
   color: #012b67;
+}
+
+/* ─── Parallax-like visual effect ─── */
+.parallax-section {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 768px) {
+  .parallax-section {
+    background-attachment: scroll;
+  }
+}
+
+/* ─── Smooth image loading ─── */
+img {
+  transition: opacity 0.4s ease;
+}
+
+/* ─── Service card image zoom ─── */
+.service-img-zoom {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover .service-img-zoom {
+  transform: scale(1.08);
+}
+
+/* ─── Stats counter animation ─── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-animate {
+  animation: countUp 0.6s ease-out forwards;
+}
+
+/* ─── Marquee for partners ─── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }

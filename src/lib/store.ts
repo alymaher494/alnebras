@@ -2,6 +2,7 @@ import { create } from 'zustand'
 
 export type PageName =
   | 'home'
+  | 'about'
   | 'services'
   | 'contracting'
   | 'media-center'
@@ -26,6 +27,7 @@ export const useNavigationStore = create<NavigationState>((set) => ({
   currentPage: 'home',
   isMobileMenuOpen: false,
   isMediaSubPage: 'all',
+  isHeroTransparent: true,
   setCurrentPage: (page) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     set({ currentPage: page, isMobileMenuOpen: false })
@@ -34,4 +36,5 @@ export const useNavigationStore = create<NavigationState>((set) => ({
     set((state) => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
   closeMobileMenu: () => set({ isMobileMenuOpen: false }),
   setMediaSubPage: (sub) => set({ isMediaSubPage: sub }),
+  setHeroTransparent: (v: boolean) => set({ isHeroTransparent: v }),
 }))

@@ -16,6 +16,7 @@ const CareersPage = lazy(() => import('@/components/pages/CareersPage'))
 const EventsPage = lazy(() => import('@/components/pages/EventsPage'))
 const SupplierPortalPage = lazy(() => import('@/components/pages/SupplierPortalPage'))
 const ContactPage = lazy(() => import('@/components/pages/ContactPage'))
+const AboutPage = lazy(() => import('@/components/pages/AboutPage'))
 
 function PageSkeleton() {
   return (
@@ -40,6 +41,7 @@ const pageComponents: Record<string, React.LazyExoticComponent<() => JSX.Element
   events: EventsPage,
   'supplier-portal': SupplierPortalPage,
   contact: ContactPage,
+  about: AboutPage,
 }
 
 export default function Home() {
