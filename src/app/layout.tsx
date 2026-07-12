@@ -1,53 +1,45 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
+import type { Metadata } from 'next'
+import { IBM_Plex_Sans_Arabic } from 'next/font/google'
+import './globals.css'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+  variable: '--font-ibm-plex-arabic',
+  subsets: ['arabic', 'latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: "Z.ai Code Scaffold - AI-Powered Development",
-  description: "Modern Next.js scaffold optimized for AI-powered development with Z.ai. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
-  keywords: ["Z.ai", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "AI development", "React"],
-  authors: [{ name: "Z.ai Team" }],
-  icons: {
-    icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
-  },
+  title: 'النبراس لإدارة المرافق',
+  description:
+    'النبراس لإدارة المرافق - حلول ذكية ومتخصصة في إدارة المرافق وعملياتها وصيانتها عبر مجموعة واسعة من القطاعات في المملكة العربية السعودية ومصر.',
+  keywords: [
+    'النبراس',
+    'إدارة المرافق',
+    'صيانة المنشآت',
+    'خدمات التنظيف',
+    'السعودية',
+    'جدة',
+    'مصر',
+  ],
   openGraph: {
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
-    url: "https://chat.z.ai",
-    siteName: "Z.ai",
-    type: "website",
+    title: 'النبراس لإدارة المرافق',
+    description:
+      'حلول ذكية ومتخصصة في إدارة المرافق وعملياتها وصيانتها',
+    type: 'website',
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
-  },
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
-        {children}
-        <Toaster />
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
+      <body className={`${ibmPlexArabic.variable} antialiased`}>
+        <main className="min-h-screen flex flex-col">{children}</main>
       </body>
     </html>
-  );
+  )
 }
