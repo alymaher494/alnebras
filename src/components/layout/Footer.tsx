@@ -218,7 +218,7 @@ export default function Footer() {
               alt="رؤية السعودية 2030"
               width={70}
               height={30}
-              className="h-8 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity filter brightness-0 invert"
+              className="h-8 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity mix-blend-screen"
             />
             <button
               onClick={scrollToTop}

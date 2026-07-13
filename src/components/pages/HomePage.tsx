@@ -147,10 +147,10 @@ export default function HomePage() {
             partnersRes.json(),
             branchesRes.json(),
           ])
-        setSettings(settingsData)
-        setServices(servicesData)
-        setPartners(partnersData)
-        setBranches(branchesData)
+        setSettings(settingsData && !settingsData.error ? settingsData : null)
+        setServices(Array.isArray(servicesData) ? servicesData : [])
+        setPartners(Array.isArray(partnersData) ? partnersData : [])
+        setBranches(Array.isArray(branchesData) ? branchesData : [])
       } catch (err) {
         console.error('Failed to fetch data:', err)
       } finally {
@@ -624,41 +624,59 @@ export default function HomePage() {
           />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle
-            title={t('ceo_message')}
-            align="center"
-          />
-
-          <AnimatedSection>
-            <div className="relative bg-white/[0.06] backdrop-blur-sm border border-white/10 rounded-2xl p-8 md:p-12 lg:p-16">
-              {/* Quote mark */}
-              <div className="absolute top-6 right-8 md:top-8 md:right-12">
-                <span className="text-white/10 text-[6rem] md:text-[8rem] font-serif leading-none block -mt-8">
-                  &ldquo;
-                </span>
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* CEO Image Column */}
+            <div className="lg:col-span-4 flex justify-center order-first lg:order-last">
+              <div className="relative w-72 h-80 sm:w-80 sm:h-96 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 border-white/20 group">
+                <Image
+                  src="/images/ceo.jpg"
+                  alt={t('ceo_title')}
+                  fill
+                  className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, 320px"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#012b67]/40 via-transparent to-transparent" />
               </div>
+            </div>
 
-              <div className="relative z-10">
-                <p className="text-white/90 text-lg md:text-xl lg:text-2xl leading-[2.2] text-center max-w-3xl mx-auto">
+            {/* CEO Message Column */}
+            <div className={`lg:col-span-8 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+              <AnimatedSection>
+                {/* Quote mark */}
+                <div className="mb-4">
+                  <span className="text-white/20 text-[80px] md:text-[100px] font-serif leading-none block -mb-10">
+                    &ldquo;
+                  </span>
+                </div>
+
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                  {t('ceo_message')}
+                </h2>
+                <div className={`accent-line accent-line-white mb-6 ${language === 'ar' ? 'mr-0' : 'ml-0'}`} />
+
+                <p className="text-white/90 text-base md:text-lg leading-[2.1] mb-8">
                   {loading
                     ? ''
                     : (language === 'ar' ? settings?.ceo_message_ar : settings?.ceo_message_en) ||
                       'في النبراس، نؤمن بأن إدارة المرافق ليست مجرد خدمة تُقدَّم، بل هي شراكة حقيقية نبنيها مع عملائنا نحو التميز والاستدامة. نسعى دائماً لتقديم أعلى معايير الجودة والابتكار في كل مشروع نتولاه.'}
                 </p>
 
-                <div className="mt-10 flex flex-col items-center gap-2">
-                  <div className="w-12 h-px bg-white/30" />
-                  <p className="text-white font-semibold text-base md:text-lg">
-                    {t('ceo_title')}
+                {/* Divider */}
+                <div className="w-16 h-[2px] bg-white/30 mb-6" />
+
+                <div>
+                  <p className="text-white font-bold text-xl">
+                    {language === 'ar' ? 'م. علي ماهر' : 'Eng. Aly Maher'}
                   </p>
-                  <p className="text-white/50 text-sm">
-                    {language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
+                  <p className="text-white/60 text-sm mt-1">
+                    {t('ceo_title')} | {language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
                   </p>
                 </div>
-              </div>
+              </AnimatedSection>
             </div>
-          </AnimatedSection>
+          </div>
         </div>
       </section>
     </>

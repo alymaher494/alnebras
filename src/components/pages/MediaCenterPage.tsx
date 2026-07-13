@@ -60,7 +60,7 @@ function HeroBanner({ language }: { language: 'ar' | 'en' }) {
   return (
     <section className="relative w-full h-[45vh] min-h-[340px] md:min-h-[400px] overflow-hidden">
       <Image
-        src="/images/gallery/page9_img1.jpg"
+        src="/images/media_hero.png"
         alt="المركز الإعلامي"
         fill
         className="object-cover"

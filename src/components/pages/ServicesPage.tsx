@@ -48,7 +48,7 @@ function HeroBanner({ language }: { language: 'ar' | 'en' }) {
     <section className="relative w-full h-[46vh] min-h-[360px] md:min-h-[420px] overflow-hidden">
       {/* Background Image */}
       <Image
-        src="/images/gallery/page6_img6.jpg"
+        src="/images/services_hero.png"
         alt="إدارة المرافق"
         fill
         className="object-cover"

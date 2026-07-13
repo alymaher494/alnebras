@@ -476,17 +476,7 @@ export default function AboutPage() {
       {/* ══════════════════════════════════════════
           7. CEO MESSAGE
       ══════════════════════════════════════════ */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/ceo_bg.png"
-            alt="خلفية الإدارة"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-[#012b67]/80" />
-        </div>
+      <section className="py-20 md:py-28 relative overflow-hidden bg-[#012b67]">
         {/* Subtle pattern */}
         <div className="absolute inset-0 opacity-[0.03]">
           <div
@@ -499,39 +489,59 @@ export default function AboutPage() {
           />
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <AnimatedSection>
-            {/* Decorative Quote Mark */}
-            <div className="mb-8">
-              <span className="text-[80px] md:text-[120px] leading-none font-serif text-white/20 select-none block -mb-10">
-                &ldquo;
-              </span>
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* CEO Image Column */}
+            <div className="lg:col-span-4 flex justify-center order-first lg:order-last">
+              <div className="relative w-72 h-80 sm:w-80 sm:h-96 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 border-white/20 group">
+                <Image
+                  src="/images/ceo.jpg"
+                  alt={t('ceo_title')}
+                  fill
+                  className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, 320px"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#012b67]/40 via-transparent to-transparent" />
+              </div>
             </div>
 
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
-              {t('ceo_message')}
-            </h2>
-            <div className="accent-line accent-line-white mx-auto mb-8" />
+            {/* CEO Message Column */}
+            <div className={`lg:col-span-8 ${language === 'ar' ? 'text-right' : 'text-left'}`}>
+              <AnimatedSection>
+                {/* Decorative Quote Mark */}
+                <div className="mb-4">
+                  <span className="text-[80px] md:text-[100px] leading-none font-serif text-white/20 select-none block -mb-10">
+                    &ldquo;
+                  </span>
+                </div>
 
-            <p className="text-white/90 text-base md:text-lg leading-[2.2] max-w-3xl mx-auto mb-10">
-              {loading
-                ? ''
-                : (language === 'ar' ? settings?.ceo_message_ar : settings?.ceo_message_en) ||
-                  'في النبراس لإدارة المرافق، نؤمن بأن رضا عملائنا هو مقياس نجاحنا الحقيقي. نلتزم بتقديم خدمات عالية الجودة تجمع بين الكفاءة المهنية والابتكار المستمر، ونسعى لأن نكون الشريك الأمثل في إدارة منشآتكم وضمان استمرارية أعمالكم بأعلى المعايير.'}
-            </p>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                  {t('ceo_message')}
+                </h2>
+                <div className={`accent-line accent-line-white mb-6 ${language === 'ar' ? 'mr-0' : 'ml-0'}`} />
 
-            {/* Divider */}
-            <div className="w-16 h-[2px] bg-white/30 mx-auto mb-6" />
+                <p className="text-white/90 text-base md:text-lg leading-[2.1] mb-8">
+                  {loading
+                    ? ''
+                    : (language === 'ar' ? settings?.ceo_message_ar : settings?.ceo_message_en) ||
+                      'في النبراس لإدارة المرافق، نؤمن بأن رضا عملائنا هو مقياس نجاحنا الحقيقي. نلتزم بتقديم خدمات عالية الجودة تجمع بين الكفاءة المهنية والابتكار المستمر، ونسعى لأن نكون الشريك الأمثل في إدارة منشآتكم وضمان استمرارية أعمالكم بأعلى المعايير.'}
+                </p>
 
-            <div>
-              <p className="text-white font-semibold text-lg">
-                {t('ceo_title')}
-              </p>
-              <p className="text-white/77 text-sm mt-1">
-                {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'النبراس لإدارة المرافق'}
-              </p>
+                {/* Divider */}
+                <div className="w-16 h-[2px] bg-white/30 mb-6" />
+
+                <div>
+                  <p className="text-white font-bold text-xl">
+                    {language === 'ar' ? 'م. علي ماهر' : 'Eng. Aly Maher'}
+                  </p>
+                  <p className="text-white/60 text-sm mt-1">
+                    {t('ceo_title')} | {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'النبراس لإدارة المرافق'}
+                  </p>
+                </div>
+              </AnimatedSection>
             </div>
-          </AnimatedSection>
+          </div>
         </div>
       </section>
     </div>

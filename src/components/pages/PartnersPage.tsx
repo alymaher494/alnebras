@@ -51,7 +51,7 @@ export default function PartnersPage() {
       {/* Hero Banner */}
       <section className="relative w-full h-[40vh] min-h-[300px] overflow-hidden">
         <Image
-          src="/images/ceo_bg.png"
+          src="/images/services_hero.png"
           alt="شركاؤنا"
           fill
           className="object-cover"

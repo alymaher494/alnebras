@@ -19,7 +19,7 @@ function HeroBanner({ language }: { language: 'ar' | 'en' }) {
   return (
     <section className="relative w-full h-[45vh] min-h-[340px] md:min-h-[400px] overflow-hidden">
       <Image
-        src="/images/gallery/page10_img1.jpg"
+        src="/images/contact_hero.png"
         alt="تواصل معنا"
         fill
         className="object-cover"

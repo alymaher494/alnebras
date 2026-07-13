@@ -48,6 +48,7 @@ export default function Header() {
 
   return (
     <header
+      dir={language === 'ar' ? 'rtl' : 'ltr'}
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 bg-white/97 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.06)]`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
