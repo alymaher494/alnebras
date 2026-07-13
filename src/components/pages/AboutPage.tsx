@@ -84,22 +84,19 @@ const valueDescriptionsEn: Record<string, string> = {
 
 /* ──────────── Certifications ──────────── */
 const certifications = [
-  { name: 'BICSc', labelAr: 'معهد التنظيف البريطاني', labelEn: 'British Institute of Cleaning Science', logo: '/images/logo/logo_bicsc.png' },
-  { name: 'ISO 9001', labelAr: 'إدارة الجودة', labelEn: 'Quality Management', logo: '/images/logo/logo_iso9001.png' },
-  { name: 'ISO 14001', labelAr: 'إدارة البيئة', labelEn: 'Environmental Management', logo: '/images/logo/logo_iso14001.png' },
-  { name: 'ISO 45001', labelAr: 'الصحة والسلامة المهنية', labelEn: 'Occupational Health & Safety', logo: '/images/logo/logo_iso45001.png' },
+  { name: 'BICSc', labelAr: 'معهد التنظيف البريطاني', labelEn: 'British Institute of Cleaning Science', logo: '/images/certificate/WhatsApp Image 2026-05-13 at 12.19.30 PM.jpeg' },
+  { name: 'ISO 9001', labelAr: 'إدارة الجودة', labelEn: 'Quality Management', logo: '/images/certificate/WhatsApp Image 2026-05-13 at 12.20.22 PM (1).jpeg' },
+  { name: 'ISO 14001', labelAr: 'إدارة البيئة', labelEn: 'Environmental Management', logo: '/images/certificate/WhatsApp Image 2026-05-13 at 12.20.22 PM (2).jpeg' },
+  { name: 'ISO 45001', labelAr: 'الصحة والسلامة المهنية', labelEn: 'Occupational Health & Safety', logo: '/images/certificate/WhatsApp Image 2026-05-13 at 12.27.33 PM.jpeg' },
 ]
 
 /* ──────────── Gallery Images ──────────── */
 const galleryImages = [
-  '/images/gallery/page4_img1.jpg',
-  '/images/gallery/page4_img3.jpg',
-  '/images/gallery/page4_img6.jpg',
-  '/images/gallery/page4_img8.jpg',
   '/images/gallery/page4_img10.jpg',
-  '/images/gallery/page5_img2.jpg',
-  '/images/gallery/page5_img5.jpg',
-  '/images/gallery/page5_img6.jpg',
+  '/images/gallery/page5_img20.jpg',
+  '/images/gallery/page5_img4.jpg',
+  '/images/gallery/page6_img1.jpg',
+  '/images/gallery/page6_img2.jpg',
 ]
 
 /* ──────────── Component ──────────── */
@@ -151,7 +148,7 @@ export default function AboutPage() {
       <section className="relative h-[50vh] min-h-[360px] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <Image
-          src="/images/gallery/page4_img3.jpg"
+          src="/images/about_hero.png"
           alt="من نحن - النبراس لإدارة المرافق"
           fill
           className="object-cover scale-105"
