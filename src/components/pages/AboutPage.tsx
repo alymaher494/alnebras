@@ -84,10 +84,10 @@ const valueDescriptionsEn: Record<string, string> = {
 
 /* ──────────── Certifications ──────────── */
 const certifications = [
-  { name: 'BICSc', labelAr: 'معهد التنظيف البريطاني', labelEn: 'British Institute of Cleaning Science' },
-  { name: 'ISO 9001', labelAr: 'إدارة الجودة', labelEn: 'Quality Management' },
-  { name: 'ISO 14001', labelAr: 'إدارة البيئة', labelEn: 'Environmental Management' },
-  { name: 'ISO 45001', labelAr: 'الصحة والسلامة المهنية', labelEn: 'Occupational Health & Safety' },
+  { name: 'BICSc', labelAr: 'معهد التنظيف البريطاني', labelEn: 'British Institute of Cleaning Science', logo: '/images/logo/logo_bicsc.png' },
+  { name: 'ISO 9001', labelAr: 'إدارة الجودة', labelEn: 'Quality Management', logo: '/images/logo/logo_iso9001.png' },
+  { name: 'ISO 14001', labelAr: 'إدارة البيئة', labelEn: 'Environmental Management', logo: '/images/logo/logo_iso14001.png' },
+  { name: 'ISO 45001', labelAr: 'الصحة والسلامة المهنية', labelEn: 'Occupational Health & Safety', logo: '/images/logo/logo_iso45001.png' },
 ]
 
 /* ──────────── Gallery Images ──────────── */
@@ -270,8 +270,14 @@ export default function AboutPage() {
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                     className="card-modern bg-white border border-[#e5e7eb] rounded-xl p-5 text-center"
                   >
-                    <div className="w-12 h-12 bg-[#e8eef5] rounded-lg flex items-center justify-center mx-auto mb-3">
-                      <CheckCircle2 className="w-6 h-6 text-[#012b67]" />
+                    <div className="relative w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                      <Image
+                        src={cert.logo}
+                        alt={cert.name}
+                        fill
+                        className="object-contain"
+                        sizes="96px"
+                      />
                     </div>
                     <p className="text-[#012b67] font-bold text-sm mb-1">{cert.name}</p>
                     <p className="text-[#6b7280] text-xs leading-relaxed">{language === 'ar' ? cert.labelAr : cert.labelEn}</p>
