@@ -3,14 +3,16 @@
 import Image from 'next/image'
 import { Instagram, Facebook, MapPin, Phone, Mail, ArrowUp } from 'lucide-react'
 import { useNavigationStore, type PageName } from '@/lib/store'
+import { useTranslation, type TranslationKey } from '@/lib/translations'
 
-const quickLinks: { label: string; page: PageName }[] = [
-  { label: 'الرئيسية', page: 'home' },
-  { label: 'من نحن', page: 'about' },
-  { label: 'إدارة المرافق', page: 'services' },
-  { label: 'المركز الإعلامي', page: 'media-center' },
-  { label: 'الوظائف', page: 'careers' },
-  { label: 'تواصل معنا', page: 'contact' },
+const quickLinks: { label: TranslationKey; page: PageName }[] = [
+  { label: 'home', page: 'home' },
+  { label: 'about', page: 'about' },
+  { label: 'services', page: 'services' },
+  { label: 'partners_page', page: 'partners' },
+  { label: 'media-center', page: 'media-center' },
+  { label: 'careers', page: 'careers' },
+  { label: 'contact', page: 'contact' },
 ]
 
 function TiktokIcon({ className }: { className?: string }) {
@@ -22,32 +24,37 @@ function TiktokIcon({ className }: { className?: string }) {
 }
 
 const socialLinks = [
-  { icon: Instagram, href: 'https://instagram.com/alnebras_fm', label: 'انستغرام' },
-  { icon: TiktokIcon, href: 'https://tiktok.com/@alnebras_fm', label: 'تيك توك' },
-  { icon: Facebook, href: 'https://facebook.com/alnebras_fm', label: 'فيسبوك' },
+  { icon: Instagram, href: 'https://instagram.com/alnebras_fm', label: 'Instagram' },
+  { icon: TiktokIcon, href: 'https://tiktok.com/@alnebras_fm', label: 'TikTok' },
+  { icon: Facebook, href: 'https://facebook.com/alnebras_fm', label: 'Facebook' },
 ]
 
 export default function Footer() {
-  const { setCurrentPage } = useNavigationStore()
+  const { setCurrentPage, language } = useNavigationStore()
+  const { t } = useTranslation(language)
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
-    <footer className="bg-[#011a45] text-white mt-auto relative">
+    <footer className="bg-[#011a45] text-white mt-auto relative" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {/* Top CTA Strip */}
       <div className="bg-[#012b67]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h3 className="text-white text-lg font-semibold">هل تبحث عن شراكة في إدارة المرافق؟</h3>
-            <p className="text-[#d1ddeb] text-sm mt-1">تواصل معنا اليوم واكتشف حلولنا المتكاملة</p>
+            <h3 className="text-white text-lg font-semibold">
+              {language === 'ar' ? 'هل تبحث عن شراكة في إدارة المرافق؟' : 'Looking for a partnership in facility management?'}
+            </h3>
+            <p className="text-[#d1ddeb] text-sm mt-1">
+              {language === 'ar' ? 'تواصل معنا اليوم واكتشف حلولنا المتكاملة' : 'Contact us today and discover our comprehensive solutions'}
+            </p>
           </div>
           <button
             onClick={() => setCurrentPage('contact')}
             className="bg-white text-[#012b67] px-8 py-3 rounded-lg font-semibold text-sm hover:bg-[#e8eef5] transition-colors flex-shrink-0"
           >
-            تواصل معنا
+            {t('contact')}
           </button>
         </div>
       </div>
@@ -58,15 +65,16 @@ export default function Footer() {
           {/* Column 1: Company Info */}
           <div>
             <Image
-              src="/logo.svg"
+              src="/logo-white.png"
               alt="النبراس"
               width={140}
               height={48}
-              className="h-11 w-auto object-contain brightness-0 invert mb-5"
+              className="h-11 w-auto object-contain mb-5 filter brightness-0 invert"
             />
             <p className="text-[#a8b8d1] text-sm leading-relaxed mb-6">
-              شركة وطنية رائدة متخصصة في إدارة المرافق وعملياتها وصيانتها
-              عبر مجموعة واسعة من القطاعات في المملكة العربية السعودية ومصر.
+              {language === 'ar' 
+                ? 'شركة وطنية رائدة متخصصة في إدارة المرافق وعملياتها وصيانتها عبر مجموعة واسعة من القطاعات في المملكة العربية السعودية ومصر.'
+                : 'A leading national company specializing in facility management, operations, and maintenance across a wide range of sectors in Saudi Arabia and Egypt.'}
             </p>
             <div className="flex items-center gap-2.5">
               {socialLinks.map((social) => (
@@ -88,7 +96,7 @@ export default function Footer() {
           <div>
             <h3 className="text-white text-[15px] font-semibold mb-6 flex items-center gap-2">
               <div className="w-1 h-5 bg-white/30 rounded-full" />
-              روابط سريعة
+              {language === 'ar' ? 'روابط سريعة' : 'Quick Links'}
             </h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
@@ -97,7 +105,7 @@ export default function Footer() {
                     onClick={() => setCurrentPage(link.page)}
                     className="text-[#a8b8d1] text-sm hover:text-white transition-colors duration-200 hover:translate-x-[-4px] inline-block"
                   >
-                    {link.label}
+                    {t(link.label)}
                   </button>
                 </li>
               ))}
@@ -108,18 +116,22 @@ export default function Footer() {
           <div>
             <h3 className="text-white text-[15px] font-semibold mb-6 flex items-center gap-2">
               <div className="w-1 h-5 bg-white/30 rounded-full" />
-              فروعنا
+              {t('branches_title')}
             </h3>
             <div className="space-y-6">
               <div className="group">
                 <div className="flex items-center gap-2 mb-2">
                   <MapPin className="w-4 h-4 text-[#d1ddeb]" />
-                  <p className="text-white text-sm font-medium">جدة - المملكة العربية السعودية</p>
+                  <p className="text-white text-sm font-medium">
+                    {language === 'ar' ? 'جدة - المملكة العربية السعودية' : 'Jeddah - Saudi Arabia'}
+                  </p>
                 </div>
-                <p className="text-[#a8b8d1] text-xs leading-relaxed mr-6">
-                  حي الرويس، طريق المدينة، مبني المحمدية بلازا 31، الطابق الثالث
+                <p className={`text-[#a8b8d1] text-xs leading-relaxed ${language === 'ar' ? 'mr-6' : 'ml-6'}`}>
+                  {language === 'ar' 
+                    ? 'حي الرويس، طريق المدينة، مبني المحمدية بلازا 31، الطابق الثالث'
+                    : 'Al-Ruwais, Al-Madina Road, Al-Mohammadiya Plaza Building 31, 3rd Floor'}
                 </p>
-                <a href="tel:920028911" className="text-[#d1ddeb] text-xs mt-1.5 inline-flex items-center gap-1.5 hover:text-white transition-colors mr-6" dir="ltr">
+                <a href="tel:920028911" className={`text-[#d1ddeb] text-xs mt-1.5 inline-flex items-center gap-1.5 hover:text-white transition-colors ${language === 'ar' ? 'mr-6' : 'ml-6'}`} dir="ltr">
                   <Phone className="w-3 h-3" />
                   920028911
                 </a>
@@ -127,12 +139,16 @@ export default function Footer() {
               <div className="group">
                 <div className="flex items-center gap-2 mb-2">
                   <MapPin className="w-4 h-4 text-[#d1ddeb]" />
-                  <p className="text-white text-sm font-medium">القاهرة - مصر</p>
+                  <p className="text-white text-sm font-medium">
+                    {language === 'ar' ? 'القاهرة - مصر' : 'Cairo - Egypt'}
+                  </p>
                 </div>
-                <p className="text-[#a8b8d1] text-xs leading-relaxed mr-6">
-                  8 شارع الهداية - حي السفارات - مدينة نصر
+                <p className={`text-[#a8b8d1] text-xs leading-relaxed ${language === 'ar' ? 'mr-6' : 'ml-6'}`}>
+                  {language === 'ar' 
+                    ? '8 شارع الهداية - حي السفارات - مدينة نصر'
+                    : '8 Al-Hidaya Street - Embassies District - Nasr City'}
                 </p>
-                <a href="tel:2011731149" className="text-[#d1ddeb] text-xs mt-1.5 inline-flex items-center gap-1.5 hover:text-white transition-colors mr-6" dir="ltr">
+                <a href="tel:2011731149" className={`text-[#d1ddeb] text-xs mt-1.5 inline-flex items-center gap-1.5 hover:text-white transition-colors ${language === 'ar' ? 'mr-6' : 'ml-6'}`} dir="ltr">
                   <Phone className="w-3 h-3" />
                   2011731149
                 </a>
@@ -144,7 +160,7 @@ export default function Footer() {
           <div>
             <h3 className="text-white text-[15px] font-semibold mb-6 flex items-center gap-2">
               <div className="w-1 h-5 bg-white/30 rounded-full" />
-              تواصل معنا
+              {t('contact')}
             </h3>
             <div className="space-y-4">
               <a
@@ -155,7 +171,9 @@ export default function Footer() {
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-[#7a8da8] mb-0.5">البريد الإلكتروني</p>
+                  <p className="text-[10px] text-[#7a8da8] mb-0.5">
+                    {language === 'ar' ? 'البريد الإلكتروني' : 'Email Address'}
+                  </p>
                   <p className="text-sm">info@alnebras.com.sa</p>
                 </div>
               </a>
@@ -164,7 +182,9 @@ export default function Footer() {
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-[#7a8da8] mb-0.5">هاتف جدة</p>
+                  <p className="text-[10px] text-[#7a8da8] mb-0.5">
+                    {language === 'ar' ? 'هاتف جدة' : 'Jeddah Phone'}
+                  </p>
                   <a href="tel:920028911" className="text-sm hover:text-white transition-colors" dir="ltr">920028911</a>
                 </div>
               </div>
@@ -173,7 +193,9 @@ export default function Footer() {
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-[10px] text-[#7a8da8] mb-0.5">هاتف القاهرة</p>
+                  <p className="text-[10px] text-[#7a8da8] mb-0.5">
+                    {language === 'ar' ? 'هاتف القاهرة' : 'Cairo Phone'}
+                  </p>
                   <a href="tel:2011731149" className="text-sm hover:text-white transition-colors" dir="ltr">2011731149</a>
                 </div>
               </div>
@@ -186,15 +208,26 @@ export default function Footer() {
       <div className="border-t border-white/8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[#7a8da8] text-xs">
-            © {new Date().getFullYear()} النبراس لإدارة المرافق. جميع الحقوق محفوظة.
+            {language === 'ar' 
+              ? `© ${new Date().getFullYear()} النبراس لإدارة المرافق. جميع الحقوق محفوظة.`
+              : `© ${new Date().getFullYear()} Alnebras Facilities Management. All rights reserved.`}
           </p>
-          <button
-            onClick={scrollToTop}
-            className="w-9 h-9 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center hover:bg-white/15 transition-colors"
-            aria-label="العودة للأعلى"
-          >
-            <ArrowUp className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-4">
+            <Image
+              src="/images/logo/vision-2030.png"
+              alt="رؤية السعودية 2030"
+              width={70}
+              height={30}
+              className="h-8 w-auto object-contain opacity-70 hover:opacity-100 transition-opacity filter brightness-0 invert"
+            />
+            <button
+              onClick={scrollToTop}
+              className="w-9 h-9 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center hover:bg-white/15 transition-colors"
+              aria-label="العودة للأعلى"
+            >
+              <ArrowUp className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
     </footer>

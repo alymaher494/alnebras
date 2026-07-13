@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     await writeFile(filepath, buffer)
 
-    return NextResponse.json({ path: `/uploads/${filename}`, filename }, { status: 201 })
+    return NextResponse.json({ path: `/uploads/${filename}`, url: `/uploads/${filename}`, filename }, { status: 201 })
   } catch (error) {
     console.error('Error uploading file:', error)
     return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 })

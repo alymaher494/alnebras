@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type FormEvent, type ChangeEvent } from 'react'
+import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react'
 import { Upload, Send, Loader2, FileText, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -10,8 +10,12 @@ import { Card, CardContent } from '@/components/ui/card'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import SectionTitle from '@/components/shared/SectionTitle'
 import { toast } from 'sonner'
+import { useNavigationStore } from '@/lib/store'
+import { useTranslation } from '@/lib/translations'
 
 export default function SupplierPortalPage() {
+  const { language } = useNavigationStore()
+  const { t } = useTranslation(language)
   const [submitting, setSubmitting] = useState(false)
   const [uploading, setUploading] = useState(false)
   const [fileName, setFileName] = useState('')
@@ -47,12 +51,12 @@ export default function SupplierPortalPage() {
       if (data.url) {
         setFileUrl(data.url)
         setFileName(file.name)
-        toast.success('تم رفع الملف بنجاح')
+        toast.success(language === 'ar' ? 'تم رفع الملف بنجاح' : 'File uploaded successfully')
       } else {
-        toast.error('فشل في رفع الملف')
+        toast.error(language === 'ar' ? 'فشل في رفع الملف' : 'Failed to upload file')
       }
     } catch {
-      toast.error('حدث خطأ أثناء رفع الملف')
+      toast.error(language === 'ar' ? 'حدث خطأ أثناء رفع الملف' : 'Error uploading file')
     } finally {
       setUploading(false)
     }
@@ -66,7 +70,7 @@ export default function SupplierPortalPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!form.name || !form.company || !form.phone || !form.email) {
-      toast.error('يرجى ملء الحقول المطلوبة')
+      toast.error(t('error_fill_fields'))
       return
     }
     setSubmitting(true)
@@ -77,26 +81,26 @@ export default function SupplierPortalPage() {
         body: JSON.stringify({ ...form, fileUrl }),
       })
       if (res.ok) {
-        toast.success('تم إرسال طلبكم بنجاح')
+        toast.success(language === 'ar' ? 'تم إرسال طلبكم بنجاح' : 'Request sent successfully')
         setForm({ name: '', company: '', phone: '', email: '', message: '' })
         removeFile()
       } else {
-        toast.error('حدث خطأ أثناء إرسال الطلب')
+        toast.error(language === 'ar' ? 'حدث خطأ أثناء إرسال الطلب' : 'Error sending request')
       }
     } catch {
-      toast.error('حدث خطأ أثناء إرسال الطلب')
+      toast.error(language === 'ar' ? 'حدث خطأ أثناء إرسال الطلب' : 'Error sending request')
     } finally {
       setSubmitting(false)
     }
   }
 
   return (
-    <div className="pt-20 md:pt-24">
+    <div className="pt-20 md:pt-24" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            title="بوابة الموردين"
-            subtitle="ندعوكم للتسجيل في قاعدة موردينا والانضمام لشراكتنا"
+            title={t('supplier-portal')}
+            subtitle={language === 'ar' ? 'ندعوكم للتسجيل في قاعدة موردينا والانضمام لشراكتنا' : 'We invite you to register in our supplier database and join our partnership.'}
           />
 
           <AnimatedSection>
@@ -106,27 +110,27 @@ export default function SupplierPortalPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
                       <Label htmlFor="s-name">
-                        الاسم <span className="text-red-500">*</span>
+                        {t('name')} <span className="text-red-500">*</span>
                       </Label>
                       <Input
                         id="s-name"
                         name="name"
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="الاسم الكامل"
+                        placeholder={t('name')}
                         required
                       />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="s-company">
-                        اسم الشركة <span className="text-red-500">*</span>
+                        {language === 'ar' ? 'اسم الشركة' : 'Company Name'} <span className="text-red-500">*</span>
                       </Label>
                       <Input
                         id="s-company"
                         name="company"
                         value={form.company}
                         onChange={handleChange}
-                        placeholder="اسم الشركة"
+                        placeholder={language === 'ar' ? 'اسم الشركة' : 'Company Name'}
                         required
                       />
                     </div>
@@ -134,7 +138,7 @@ export default function SupplierPortalPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
                       <Label htmlFor="s-phone">
-                        رقم الجوال <span className="text-red-500">*</span>
+                        {t('phone')} <span className="text-red-500">*</span>
                       </Label>
                       <Input
                         id="s-phone"
@@ -148,7 +152,7 @@ export default function SupplierPortalPage() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="s-email">
-                        البريد الإلكتروني <span className="text-red-500">*</span>
+                        {t('email')} <span className="text-red-500">*</span>
                       </Label>
                       <Input
                         id="s-email"
@@ -163,20 +167,20 @@ export default function SupplierPortalPage() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="s-message">الرسالة</Label>
+                    <Label htmlFor="s-message">{t('message')}</Label>
                     <Textarea
                       id="s-message"
                       name="message"
                       value={form.message}
                       onChange={handleChange}
-                      placeholder="أي تفاصيل إضافية..."
+                      placeholder={language === 'ar' ? 'أي تفاصيل إضافية...' : 'Any additional details...'}
                       rows={4}
                     />
                   </div>
 
                   {/* File Upload */}
                   <div className="space-y-2">
-                    <Label>رفع ملف (اختياري)</Label>
+                    <Label>{language === 'ar' ? 'رفع ملف (اختياري)' : 'Upload File (Optional)'}</Label>
                     {fileName ? (
                       <div className="flex items-center justify-between bg-[#f9fafb] border border-[#e5e7eb] rounded-lg px-4 py-3">
                         <div className="flex items-center gap-2">
@@ -201,7 +205,9 @@ export default function SupplierPortalPage() {
                           <Upload className="w-5 h-5 text-[#6b7280]" />
                         )}
                         <span className="text-sm text-[#6b7280]">
-                          {uploading ? 'جارٍ الرفع...' : 'اختر ملفاً للرفع'}
+                          {uploading 
+                            ? (language === 'ar' ? 'جارٍ الرفع...' : 'Uploading...') 
+                            : (language === 'ar' ? 'اختر ملفاً للرفع' : 'Choose file to upload')}
                         </span>
                         <input
                           type="file"
@@ -222,8 +228,8 @@ export default function SupplierPortalPage() {
                       <Loader2 className="w-5 h-5 animate-spin" />
                     ) : (
                       <>
-                        إرسال الطلب
-                        <Send className="mr-2 h-4 w-4" />
+                        {language === 'ar' ? 'إرسال الطلب' : 'Submit Request'}
+                        <Send className={`h-4 w-4 ${language === 'ar' ? 'mr-2' : 'ml-2'}`} />
                       </>
                     )}
                   </Button>

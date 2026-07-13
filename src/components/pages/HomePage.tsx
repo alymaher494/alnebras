@@ -27,22 +27,34 @@ import AnimatedSection from '@/components/shared/AnimatedSection'
 import SectionTitle from '@/components/shared/SectionTitle'
 import { useNavigationStore } from '@/lib/store'
 
+import { useTranslation } from '@/lib/translations'
+
 /* ──────────────────────── Types ──────────────────────── */
 interface Settings {
   company_name_ar: string
+  company_name_en: string
   vision_ar: string
+  vision_en: string
   mission_ar: string
+  mission_en: string
   values_ar: string
+  values_en: string
   ceo_message_ar: string
+  ceo_message_en: string
   hero_title_ar: string
+  hero_title_en: string
   hero_subtitle_ar: string
+  hero_subtitle_en: string
   about_text_ar: string
+  about_text_en: string
 }
 
 interface Service {
   id: string
   titleAr: string
+  titleEn: string | null
   descriptionAr: string
+  descriptionEn: string | null
   icon: string
   order: number
   image: string | null
@@ -58,24 +70,36 @@ interface Partner {
 interface Branch {
   id: string
   countryAr: string
+  country: string
   cityAr: string
+  city: string
   addressAr: string
+  address: string
   phone: string | null
   email: string | null
   image: string | null
   descriptionAr: string | null
+  description: string | null
 }
 
 /* ──────────────────────── Icon Maps ──────────────────────── */
 const valueIconMap: Record<string, LucideIcon> = {
   'الجودة': Award,
+  'Quality': Award,
   'السلامة والأمان': ShieldCheck,
+  'Safety & Security': ShieldCheck,
   'روح الفريق والتواصل': Users,
+  'Teamwork & Communication': Users,
   'النزاهة والالتزام': Handshake,
+  'Integrity & Commitment': Handshake,
   'التطوير والتحسين': TrendingUp,
+  'Development & Improvement': TrendingUp,
   'التخطيط الاستراتيجي': Target,
+  'Strategic Planning': Target,
   'الإبداع والابتكار': Lightbulb,
+  'Creativity & Innovation': Lightbulb,
   'الاستدامة': Leaf,
+  'Sustainability': Leaf,
 }
 
 const fallbackServiceImages = [
@@ -90,15 +114,16 @@ const fallbackServiceImages = [
 ]
 
 const stats = [
-  { label: 'سنوات خبرة', value: '15+', icon: Calendar },
-  { label: 'مشروع منجز', value: '200+', icon: Building2 },
-  { label: 'عميل راضٍ', value: '150+', icon: Users },
-  { label: 'فرع', value: '2', icon: MapPin },
+  { labelKey: 'years_experience', value: '15+', icon: Calendar },
+  { labelKey: 'completed_projects', value: '200+', icon: Building2 },
+  { labelKey: 'satisfied_clients', value: '150+', icon: Users },
+  { labelKey: 'branches', value: '2', icon: MapPin },
 ]
 
 /* ──────────────────────── Component ──────────────────────── */
 export default function HomePage() {
-  const { setCurrentPage } = useNavigationStore()
+  const { setCurrentPage, language } = useNavigationStore()
+  const { t } = useTranslation(language)
   const [settings, setSettings] = useState<Settings | null>(null)
   const [services, setServices] = useState<Service[]>([])
   const [partners, setPartners] = useState<Partner[]>([])
@@ -135,15 +160,19 @@ export default function HomePage() {
     fetchData()
   }, [])
 
-  const values = settings?.values_ar?.split('|') || []
-  const heroTitle =
-    !loading && settings?.hero_title_ar
-      ? settings.hero_title_ar
-      : 'حلول ذكية لإدارة المرافق'
-  const heroSubtitle =
-    !loading && settings?.hero_subtitle_ar
-      ? settings.hero_subtitle_ar
-      : 'نرفع كفاءة منشأتك ونضمن استمرارية أعمالك بأعلى معايير الجودة والاحترافية'
+  const values = language === 'ar'
+    ? (settings?.values_ar?.split('|') || [])
+    : (settings?.values_en?.split('|') || [])
+
+  const heroTitle = !loading
+    ? (language === 'ar' ? (settings?.hero_title_ar || 'حلول ذكية لإدارة المرافق') : (settings?.hero_title_en || 'Smart Facilities Management Solutions'))
+    : ''
+
+  const heroSubtitle = !loading
+    ? (language === 'ar' 
+        ? (settings?.hero_subtitle_ar || 'نرفع كفاءة منشأتك ونضمن استمرارية أعمالك بأعلى معايير الجودة والاحترافية')
+        : (settings?.hero_subtitle_en || 'We elevate the efficiency of your facility and ensure your business continuity with the highest standards of quality and professionalism.'))
+    : ''
 
   return (
     <>
@@ -195,8 +224,8 @@ export default function HomePage() {
               onClick={() => setCurrentPage('services')}
               className="inline-flex items-center gap-3 bg-white text-[#012b67] font-semibold text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl hover:bg-[#f0f4f8] hover:scale-[1.03] active:scale-[0.98]"
             >
-              اكتشف خدماتنا
-              <ArrowLeft className="h-5 w-5" />
+              {t('discover_services')}
+              <ArrowLeft className={`h-5 w-5 ${language === 'en' ? 'rotate-180' : ''}`} />
             </button>
           </motion.div>
         </div>
@@ -208,7 +237,7 @@ export default function HomePage() {
           transition={{ delay: 1.5, duration: 0.8 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
         >
-          <span className="text-white/60 text-sm tracking-wide">اكتشف المزيد</span>
+          <span className="text-white/60 text-sm tracking-wide">{t('discover_more')}</span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
@@ -239,7 +268,7 @@ export default function HomePage() {
                     <p className="text-2xl sm:text-3xl font-bold text-white">
                       {stat.value}
                     </p>
-                    <p className="text-white/60 text-xs sm:text-sm">{stat.label}</p>
+                    <p className="text-white/60 text-xs sm:text-sm">{t(stat.labelKey as any)}</p>
                   </div>
                 </AnimatedSection>
               )
@@ -260,7 +289,7 @@ export default function HomePage() {
                 <div className="rounded-2xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/about/page1_img1.jpg"
-                    alt={settings?.company_name_ar || 'النبراس لإدارة المرافق'}
+                    alt={language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
                     width={700}
                     height={500}
                     className="w-full h-auto object-cover"
@@ -276,21 +305,21 @@ export default function HomePage() {
             <AnimatedSection delay={0.2}>
               <div>
                 <h2 className="text-3xl md:text-4xl lg:text-[2.5rem] font-bold text-[#012b67] mb-3 leading-tight">
-                  {settings?.company_name_ar || 'النبراس لإدارة المرافق'}
+                  {language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
                 </h2>
                 <div className="accent-line mb-6" />
                 <p className="text-[#374151] text-base md:text-lg leading-[2] mb-8">
                   {loading
                     ? ''
-                    : settings?.about_text_ar ||
+                    : (language === 'ar' ? settings?.about_text_ar : settings?.about_text_en) ||
                       'شركة وطنية رائدة متخصصة في إدارة المرافق وعملياتها وصيانتها بأعلى معايير الجودة والاحترافية في المملكة العربية السعودية وجمهورية مصر العربية.'}
                 </p>
                 <button
                   onClick={() => setCurrentPage('about')}
                   className="inline-flex items-center gap-2 bg-[#012b67] text-white font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 hover:bg-[#011d47] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
                 >
-                  اقرأ المزيد
-                  <ArrowLeft className="h-4 w-4" />
+                  {t('read_more')}
+                  <ArrowLeft className={`h-4 w-4 ${language === 'en' ? 'rotate-180' : ''}`} />
                 </button>
               </div>
             </AnimatedSection>
@@ -304,8 +333,8 @@ export default function HomePage() {
       <section className="py-20 md:py-28 bg-[#f9fafb]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            title="خدماتنا"
-            subtitle="حلول متكاملة ومتخصصة لإدارة المرافق وعملياتها وصيانتها"
+            title={t('our_services')}
+            subtitle={t('our_services_subtitle')}
           />
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
@@ -313,6 +342,8 @@ export default function HomePage() {
               const imgSrc =
                 service.image ||
                 fallbackServiceImages[i % fallbackServiceImages.length]
+              const sTitle = language === 'ar' ? service.titleAr : (service.titleEn || service.titleAr)
+              const sDesc = language === 'ar' ? service.descriptionAr : (service.descriptionEn || service.descriptionAr)
               return (
                 <AnimatedSection key={service.id} delay={i * 0.06}>
                   <div className="group card-modern bg-white h-full flex flex-col cursor-pointer">
@@ -320,7 +351,7 @@ export default function HomePage() {
                     <div className="relative overflow-hidden aspect-[4/3]">
                       <Image
                         src={imgSrc}
-                        alt={service.titleAr}
+                        alt={sTitle}
                         fill
                         sizes="(max-width: 640px) 50vw, 25vw"
                         className="object-cover service-img-zoom"
@@ -330,10 +361,10 @@ export default function HomePage() {
                     {/* Text */}
                     <div className="p-4 md:p-5 flex-1 flex flex-col">
                       <h3 className="text-sm md:text-base font-bold text-[#012b67] mb-2 line-clamp-1">
-                        {service.titleAr}
+                        {sTitle}
                       </h3>
                       <p className="text-[#6b7280] text-xs md:text-sm leading-relaxed line-clamp-3 flex-1">
-                        {service.descriptionAr}
+                        {sDesc}
                       </p>
                     </div>
                   </div>
@@ -347,8 +378,8 @@ export default function HomePage() {
               onClick={() => setCurrentPage('services')}
               className="inline-flex items-center gap-2 border-2 border-[#012b67] text-[#012b67] font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 hover:bg-[#012b67] hover:text-white hover:shadow-lg"
             >
-              عرض جميع الخدمات
-              <ArrowLeft className="h-4 w-4" />
+              {t('view_all_services')}
+              <ArrowLeft className={`h-4 w-4 ${language === 'en' ? 'rotate-180' : ''}`} />
             </button>
           </AnimatedSection>
         </div>
@@ -365,8 +396,9 @@ export default function HomePage() {
           <AnimatedSection>
             <Quote className="w-12 h-12 text-white/30 mx-auto mb-6" />
             <p className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-bold text-white leading-[1.7]">
-              نؤمن بأن إدارة المرافق ليست مجرد خدمة، بل شراكة حقيقية نحو
-              التميز
+              {language === 'ar'
+                ? 'نؤمن بأن إدارة المرافق ليست مجرد خدمة، بل شراكة حقيقية نحو التميز'
+                : 'We believe that facilities management is not just a service, but a true partnership towards excellence.'}
             </p>
             <div className="accent-line accent-line-white mt-8 mx-auto" />
           </AnimatedSection>
@@ -378,7 +410,7 @@ export default function HomePage() {
           ════════════════════════════════════════════════════ */}
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle title="رؤيتنا ورسالتنا" />
+          <SectionTitle title={language === 'ar' ? 'رؤيتنا ورسالتنا' : 'Our Vision & Mission'} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
             {/* Vision */}
@@ -388,12 +420,12 @@ export default function HomePage() {
                   <Eye className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-[#012b67] mb-4">
-                  الرؤية
+                  {t('vision')}
                 </h3>
                 <p className="text-[#374151] text-base md:text-lg leading-[2]">
                   {loading
                     ? ''
-                    : settings?.vision_ar ||
+                    : (language === 'ar' ? settings?.vision_ar : settings?.vision_en) ||
                       'أن نكون الخيار الأول والأكثر ثقة في مجال إدارة المرافق على مستوى المملكة والمنطقة'}
                 </p>
               </div>
@@ -406,12 +438,12 @@ export default function HomePage() {
                   <Target className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-4">
-                  الرسالة
+                  {t('mission')}
                 </h3>
                 <p className="text-white/80 text-base md:text-lg leading-[2]">
                   {loading
                     ? ''
-                    : settings?.mission_ar ||
+                    : (language === 'ar' ? settings?.mission_ar : settings?.mission_en) ||
                       'تقديم حلول إدارة مرافق متكاملة ومبتكرة تتجاوز توقعات عملائنا وتساهم في بناء بيئة عمل مستدامة'}
                 </p>
               </div>
@@ -426,8 +458,8 @@ export default function HomePage() {
       <section className="py-20 md:py-28 bg-[#f9fafb]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            title="قيمنا"
-            subtitle="القيم الأساسية التي توجه أعمالنا وتعكس التزامنا بالتميز"
+            title={t('values')}
+            subtitle={language === 'ar' ? 'القيم الأساسية التي توجه أعمالنا وتعكس التزامنا بالتميز' : 'Core values that guide our actions and reflect our commitment to excellence'}
           />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {values.map((value, i) => {
@@ -459,7 +491,7 @@ export default function HomePage() {
           ════════════════════════════════════════════════════ */}
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle title="فروعنا" />
+          <SectionTitle title={t('branches_title')} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
             {branches.map((branch, i) => {
@@ -468,13 +500,15 @@ export default function HomePage() {
                 (i === 0
                   ? '/images/gallery/page4_img1.jpg'
                   : '/images/gallery/page6_img1.jpg')
+              const bCity = language === 'ar' ? branch.cityAr : branch.city
+              const bAddress = language === 'ar' ? branch.addressAr : branch.address
               return (
                 <AnimatedSection key={branch.id} delay={i * 0.15}>
                   <div className="group relative min-h-[380px] md:min-h-[440px] rounded-2xl overflow-hidden cursor-pointer">
                     {/* Background Image */}
                     <Image
                       src={branchImg}
-                      alt={branch.cityAr}
+                      alt={bCity}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -485,13 +519,13 @@ export default function HomePage() {
                     {/* Content */}
                     <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
                       <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                        {branch.cityAr}
+                        {bCity}
                       </h3>
                       <div className="space-y-2.5">
                         <div className="flex items-center gap-3">
                           <MapPin className="w-4 h-4 text-white/70 flex-shrink-0" />
                           <p className="text-white/85 text-sm leading-relaxed">
-                            {branch.addressAr}
+                            {bAddress}
                           </p>
                         </div>
                         {branch.phone && (
@@ -525,7 +559,7 @@ export default function HomePage() {
           ════════════════════════════════════════════════════ */}
       <section className="py-20 md:py-28 bg-[#f9fafb] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTitle title="شركاؤنا في النجاح" />
+          <SectionTitle title={t('partners')} />
         </div>
 
         {partners.length > 0 && (
@@ -592,7 +626,7 @@ export default function HomePage() {
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            title="رسالة الرئيس التنفيذي"
+            title={t('ceo_message')}
             align="center"
           />
 
@@ -609,17 +643,17 @@ export default function HomePage() {
                 <p className="text-white/90 text-lg md:text-xl lg:text-2xl leading-[2.2] text-center max-w-3xl mx-auto">
                   {loading
                     ? ''
-                    : settings?.ceo_message_ar ||
+                    : (language === 'ar' ? settings?.ceo_message_ar : settings?.ceo_message_en) ||
                       'في النبراس، نؤمن بأن إدارة المرافق ليست مجرد خدمة تُقدَّم، بل هي شراكة حقيقية نبنيها مع عملائنا نحو التميز والاستدامة. نسعى دائماً لتقديم أعلى معايير الجودة والابتكار في كل مشروع نتولاه.'}
                 </p>
 
                 <div className="mt-10 flex flex-col items-center gap-2">
                   <div className="w-12 h-px bg-white/30" />
                   <p className="text-white font-semibold text-base md:text-lg">
-                    الرئيس التنفيذي
+                    {t('ceo_title')}
                   </p>
                   <p className="text-white/50 text-sm">
-                    {settings?.company_name_ar || 'النبراس لإدارة المرافق'}
+                    {language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
                   </p>
                 </div>
               </div>

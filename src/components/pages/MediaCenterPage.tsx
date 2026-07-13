@@ -13,13 +13,17 @@ import {
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import { useNavigationStore, type MediaSubPage } from '@/lib/store'
+import { useTranslation } from '@/lib/translations'
 
 /* ──────────── Types ──────────── */
 interface NewsArticle {
   id: string
   titleAr: string
+  titleEn: string | null
   summaryAr: string | null
+  summaryEn: string | null
   contentAr: string | null
+  contentEn: string | null
   image: string | null
   publishDate: string
 }
@@ -27,10 +31,13 @@ interface NewsArticle {
 interface EventItem {
   id: string
   titleAr: string
+  titleEn: string | null
   descriptionAr: string | null
+  descriptionEn: string | null
   image: string | null
   eventDate: string | null
   locationAr: string | null
+  locationEn: string | null
 }
 
 /* ──────────── Gallery Images ──────────── */
@@ -48,7 +55,8 @@ const GALLERY_IMAGES = [
 ]
 
 /* ──────────── Hero Banner ──────────── */
-function HeroBanner() {
+function HeroBanner({ language }: { language: 'ar' | 'en' }) {
+  const { t } = useTranslation(language)
   return (
     <section className="relative w-full h-[45vh] min-h-[340px] md:min-h-[400px] overflow-hidden">
       <Image
@@ -67,7 +75,7 @@ function HeroBanner() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5"
         >
-          المركز الإعلامي
+          {t('media-center')}
         </motion.h1>
         <motion.div
           initial={{ width: 0 }}
@@ -81,7 +89,9 @@ function HeroBanner() {
           transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
           className="text-white/85 text-lg md:text-xl max-w-2xl leading-relaxed"
         >
-          تابع آخر الأخبار والفعاليات والصور من عالم النبراس
+          {language === 'ar'
+            ? 'تابع آخر الأخبار والفعاليات والصور من عالم النبراس'
+            : 'Follow the latest news, events, and photos from the Alnebras world.'}
         </motion.p>
       </div>
     </section>
@@ -114,18 +124,24 @@ function MediaSkeleton() {
 function NewsCard({
   article,
   index,
+  language,
 }: {
   article: NewsArticle
   index: number
+  language: 'ar' | 'en'
 }) {
+  const { t } = useTranslation(language)
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr)
-    return date.toLocaleDateString('ar-SA', {
+    return date.toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     })
   }
+
+  const aTitle = language === 'ar' ? article.titleAr : (article.titleEn || article.titleAr)
+  const aSummary = language === 'ar' ? article.summaryAr : (article.summaryEn || article.summaryAr)
 
   return (
     <AnimatedSection delay={index * 0.08}>
@@ -133,16 +149,16 @@ function NewsCard({
         <div className="relative h-52 overflow-hidden">
           <Image
             src={article.image || '/images/office.jpg'}
-            alt={article.titleAr}
+            alt={aTitle}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#012b67]/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+          <div className={`absolute bottom-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0 ${language === 'ar' ? 'right-4' : 'left-4'}`}>
             <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 flex items-center gap-1.5">
               <Newspaper className="w-3.5 h-3.5 text-[#012b67]" />
-              <span className="text-xs font-semibold text-[#012b67]">اقرأ المزيد</span>
+              <span className="text-xs font-semibold text-[#012b67]">{t('read_more')}</span>
             </div>
           </div>
         </div>
@@ -152,11 +168,11 @@ function NewsCard({
             {formatDate(article.publishDate)}
           </div>
           <h4 className="text-base font-bold text-[#012b67] mb-2 leading-relaxed line-clamp-2">
-            {article.titleAr}
+            {aTitle}
           </h4>
-          {article.summaryAr && (
+          {aSummary && (
             <p className="text-[#6b7280] text-sm leading-relaxed line-clamp-3">
-              {article.summaryAr}
+              {aSummary}
             </p>
           )}
         </div>
@@ -169,19 +185,25 @@ function NewsCard({
 function EventCard({
   event,
   index,
+  language,
 }: {
   event: EventItem
   index: number
+  language: 'ar' | 'en'
 }) {
   const formatEventDate = (dateStr: string | null) => {
     if (!dateStr) return ''
     const date = new Date(dateStr)
-    return date.toLocaleDateString('ar-SA', {
+    return date.toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     })
   }
+
+  const eTitle = language === 'ar' ? event.titleAr : (event.titleEn || event.titleAr)
+  const eLoc = language === 'ar' ? event.locationAr : (event.locationEn || event.locationAr)
+  const eDesc = language === 'ar' ? event.descriptionAr : (event.descriptionEn || event.descriptionAr)
 
   return (
     <AnimatedSection delay={index * 0.08}>
@@ -189,18 +211,18 @@ function EventCard({
         <div className="relative h-52 overflow-hidden">
           <Image
             src={event.image || '/images/facility.jpg'}
-            alt={event.titleAr}
+            alt={eTitle}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           {event.eventDate && (
-            <div className="absolute top-4 right-4 bg-[#012b67] text-white rounded-xl px-3 py-2 text-center min-w-[60px]">
+            <div className={`absolute top-4 bg-[#012b67] text-white rounded-xl px-3 py-2 text-center min-w-[60px] ${language === 'ar' ? 'right-4' : 'left-4'}`}>
               <div className="text-xl font-bold leading-none">
                 {new Date(event.eventDate).getDate()}
               </div>
               <div className="text-[10px] mt-1 opacity-80">
-                {new Date(event.eventDate).toLocaleDateString('ar-SA', {
+                {new Date(event.eventDate).toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', {
                   month: 'short',
                 })}
               </div>
@@ -210,7 +232,7 @@ function EventCard({
         </div>
         <div className="p-5">
           <h4 className="text-base font-bold text-[#012b67] mb-3 leading-relaxed line-clamp-2">
-            {event.titleAr}
+            {eTitle}
           </h4>
           <div className="flex flex-wrap items-center gap-4 text-[#6b7280] text-xs">
             {event.eventDate && (
@@ -219,16 +241,16 @@ function EventCard({
                 {formatEventDate(event.eventDate)}
               </div>
             )}
-            {event.locationAr && (
+            {eLoc && (
               <div className="flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5" />
-                {event.locationAr}
+                {eLoc}
               </div>
             )}
           </div>
-          {event.descriptionAr && (
+          {eDesc && (
             <p className="text-[#6b7280] text-sm leading-relaxed line-clamp-2 mt-3">
-              {event.descriptionAr}
+              {eDesc}
             </p>
           )}
         </div>
@@ -297,7 +319,7 @@ function EmptyState({ icon: Icon, title, subtitle }: { icon: React.ElementType; 
 function TabSectionHeading({ icon: Icon, title }: { icon: React.ElementType; title: string }) {
   return (
     <div className="flex items-center gap-3 mb-8">
-      <div className="w-10 h-10 rounded-xl bg-[#e8eef5] flex items-center justify-center">
+      <div className="w-10 h-10 rounded-xl bg-[#e8eef5] flex items-center justify-center flex-shrink-0">
         <Icon className="w-5 h-5 text-[#012b67]" />
       </div>
       <h3 className="text-xl font-bold text-[#012b67]">{title}</h3>
@@ -308,7 +330,8 @@ function TabSectionHeading({ icon: Icon, title }: { icon: React.ElementType; tit
 
 /* ──────────── Main Media Center Page ──────────── */
 export default function MediaCenterPage() {
-  const { isMediaSubPage, setMediaSubPage } = useNavigationStore()
+  const { isMediaSubPage, setMediaSubPage, language } = useNavigationStore()
+  const { t } = useTranslation(language)
   const [news, setNews] = useState<NewsArticle[]>([])
   const [events, setEvents] = useState<EventItem[]>([])
   const [loading, setLoading] = useState(true)
@@ -336,10 +359,10 @@ export default function MediaCenterPage() {
   }, [])
 
   const tabs: { value: MediaSubPage; label: string }[] = [
-    { value: 'all', label: 'الكل' },
-    { value: 'news', label: 'الأخبار' },
-    { value: 'photos', label: 'الصور' },
-    { value: 'events', label: 'الفعاليات' },
+    { value: 'all', label: language === 'ar' ? 'الكل' : 'All' },
+    { value: 'news', label: language === 'ar' ? 'الأخبار' : 'News' },
+    { value: 'photos', label: language === 'ar' ? 'الصور' : 'Photos' },
+    { value: 'events', label: language === 'ar' ? 'الفعاليات' : 'Events' },
   ]
 
   const showNews = isMediaSubPage === 'all' || isMediaSubPage === 'news'
@@ -350,8 +373,8 @@ export default function MediaCenterPage() {
     news.length > 0 || events.length > 0
 
   return (
-    <div className="pt-20">
-      <HeroBanner />
+    <div className="pt-20" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+      <HeroBanner language={language} />
 
       {/* Tabs + Content */}
       <section className="py-16 md:py-24 bg-[#f8f9fb]">
@@ -384,11 +407,11 @@ export default function MediaCenterPage() {
               {showNews && news.length > 0 && (
                 <div className="mb-14">
                   {isMediaSubPage === 'all' && (
-                    <TabSectionHeading icon={Newspaper} title="الأخبار" />
+                    <TabSectionHeading icon={Newspaper} title={language === 'ar' ? 'الأخبار' : 'News'} />
                   )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {news.map((article, i) => (
-                      <NewsCard key={article.id} article={article} index={i} />
+                      <NewsCard key={article.id} article={article} index={i} language={language} />
                     ))}
                   </div>
                 </div>
@@ -400,12 +423,12 @@ export default function MediaCenterPage() {
                   {isMediaSubPage === 'all' && (
                     <TabSectionHeading
                       icon={CalendarDays}
-                      title="الفعاليات"
+                      title={language === 'ar' ? 'الفعاليات' : 'Events'}
                     />
                   )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {events.map((event, i) => (
-                      <EventCard key={event.id} event={event} index={i} />
+                      <EventCard key={event.id} event={event} index={i} language={language} />
                     ))}
                   </div>
                 </div>
@@ -414,7 +437,7 @@ export default function MediaCenterPage() {
               {/* Photos Grid */}
               {showPhotos && (
                 <div>
-                  <TabSectionHeading icon={ImageIcon} title="معرض الصور" />
+                  <TabSectionHeading icon={ImageIcon} title={language === 'ar' ? 'معرض الصور' : 'Photo Gallery'} />
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[240px] md:auto-rows-[260px]">
                     {GALLERY_IMAGES.map((img, i) => (
                       <PhotoCard key={img} src={img} index={i} />
@@ -427,8 +450,8 @@ export default function MediaCenterPage() {
               {!showPhotos && !loading && !hasContent && (
                 <EmptyState
                   icon={Newspaper}
-                  title="لا يوجد محتوى متاح حالياً"
-                  subtitle="يرجى متابعة هذه الصفحة لمعرفة آخر الأخبار والفعاليات"
+                  title={language === 'ar' ? 'لا يوجد محتوى متاح حالياً' : 'No content available currently'}
+                  subtitle={language === 'ar' ? 'يرجى متابعة هذه الصفحة لمعرفة آخر الأخبار والفعاليات' : 'Please watch this page for future updates, news and events.'}
                 />
               )}
 
@@ -438,8 +461,8 @@ export default function MediaCenterPage() {
                 !showEvents && (
                   <EmptyState
                     icon={Newspaper}
-                    title="لا توجد أخبار متاحة حالياً"
-                    subtitle="يرجى متابعة هذه الصفحة لمعرفة آخر الأخبار"
+                    title={language === 'ar' ? 'لا توجد أخبار متاحة حالياً' : 'No news articles available currently'}
+                    subtitle={language === 'ar' ? 'يرجى متابعة هذه الصفحة لمعرفة آخر الأخبار' : 'Please check back later for Alnebras news updates.'}
                   />
                 )}
 
@@ -449,8 +472,8 @@ export default function MediaCenterPage() {
                 !showNews && (
                   <EmptyState
                     icon={CalendarDays}
-                    title="لا توجد فعاليات متاحة حالياً"
-                    subtitle="يرجى متابعة هذه الصفحة لمعرفة آخر الفعاليات"
+                    title={language === 'ar' ? 'لا توجد فعاليات متاحة حالياً' : 'No events scheduled currently'}
+                    subtitle={language === 'ar' ? 'يرجى متابعة هذه الصفحة لمعرفة آخر الفعاليات' : 'Please check back later for upcoming company events.'}
                   />
                 )}
             </>

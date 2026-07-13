@@ -5,11 +5,15 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import SectionTitle from '@/components/shared/SectionTitle'
+import { useNavigationStore } from '@/lib/store'
+import { useTranslation } from '@/lib/translations'
 
 interface Service {
   id: string
   titleAr: string
+  titleEn: string | null
   descriptionAr: string
+  descriptionEn: string | null
   icon: string
   order: number
   image: string | null
@@ -38,7 +42,8 @@ function ServiceSkeleton() {
 }
 
 /* ─── Hero Banner ─── */
-function HeroBanner() {
+function HeroBanner({ language }: { language: 'ar' | 'en' }) {
+  const { t } = useTranslation(language)
   return (
     <section className="relative w-full h-[46vh] min-h-[360px] md:min-h-[420px] overflow-hidden">
       {/* Background Image */}
@@ -61,7 +66,7 @@ function HeroBanner() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-5"
         >
-          إدارة المرافق
+          {t('services')}
         </motion.h1>
         <motion.div
           initial={{ width: 0 }}
@@ -75,7 +80,9 @@ function HeroBanner() {
           transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
           className="text-white/85 text-lg md:text-xl max-w-2xl leading-relaxed"
         >
-          حلول متكاملة ومتخصصة لإدارة المرافق بأعلى معايير الجودة
+          {language === 'ar' 
+            ? 'حلول متكاملة ومتخصصة لإدارة المرافق بأعلى معايير الجودة'
+            : 'Integrated and specialized facility management solutions with the highest quality standards'}
         </motion.p>
       </div>
     </section>
@@ -83,8 +90,10 @@ function HeroBanner() {
 }
 
 /* ─── Service Card ─── */
-function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const imgSrc = getServiceImage(index)
+function ServiceCard({ service, index, language }: { service: Service; index: number; language: 'ar' | 'en' }) {
+  const imgSrc = service.image || getServiceImage(index)
+  const sTitle = language === 'ar' ? service.titleAr : (service.titleEn || service.titleAr)
+  const sDesc = language === 'ar' ? service.descriptionAr : (service.descriptionEn || service.descriptionAr)
 
   return (
     <AnimatedSection delay={index * 0.05}>
@@ -93,7 +102,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <div className="relative h-52 overflow-hidden rounded-t-2xl">
           <Image
             src={imgSrc}
-            alt={service.titleAr}
+            alt={sTitle}
             fill
             className="service-img-zoom object-cover"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -104,10 +113,10 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         {/* Content */}
         <div className="p-5 flex-1 flex flex-col">
           <h3 className="text-lg font-bold text-[#012b67] mb-2 leading-snug">
-            {service.titleAr}
+            {sTitle}
           </h3>
           <p className="text-[#6b7280] text-sm leading-relaxed flex-1">
-            {service.descriptionAr}
+            {sDesc}
           </p>
         </div>
       </div>
@@ -116,7 +125,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 }
 
 /* ─── Visual Break ─── */
-function VisualBreak() {
+function VisualBreak({ language }: { language: 'ar' | 'en' }) {
   return (
     <section className="relative w-full h-[40vh] min-h-[300px] overflow-hidden">
       {/* Background */}
@@ -134,7 +143,9 @@ function VisualBreak() {
       <div className="absolute inset-0 flex items-center justify-center px-4">
         <AnimatedSection className="max-w-3xl text-center">
           <p className="text-white text-xl md:text-2xl lg:text-3xl font-semibold leading-relaxed">
-            نقدم حلولاً متكاملة تشمل جميع جوانب إدارة المرافق لضمان أعلى مستويات الأداء
+            {language === 'ar'
+              ? 'نقدم حلولاً متكاملة تشمل جميع جوانب إدارة المرافق لضمان أعلى مستويات الأداء'
+              : 'We provide integrated solutions covering all aspects of facilities management to ensure the highest levels of performance.'}
           </p>
         </AnimatedSection>
       </div>
@@ -143,7 +154,8 @@ function VisualBreak() {
 }
 
 /* ─── Contracting Teaser ─── */
-function ContractingTeaser() {
+function ContractingTeaser({ language }: { language: 'ar' | 'en' }) {
+  const { t } = useTranslation(language)
   return (
     <section className="relative w-full overflow-hidden">
       {/* Background Image */}
@@ -160,21 +172,19 @@ function ContractingTeaser() {
 
       {/* Content */}
       <div className="relative py-16 md:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex justify-end">
+        <div className={`max-w-7xl mx-auto flex ${language === 'ar' ? 'justify-end' : 'justify-start'}`}>
           <AnimatedSection className="max-w-lg">
             <div className="flex items-center gap-3 mb-4">
               <h2 className="text-3xl md:text-4xl font-bold text-white">
-                المقاولات العامة
+                {t('contracting')}
               </h2>
               <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-white/15 text-white border border-white/25 backdrop-blur-sm">
-                قريباً
+                {language === 'ar' ? 'قريباً' : 'Soon'}
               </span>
             </div>
             <div className="h-[3px] w-20 bg-white/60 rounded-full mb-5" />
             <p className="text-white/80 text-base md:text-lg leading-relaxed">
-              نعمل على تطوير قسم المقاولات العامة لتقديم خدمات متكاملة تشمل
-              الأعمال الإنشائية والتشطيبات والمشاريع الكبرى. تابعونا لمعرفة
-              آخر التحديثات.
+              {t('contracting_desc')}
             </p>
           </AnimatedSection>
         </div>
@@ -187,6 +197,7 @@ function ContractingTeaser() {
    MAIN PAGE COMPONENT
    ═══════════════════════════════════════════ */
 export default function ServicesPage() {
+  const { language } = useNavigationStore()
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -201,16 +212,18 @@ export default function ServicesPage() {
   }, [])
 
   return (
-    <main className="pt-20">
+    <main className="pt-20" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {/* 1 ── Hero Banner */}
-      <HeroBanner />
+      <HeroBanner language={language} />
 
       {/* 2 ── Services Grid */}
       <section className="py-16 md:py-24 bg-[#f9fafb]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            title="خدماتنا المتخصصة"
-            subtitle="نقدم مجموعة شاملة من خدمات إدارة المرافق المصممة لتلبية احتياجات عملائنا بأعلى معايير الجودة"
+            title={language === 'ar' ? 'خدماتنا المتخصصة' : 'Our Specialized Services'}
+            subtitle={language === 'ar' 
+              ? 'نقدم مجموعة شاملة من خدمات إدارة المرافق المصممة لتلبية احتياجات عملائنا بأعلى معايير الجودة'
+              : 'We provide a comprehensive range of facilities management services designed to meet our clients\' needs with the highest quality standards.'}
           />
 
           {loading ? (
@@ -226,6 +239,7 @@ export default function ServicesPage() {
                   key={service.id}
                   service={service}
                   index={i}
+                  language={language}
                 />
               ))}
             </div>
@@ -234,10 +248,10 @@ export default function ServicesPage() {
       </section>
 
       {/* 3 ── Visual Break */}
-      <VisualBreak />
+      <VisualBreak language={language} />
 
       {/* 4 ── Contracting Teaser */}
-      <ContractingTeaser />
+      <ContractingTeaser language={language} />
     </main>
   )
 }

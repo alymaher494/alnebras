@@ -1,6 +1,6 @@
 'use client'
 
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Toaster } from 'sonner'
 import { useNavigationStore } from '@/lib/store'
@@ -17,6 +17,7 @@ const EventsPage = lazy(() => import('@/components/pages/EventsPage'))
 const SupplierPortalPage = lazy(() => import('@/components/pages/SupplierPortalPage'))
 const ContactPage = lazy(() => import('@/components/pages/ContactPage'))
 const AboutPage = lazy(() => import('@/components/pages/AboutPage'))
+const PartnersPage = lazy(() => import('@/components/pages/PartnersPage'))
 
 function PageSkeleton() {
   return (
@@ -32,7 +33,7 @@ function PageSkeleton() {
   )
 }
 
-const pageComponents: Record<string, React.LazyExoticComponent<() => JSX.Element>> = {
+const pageComponents: Record<string, React.LazyExoticComponent<React.ComponentType<any>>> = {
   home: HomePage,
   services: ServicesPage,
   contracting: ContractingPage,
@@ -42,11 +43,20 @@ const pageComponents: Record<string, React.LazyExoticComponent<() => JSX.Element
   'supplier-portal': SupplierPortalPage,
   contact: ContactPage,
   about: AboutPage,
+  partners: PartnersPage,
 }
 
 export default function Home() {
-  const { currentPage } = useNavigationStore()
+  const { currentPage, language } = useNavigationStore()
   const PageComponent = pageComponents[currentPage] || HomePage
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const html = document.documentElement
+      html.setAttribute('lang', language)
+      html.setAttribute('dir', language === 'ar' ? 'rtl' : 'ltr')
+    }
+  }, [language])
 
   return (
     <>

@@ -52,3 +52,10 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# upload temp folder
+/upload/
+*.pdf
+*.mp4
+*.db
+*.tsbuildinfo

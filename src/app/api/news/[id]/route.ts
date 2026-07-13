@@ -1,62 +1,69 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
-
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params
-    const article = await db.newsArticle.findUnique({ where: { id } })
-
-    if (!article) {
-      return NextResponse.json({ error: 'Article not found' }, { status: 404 })
-    }
-
-    return NextResponse.json(article)
-  } catch (error) {
-    console.error('Error fetching news article:', error)
-    return NextResponse.json({ error: 'Failed to fetch article' }, { status: 500 })
-  }
-}
+import { checkAuth } from '@/lib/auth'
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
   try {
     const { id } = await params
     const body = await request.json()
+    const {
+      titleAr,
+      titleEn,
+      contentAr,
+      contentEn,
+      summaryAr,
+      summaryEn,
+      image,
+      publishDate,
+      isActive,
+    } = body
 
     const article = await db.newsArticle.update({
       where: { id },
       data: {
-        ...body,
-        publishDate: body.publishDate ? new Date(body.publishDate) : undefined,
+        titleAr,
+        titleEn,
+        contentAr,
+        contentEn,
+        summaryAr,
+        summaryEn,
+        image,
+        publishDate: publishDate ? new Date(publishDate) : undefined,
+        isActive: isActive !== undefined ? Boolean(isActive) : undefined,
       },
     })
 
     return NextResponse.json(article)
   } catch (error) {
     console.error('Error updating news article:', error)
-    return NextResponse.json({ error: 'Failed to update article' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to update news article' }, { status: 500 })
   }
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
   try {
     const { id } = await params
-    const article = await db.newsArticle.update({
+    await db.newsArticle.delete({
       where: { id },
-      data: { isActive: false },
     })
 
-    return NextResponse.json(article)
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error deleting news article:', error)
-    return NextResponse.json({ error: 'Failed to delete article' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to delete news article' }, { status: 500 })
   }
 }

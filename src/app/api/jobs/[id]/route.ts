@@ -1,17 +1,49 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { checkAuth } from '@/lib/auth'
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
   try {
     const { id } = await params
     const body = await request.json()
+    const {
+      titleAr,
+      titleEn,
+      departmentAr,
+      departmentEn,
+      locationAr,
+      locationEn,
+      type,
+      descriptionAr,
+      descriptionEn,
+      requirementsAr,
+      requirementsEn,
+      isActive,
+    } = body
 
     const job = await db.jobListing.update({
       where: { id },
-      data: body,
+      data: {
+        titleAr,
+        titleEn,
+        departmentAr,
+        departmentEn,
+        locationAr,
+        locationEn,
+        type,
+        descriptionAr,
+        descriptionEn,
+        requirementsAr,
+        requirementsEn,
+        isActive: isActive !== undefined ? Boolean(isActive) : undefined,
+      },
     })
 
     return NextResponse.json(job)
@@ -22,17 +54,20 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
   try {
     const { id } = await params
-    const job = await db.jobListing.update({
+    await db.jobListing.delete({
       where: { id },
-      data: { isActive: false },
     })
 
-    return NextResponse.json(job)
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error deleting job listing:', error)
     return NextResponse.json({ error: 'Failed to delete job listing' }, { status: 500 })

@@ -3,14 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model SiteSetting {
   id        String   @id @default(cuid())
   key       String   @unique
-  value     String
+  value     String   @db.Text
   label     String?
   updatedAt DateTime @updatedAt
 }
@@ -19,8 +19,8 @@ model Service {
   id              String   @id @default(cuid())
   titleAr         String
   titleEn         String?
-  descriptionAr   String
-  descriptionEn   String?
+  descriptionAr   String   @db.Text
+  descriptionEn   String?  @db.Text
   image           String?
   icon            String?
   order           Int      @default(0)
@@ -33,6 +33,7 @@ model Partner {
   id        String   @id @default(cuid())
   name      String
   logo      String?
+  country   String   @default("KSA")
   order     Int      @default(0)
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
@@ -40,34 +41,34 @@ model Partner {
 }
 
 model Branch {
-  id          String   @id @default(cuid())
-  country     String
-  countryAr   String
-  city        String
-  cityAr      String
-  address     String
-  addressAr   String
-  phone       String?
-  email       String?
-  image       String?
-  description String?
-  descriptionAr String?
-  latitude    Float?
-  longitude   Float?
-  order       Int      @default(0)
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(cuid())
+  country       String
+  countryAr     String
+  city          String
+  cityAr        String
+  address       String   @db.Text
+  addressAr     String   @db.Text
+  phone         String?
+  email         String?
+  image         String?
+  description   String?  @db.Text
+  descriptionAr String?  @db.Text
+  latitude      Float?
+  longitude     Float?
+  order         Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model NewsArticle {
   id          String   @id @default(cuid())
   titleAr     String
   titleEn     String?
-  contentAr   String?
-  contentEn   String?
-  summaryAr   String?
-  summaryEn   String?
+  contentAr   String?  @db.Text
+  contentEn   String?  @db.Text
+  summaryAr   String?  @db.Text
+  summaryEn   String?  @db.Text
   image       String?
   publishDate DateTime @default(now())
   isActive    Boolean  @default(true)
@@ -76,18 +77,18 @@ model NewsArticle {
 }
 
 model Event {
-  id          String   @id @default(cuid())
-  titleAr     String
-  titleEn     String?
-  descriptionAr String?
-  descriptionEn String?
-  image       String?
-  eventDate   DateTime?
-  locationAr  String?
-  locationEn  String?
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(cuid())
+  titleAr       String
+  titleEn       String?
+  descriptionAr String?  @db.Text
+  descriptionEn String?  @db.Text
+  image         String?
+  eventDate     DateTime?
+  locationAr    String?
+  locationEn    String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model MediaImage {
@@ -102,21 +103,21 @@ model MediaImage {
 }
 
 model JobListing {
-  id           String   @id @default(cuid())
-  titleAr      String
-  titleEn      String?
-  departmentAr String?
-  departmentEn String?
-  locationAr   String?
-  locationEn   String?
-  type         String?
-  descriptionAr String?
-  descriptionEn String?
-  requirementsAr String?
-  requirementsEn String?
-  isActive     Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id             String   @id @default(cuid())
+  titleAr        String
+  titleEn        String?
+  departmentAr   String?
+  departmentEn   String?
+  locationAr     String?
+  locationEn     String?
+  type           String?
+  descriptionAr  String?  @db.Text
+  descriptionEn  String?  @db.Text
+  requirementsAr String?  @db.Text
+  requirementsEn String?  @db.Text
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model SupplierRequest {
@@ -125,7 +126,7 @@ model SupplierRequest {
   company   String
   phone     String
   email     String
-  message   String?
+  message   String?  @db.Text
   fileUrl   String?
   createdAt DateTime @default(now())
 }
@@ -136,6 +137,6 @@ model ContactMessage {
   email     String
   phone     String?
   subject   String?
-  message   String
+  message   String   @db.Text
   createdAt DateTime @default(now())
 }

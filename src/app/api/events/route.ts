@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { checkAuth } from '@/lib/auth'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url)
+    const showAll = searchParams.get('all') === 'true'
+
     const events = await db.event.findMany({
-      where: { isActive: true },
+      where: showAll ? {} : { isActive: true },
       orderBy: { eventDate: 'desc' },
     })
 
@@ -16,6 +20,10 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
   try {
     const body = await request.json()
 

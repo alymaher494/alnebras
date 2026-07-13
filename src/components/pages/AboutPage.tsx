@@ -19,31 +19,48 @@ import {
 } from 'lucide-react'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import SectionTitle from '@/components/shared/SectionTitle'
+import { useNavigationStore } from '@/lib/store'
+import { useTranslation } from '@/lib/translations'
 
 /* ──────────── Types ──────────── */
 interface Settings {
   company_name_ar: string
+  company_name_en: string
   vision_ar: string
+  vision_en: string
   mission_ar: string
+  mission_en: string
   goals_ar: string
+  goals_en: string
   values_ar: string
+  values_en: string
   ceo_message_ar: string
+  ceo_message_en: string
   about_text_ar: string
+  about_text_en: string
 }
 
 /* ──────────── Icon Maps ──────────── */
 const valueIconMap: Record<string, LucideIcon> = {
   'الجودة': Award,
+  'Quality': Award,
   'السلامة والأمان': ShieldCheck,
+  'Safety & Security': ShieldCheck,
   'روح الفريق والتواصل': Users,
+  'Teamwork & Communication': Users,
   'النزاهة والالتزام': Handshake,
+  'Integrity & Commitment': Handshake,
   'التطوير والتحسين': TrendingUp,
+  'Development & Improvement': TrendingUp,
   'التخطيط الاستراتيجي': Target,
+  'Strategic Planning': Target,
   'الإبداع والابتكار': Lightbulb,
+  'Creativity & Innovation': Lightbulb,
   'الاستدامة': Leaf,
+  'Sustainability': Leaf,
 }
 
-const valueDescriptions: Record<string, string> = {
+const valueDescriptionsAr: Record<string, string> = {
   'الجودة': 'نلتزم بأعلى معايير الجودة في جميع خدماتنا وعملياتنا',
   'السلامة والأمان': 'نوفر بيئة عمل آمنة لجميع العاملين والعملاء',
   'روح الفريق والتواصل': 'نؤمن بقوة العمل الجماعي والتواصل الفعال',
@@ -54,12 +71,23 @@ const valueDescriptions: Record<string, string> = {
   'الاستدامة': 'نعمل على تحقيق التوازن بين الجودة والبيئة',
 }
 
+const valueDescriptionsEn: Record<string, string> = {
+  'Quality': 'We commit to the highest quality standards in all our services and operations.',
+  'Safety & Security': 'We provide a safe working environment for all employees and clients.',
+  'Teamwork & Communication': 'We believe in the power of teamwork and effective communication.',
+  'Integrity & Commitment': 'We adhere to the highest degrees of transparency and credibility.',
+  'Development & Improvement': 'We always strive for continuous improvement in our performance.',
+  'Strategic Planning': 'We rely on thoughtful planning to achieve our goals.',
+  'Creativity & Innovation': 'We encourage creative thinking in solving problems.',
+  'Sustainability': 'We work to achieve a balance between quality and environment.',
+}
+
 /* ──────────── Certifications ──────────── */
 const certifications = [
-  { name: 'BICSc', label: 'معهد التنظيف البريطاني' },
-  { name: 'ISO 9001', label: 'إدارة الجودة' },
-  { name: 'ISO 14001', label: 'إدارة البيئة' },
-  { name: 'ISO 45001', label: 'الصحة والسلامة المهنية' },
+  { name: 'BICSc', labelAr: 'معهد التنظيف البريطاني', labelEn: 'British Institute of Cleaning Science' },
+  { name: 'ISO 9001', labelAr: 'إدارة الجودة', labelEn: 'Quality Management' },
+  { name: 'ISO 14001', labelAr: 'إدارة البيئة', labelEn: 'Environmental Management' },
+  { name: 'ISO 45001', labelAr: 'الصحة والسلامة المهنية', labelEn: 'Occupational Health & Safety' },
 ]
 
 /* ──────────── Gallery Images ──────────── */
@@ -76,6 +104,8 @@ const galleryImages = [
 
 /* ──────────── Component ──────────── */
 export default function AboutPage() {
+  const { language } = useNavigationStore()
+  const { t } = useTranslation(language)
   const [settings, setSettings] = useState<Settings | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -89,11 +119,32 @@ export default function AboutPage() {
       .catch(() => setLoading(false))
   }, [])
 
-  const values = settings?.values_ar?.split('|').map((v) => v.trim()).filter(Boolean) || []
-  const goals = settings?.goals_ar?.split('|').map((g) => g.trim()).filter(Boolean) || []
+  const values = language === 'ar'
+    ? (settings?.values_ar?.split('|').map((v) => v.trim()).filter(Boolean) || [])
+    : (settings?.values_en?.split('|').map((v) => v.trim()).filter(Boolean) || [])
+    
+  const goals = language === 'ar'
+    ? (settings?.goals_ar?.split('|').map((g) => g.trim()).filter(Boolean) || [])
+    : (settings?.goals_en?.split('|').map((g) => g.trim()).filter(Boolean) || [])
+
+  const fallbackGoals = language === 'ar'
+    ? [
+        'تطوير خدمات إدارة المرافق وفق أعلى المعايير الدولية',
+        'بناء فريق عمل مؤهل ومدرب على أحدث التقنيات',
+        'توسيع نطاق أعمالنا لتغطية مختلف مناطق المملكة',
+        'تعزيز الشراكات الاستراتيجية مع العملاء والموردين',
+        'تحقيق الاستدامة المالية والبيئية في عملياتنا',
+      ]
+    : [
+        'Develop facilities management services in accordance with the highest international standards.',
+        'Build a qualified team trained in the latest technologies.',
+        'Expand our business scope to cover various regions of the Kingdom.',
+        'Enhance strategic partnerships with clients and suppliers.',
+        'Achieve financial and environmental sustainability in our operations.',
+      ]
 
   return (
-    <div className="pt-20">
+    <div className="pt-20" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       {/* ══════════════════════════════════════════
           1. PAGE HERO BANNER
       ══════════════════════════════════════════ */}
@@ -128,7 +179,7 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4"
           >
-            من نحن
+            {t('about')}
           </motion.h1>
           <motion.div
             initial={{ width: 0 }}
@@ -142,7 +193,7 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-lg md:text-xl text-[#d1ddeb] mt-6 max-w-xl mx-auto leading-relaxed"
           >
-            تعرف على النبراس لإدارة المرافق
+            {language === 'ar' ? 'تعرف على النبراس لإدارة المرافق' : 'Get to know Alnebras Facilities Management'}
           </motion.p>
         </div>
 
@@ -170,7 +221,7 @@ export default function AboutPage() {
                   />
                 </div>
                 {/* Bottom Image - Offset */}
-                <div className="relative z-20 -mt-16 mr-8 md:mr-16 rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+                <div className={`relative z-20 -mt-16 rounded-2xl overflow-hidden shadow-xl border-4 border-white ${language === 'ar' ? 'mr-8 md:mr-16' : 'ml-8 md:ml-16'}`}>
                   <Image
                     src="/images/about/page1_img2.jpg"
                     alt="فريق النبراس"
@@ -188,17 +239,19 @@ export default function AboutPage() {
             <AnimatedSection delay={0.2}>
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-[#012b67] mb-4">
-                  {loading ? '' : settings?.company_name_ar || 'النبراس لإدارة المرافق'}
+                  {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'النبراس لإدارة المرافق'}
                 </h2>
                 <div className="accent-line mb-6" />
                 <p className="text-[#374151] text-base md:text-lg leading-[2] mb-6">
                   {loading
                     ? ''
-                    : settings?.about_text_ar ||
+                    : (language === 'ar' ? settings?.about_text_ar : settings?.about_text_en) ||
                       'شركة وطنية رائدة متخصصة في إدارة المرافق وعملياتها وصيانتها. نقدم حلولاً متكاملة تمزج بين الخبرة المحلية والمعايير الدولية لضمان تحقيق أعلى مستويات الكفاءة والجودة في إدارة المنشآت.'}
                 </p>
                 <p className="text-[#374151] text-base md:text-lg leading-[2]">
-                  نعمل على تقديم خدمات شاملة تغطي كافة جوانب إدارة المرافق بدءاً من الصيانة والتنظيف وصولاً إلى إدارة الطاقة والأمن والسلامة، مع الالتزام بأعلى معايير الجودة والاستدامة البيئية.
+                  {language === 'ar'
+                    ? 'نعمل على تقديم خدمات شاملة تغطي كافة جوانب إدارة المرافق بدءاً من الصيانة والتنظيف وصولاً إلى إدارة الطاقة والأمن والسلامة، مع الالتزام بأعلى معايير الجودة والاستدامة البيئية.'
+                    : 'We work to provide comprehensive services covering all aspects of facilities management, from maintenance and cleaning to energy management, security, and safety, with commitment to the highest quality and environmental sustainability standards.'}
                 </p>
               </div>
             </AnimatedSection>
@@ -221,7 +274,7 @@ export default function AboutPage() {
                       <CheckCircle2 className="w-6 h-6 text-[#012b67]" />
                     </div>
                     <p className="text-[#012b67] font-bold text-sm mb-1">{cert.name}</p>
-                    <p className="text-[#6b7280] text-xs leading-relaxed">{cert.label}</p>
+                    <p className="text-[#6b7280] text-xs leading-relaxed">{language === 'ar' ? cert.labelAr : cert.labelEn}</p>
                   </motion.div>
                 ))}
               </div>
@@ -236,8 +289,8 @@ export default function AboutPage() {
       <section className="py-20 md:py-28 bg-[#f9fafb]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            title="رؤيتنا ورسالتنا"
-            subtitle="نحو مستقبل أفضل لإدارة المرافق في المملكة"
+            title={language === 'ar' ? 'رؤيتنا ورسالتنا' : 'Our Vision & Mission'}
+            subtitle={language === 'ar' ? 'نحو مستقبل أفضل لإدارة المرافق في المملكة' : 'Towards a better future for facility management in the Kingdom'}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Vision Card */}
@@ -246,12 +299,12 @@ export default function AboutPage() {
                 <div className="w-16 h-16 bg-[#e8eef5] rounded-2xl flex items-center justify-center mb-6">
                   <Eye className="w-8 h-8 text-[#012b67]" />
                 </div>
-                <h3 className="text-2xl font-bold text-[#012b67] mb-4">رؤيتنا</h3>
+                <h3 className="text-2xl font-bold text-[#012b67] mb-4">{t('vision')}</h3>
                 <div className="accent-line mb-5" />
                 <p className="text-[#374151] text-base md:text-lg leading-[2]">
                   {loading
                     ? ''
-                    : settings?.vision_ar ||
+                    : (language === 'ar' ? settings?.vision_ar : settings?.vision_en) ||
                       'أن نكون الخيار الأول والموثوق لإدارة المرافق على مستوى المملكة العربية السعودية، ونساهم في رفع معايير الجودة والكفاءة في هذا القطاع الحيوي.'}
                 </p>
               </div>
@@ -263,12 +316,12 @@ export default function AboutPage() {
                 <div className="w-16 h-16 bg-[#e8eef5] rounded-2xl flex items-center justify-center mb-6">
                   <Target className="w-8 h-8 text-[#012b67]" />
                 </div>
-                <h3 className="text-2xl font-bold text-[#012b67] mb-4">رسالتنا</h3>
+                <h3 className="text-2xl font-bold text-[#012b67] mb-4">{t('mission')}</h3>
                 <div className="accent-line mb-5" />
                 <p className="text-[#374151] text-base md:text-lg leading-[2]">
                   {loading
                     ? ''
-                    : settings?.mission_ar ||
+                    : (language === 'ar' ? settings?.mission_ar : settings?.mission_en) ||
                       'تقديم خدمات إدارة مرافق متكاملة ومبتكرة تتجاوز توقعات عملائنا، من خلال فريق عمل محترف وشراكات استراتيجية فعالة، مع الالتزام بأعلى معايير الجودة والسلامة والاستدامة.'}
                 </p>
               </div>
@@ -286,18 +339,12 @@ export default function AboutPage() {
             {/* Goals Content */}
             <div className="lg:col-span-3">
               <SectionTitle
-                title="أهدافنا"
-                subtitle="نسعى لتحقيق أهداف استراتيجية تدفع عجلة التميز والابتكار"
+                title={t('goals')}
+                subtitle={language === 'ar' ? 'نسعى لتحقيق أهداف استراتيجية تدفع عجلة التميز والابتكار' : 'We seek to achieve strategic goals that drive excellence and innovation.'}
                 align="start"
               />
               <div className="space-y-5">
-                {(goals.length > 0 ? goals : [
-                  'تطوير خدمات إدارة المرافق وفق أعلى المعايير الدولية',
-                  'بناء فريق عمل مؤهل ومدرب على أحدث التقنيات',
-                  'توسيع نطاق أعمالنا لتغطية مختلف مناطق المملكة',
-                  'تعزيز الشراكات الاستراتيجية مع العملاء والموردين',
-                  'تحقيق الاستدامة المالية والبيئية في عملياتنا',
-                ]).map((goal, i) => (
+                {(goals.length > 0 ? goals : fallbackGoals).map((goal, i) => (
                   <AnimatedSection key={i} delay={i * 0.08}>
                     <div className="flex items-start gap-4 p-4 bg-[#f9fafb] rounded-xl border border-[#e5e7eb]/60 hover:border-[#012b67]/20 transition-colors duration-300">
                       <div className="flex-shrink-0 w-10 h-10 bg-[#012b67] rounded-lg flex items-center justify-center text-white font-bold text-sm">
@@ -327,11 +374,11 @@ export default function AboutPage() {
                       <div className="flex items-center gap-3 mb-2">
                         <Building2 className="w-6 h-6 text-[#012b67]" />
                         <h4 className="text-[#012b67] font-bold text-lg">
-                          {loading ? '' : settings?.company_name_ar || 'النبراس'}
+                          {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'النبراس'}
                         </h4>
                       </div>
                       <p className="text-[#6b7280] text-sm leading-relaxed">
-                        نلتزم بالتميز في كل خطوة نخطوها نحو تحقيق رؤيتنا
+                        {language === 'ar' ? 'نلتزم بالتميز في كل خطوة نخطوها نحو تحقيق رؤيتنا' : 'We commit to excellence in every step we take towards achieving our vision'}
                       </p>
                     </div>
                   </div>
@@ -348,8 +395,8 @@ export default function AboutPage() {
       <section className="py-20 md:py-28 bg-[#f9fafb]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            title="قيمنا الأساسية"
-            subtitle="المبادئ التي نلتزم بها وتوجه كل ما نقوم به"
+            title={t('values')}
+            subtitle={language === 'ar' ? 'المبادئ التي نلتزم بها وتوجه كل ما نقوم به' : 'The principles we adhere to that guide everything we do'}
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
             {(values.length > 0 ? values : [
@@ -363,6 +410,9 @@ export default function AboutPage() {
               'الاستدامة',
             ]).map((value, i) => {
               const IconComponent = valueIconMap[value] || Award
+              const desc = language === 'ar' 
+                ? (valueDescriptionsAr[value] || 'قيمة أساسية نلتزم بها في جميع عملياتنا')
+                : (valueDescriptionsEn[value] || 'A core value we commit to in all our operations')
               return (
                 <AnimatedSection key={i} delay={i * 0.06}>
                   <div className="card-modern bg-white rounded-2xl p-6 md:p-7 text-center border border-[#e5e7eb]/50 h-full group">
@@ -373,7 +423,7 @@ export default function AboutPage() {
                       {value}
                     </h4>
                     <p className="text-[#6b7280] text-sm leading-relaxed">
-                      {valueDescriptions[value] || 'قيمة أساسية نلتزم بها في جميع عملياتنا'}
+                      {desc}
                     </p>
                   </div>
                 </AnimatedSection>
@@ -389,8 +439,8 @@ export default function AboutPage() {
       <section className="py-20 md:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            title="معرض صور الشركة"
-            subtitle="لمحة من أعمالنا ومنشآتنا التي نديرها"
+            title={language === 'ar' ? 'معرض صور الشركة' : 'Company Photo Gallery'}
+            subtitle={language === 'ar' ? 'لمحة من أعمالنا ومنشآتنا التي نديرها' : 'A glimpse of our work and the facilities we manage'}
           />
         </div>
         {/* Horizontal Scrollable Row */}
@@ -413,11 +463,11 @@ export default function AboutPage() {
         </div>
         {/* Scroll indicator */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 flex items-center justify-center gap-2 text-[#6b7280] text-sm">
-          <svg className="w-4 h-4 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className={`w-4 h-4 ${language === 'en' ? '' : 'rotate-180'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
-          <span>اسحب لعرض المزيد</span>
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <span>{language === 'ar' ? 'اسحب لعرض المزيد' : 'Swipe to view more'}</span>
+          <svg className={`w-4 h-4 ${language === 'en' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </div>
@@ -430,12 +480,12 @@ export default function AboutPage() {
         {/* Background */}
         <div className="absolute inset-0">
           <Image
-            src="/images/about/team.jpg"
-            alt="فريق النبراس"
+            src="/images/ceo_bg.png"
+            alt="خلفية الإدارة"
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#012b67]/90" />
+          <div className="absolute inset-0 bg-[#012b67]/80" />
         </div>
         {/* Subtle pattern */}
         <div className="absolute inset-0 opacity-[0.03]">
@@ -459,14 +509,14 @@ export default function AboutPage() {
             </div>
 
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
-              رسالة الرئيس التنفيذي
+              {t('ceo_message')}
             </h2>
             <div className="accent-line accent-line-white mx-auto mb-8" />
 
             <p className="text-white/90 text-base md:text-lg leading-[2.2] max-w-3xl mx-auto mb-10">
               {loading
                 ? ''
-                : settings?.ceo_message_ar ||
+                : (language === 'ar' ? settings?.ceo_message_ar : settings?.ceo_message_en) ||
                   'في النبراس لإدارة المرافق، نؤمن بأن رضا عملائنا هو مقياس نجاحنا الحقيقي. نلتزم بتقديم خدمات عالية الجودة تجمع بين الكفاءة المهنية والابتكار المستمر، ونسعى لأن نكون الشريك الأمثل في إدارة منشآتكم وضمان استمرارية أعمالكم بأعلى المعايير.'}
             </p>
 
@@ -475,10 +525,10 @@ export default function AboutPage() {
 
             <div>
               <p className="text-white font-semibold text-lg">
-                الرئيس التنفيذي
+                {t('ceo_title')}
               </p>
-              <p className="text-white/70 text-sm mt-1">
-                {loading ? '' : settings?.company_name_ar || 'النبراس لإدارة المرافق'}
+              <p className="text-white/77 text-sm mt-1">
+                {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'النبراس لإدارة المرافق'}
               </p>
             </div>
           </AnimatedSection>

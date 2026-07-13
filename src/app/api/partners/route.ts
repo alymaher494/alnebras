@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { checkAuth } from '@/lib/auth'
+import { checkAndAutoSeed } from '@/lib/auto-seed'
 
 export async function GET(request: NextRequest) {
   try {
+    // Run auto-seed check
+    await checkAndAutoSeed()
+
     const { searchParams } = new URL(request.url)
     const showAll = searchParams.get('all') === 'true'
 
@@ -19,6 +24,10 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
   try {
     const body = await request.json()
 

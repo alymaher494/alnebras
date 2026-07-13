@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { IBM_Plex_Sans_Arabic } from 'next/font/google'
 import './globals.css'
+import WhatsAppButton from '@/components/shared/WhatsAppButton'
 
 const ibmPlexArabic = IBM_Plex_Sans_Arabic({
   variable: '--font-ibm-plex-arabic',
@@ -39,6 +40,7 @@ export default function RootLayout({
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body className={`${ibmPlexArabic.variable} antialiased`}>
         <main className="min-h-screen flex flex-col">{children}</main>
+        <WhatsAppButton />
       </body>
     </html>
   )

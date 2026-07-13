@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { checkAuth } from '@/lib/auth'
+import { checkAndAutoSeed } from '@/lib/auto-seed'
 
 export async function GET() {
   try {
+    // Run auto-seed check
+    await checkAndAutoSeed()
+
     const settings = await db.siteSetting.findMany()
     const kv: Record<string, string> = {}
     for (const s of settings) {
@@ -16,6 +21,10 @@ export async function GET() {
 }
 
 export async function PUT(request: NextRequest) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
   try {
     const body: Record<string, string> = await request.json()
 

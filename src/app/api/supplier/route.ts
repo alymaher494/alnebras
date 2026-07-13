@@ -1,5 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { checkAuth } from '@/lib/auth'
+
+export async function GET(request: NextRequest) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
+  try {
+    const requests = await db.supplierRequest.findMany({
+      orderBy: { createdAt: 'desc' },
+    })
+    return NextResponse.json(requests)
+  } catch (error) {
+    console.error('Error fetching supplier requests:', error)
+    return NextResponse.json({ error: 'Failed to fetch requests' }, { status: 500 })
+  }
+}
 
 export async function POST(request: NextRequest) {
   try {

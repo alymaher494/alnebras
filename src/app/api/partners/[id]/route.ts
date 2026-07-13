@@ -1,17 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { checkAuth } from '@/lib/auth'
 
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
   try {
     const { id } = await params
     const body = await request.json()
+    const { name, logo, order, isActive } = body
 
     const partner = await db.partner.update({
       where: { id },
-      data: body,
+      data: {
+        name,
+        logo,
+        order: order !== undefined ? Number(order) : undefined,
+        isActive: isActive !== undefined ? Boolean(isActive) : undefined,
+      },
     })
 
     return NextResponse.json(partner)
@@ -22,17 +33,20 @@ export async function PUT(
 }
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  if (!checkAuth(request)) {
+    return NextResponse.json({ error: 'غير مصرح بالوصول' }, { status: 401 })
+  }
+
   try {
     const { id } = await params
-    const partner = await db.partner.update({
+    await db.partner.delete({
       where: { id },
-      data: { isActive: false },
     })
 
-    return NextResponse.json(partner)
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error deleting partner:', error)
     return NextResponse.json({ error: 'Failed to delete partner' }, { status: 500 })
