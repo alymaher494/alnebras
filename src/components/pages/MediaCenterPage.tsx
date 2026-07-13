@@ -42,16 +42,13 @@ interface EventItem {
 
 /* ──────────── Gallery Images ──────────── */
 const GALLERY_IMAGES = [
-  'page4_img1.jpg',
-  'page4_img3.jpg',
-  'page4_img6.jpg',
-  'page4_img8.jpg',
   'page4_img10.jpg',
-  'page5_img2.jpg',
-  'page5_img5.jpg',
-  'page5_img6.jpg',
-  'page5_img8.jpg',
   'page5_img20.jpg',
+  'page5_img4.jpg',
+  'page6_img1.jpg',
+  'page6_img2.jpg',
+  'page10_img1.jpg',
+  'page9_img1.jpg',
 ]
 
 /* ──────────── Hero Banner ──────────── */

@@ -130,7 +130,7 @@ function VisualBreak({ language }: { language: 'ar' | 'en' }) {
     <section className="relative w-full h-[40vh] min-h-[300px] overflow-hidden">
       {/* Background */}
       <Image
-        src="/images/gallery/page7_img1.jpg"
+        src="/images/services_hero.png"
         alt="حلول متكاملة لإدارة المرافق"
         fill
         className="object-cover"
@@ -161,7 +161,7 @@ function ContractingTeaser({ language }: { language: 'ar' | 'en' }) {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/gallery/page5_img21.jpg"
+          src="/images/services/page3_img21.jpg"
           alt="المقاولات العامة"
           fill
           className="object-cover"

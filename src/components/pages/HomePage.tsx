@@ -389,7 +389,7 @@ export default function HomePage() {
           5. FULL-WIDTH VISUAL BREAK
           ════════════════════════════════════════════════════ */}
       <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden parallax-section"
-        style={{ backgroundImage: "url('/images/gallery/page5_img1.jpg')" }}
+        style={{ backgroundImage: "url('/images/services_hero.png')" }}
       >
         <div className="absolute inset-0 bg-[#012b67]/75" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -498,7 +498,7 @@ export default function HomePage() {
               const branchImg =
                 branch.image ||
                 (i === 0
-                  ? '/images/gallery/page4_img1.jpg'
+                  ? '/images/gallery/page6_img1.jpg'
                   : '/images/gallery/page6_img1.jpg')
               const bCity = language === 'ar' ? branch.cityAr : branch.city
               const bAddress = language === 'ar' ? branch.addressAr : branch.address

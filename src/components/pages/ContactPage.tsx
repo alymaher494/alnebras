@@ -284,7 +284,7 @@ function MapSection({ language }: { language: 'ar' | 'en' }) {
     <AnimatedSection>
       <section className="relative w-full py-24 md:py-32 overflow-hidden">
         <Image
-          src="/images/gallery/page4_img1.jpg"
+          src="/images/contact_hero.png"
           alt="موقعنا"
           fill
           className="object-cover"
