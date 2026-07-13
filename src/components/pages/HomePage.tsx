@@ -668,7 +668,7 @@ export default function HomePage() {
 
                 <div>
                   <p className="text-white font-bold text-xl">
-                    {language === 'ar' ? 'م. علي ماهر' : 'Eng. Aly Maher'}
+                    {language === 'ar' ? 'م. محمد المقبلي' : 'Eng. Mohammed Almogbly'}
                   </p>
                   <p className="text-white/60 text-sm mt-1">
                     {t('ceo_title')} | {language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
