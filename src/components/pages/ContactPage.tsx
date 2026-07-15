@@ -65,10 +65,11 @@ const getBranchesList = (language: 'ar' | 'en') => [
     address: language === 'ar' 
       ? 'حي الرويس، طريق المدينة، مبني المحمدية بلازا 31، الطابق الثالث'
       : 'Al-Ruwais, Al-Madina Road, Al-Mohammadiya Plaza Building 31, 3rd Floor',
-    phone: '920028911',
+    phone: '966543272271',
     email: 'info@alnebras.com.sa',
     latitude: 21.5433,
     longitude: 39.1728,
+    mapUrl: 'https://www.google.com/maps?cid=17583181191626032120&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAMYASAF&hl=en-US&source=embed',
   },
   {
     city: language === 'ar' ? 'القاهرة' : 'Cairo',
@@ -76,10 +77,11 @@ const getBranchesList = (language: 'ar' | 'en') => [
     address: language === 'ar' 
       ? '8 شارع الهداية - حي السفارات - مدينة نصر'
       : '8 Al-Hidaya Street - Embassies District - Nasr City',
-    phone: '2011731149',
+    phone: '201117311149',
     email: 'info@alnebras.com.sa',
     latitude: 30.0444,
     longitude: 31.2357,
+    mapUrl: 'https://www.google.com/maps?ll=30.055936,31.296586&z=10&t=m&hl=en-US&gl=US&mapclient=embed&q=8+%D8%B4%D8%A7%D8%B1%D8%B9+%D8%A7%D9%84%D9%87%D8%AF%D8%A7%D9%8A%D8%A9+-+%D8%AD%D9%89+%D8%A7%D9%84%D8%B3%D9%81%D8%A7%D8%B1%D8%A7%D8%AA+-+%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9+-+%D9%85%D8%B5%D8%B1',
   },
 ]
 
@@ -263,7 +265,7 @@ function BranchCard({
           {/* Google Maps link */}
           <div className="pt-2">
             <a
-              href={`https://www.google.com/maps/search/?api=1&query=${branch.latitude},${branch.longitude}`}
+              href={branch.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center text-xs font-bold text-[#012b67] hover:underline"

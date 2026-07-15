@@ -131,9 +131,9 @@ export default function Footer() {
                     ? 'حي الرويس، طريق المدينة، مبني المحمدية بلازا 31، الطابق الثالث'
                     : 'Al-Ruwais, Al-Madina Road, Al-Mohammadiya Plaza Building 31, 3rd Floor'}
                 </p>
-                <a href="tel:920028911" className={`text-[#d1ddeb] text-xs mt-1.5 inline-flex items-center gap-1.5 hover:text-white transition-colors ${language === 'ar' ? 'mr-6' : 'ml-6'}`} dir="ltr">
+                <a href="tel:966543272271" className={`text-[#d1ddeb] text-xs mt-1.5 inline-flex items-center gap-1.5 hover:text-white transition-colors ${language === 'ar' ? 'mr-6' : 'ml-6'}`} dir="ltr">
                   <Phone className="w-3 h-3" />
-                  920028911
+                  966543272271
                 </a>
               </div>
               <div className="group">
@@ -148,9 +148,9 @@ export default function Footer() {
                     ? '8 شارع الهداية - حي السفارات - مدينة نصر'
                     : '8 Al-Hidaya Street - Embassies District - Nasr City'}
                 </p>
-                <a href="tel:2011731149" className={`text-[#d1ddeb] text-xs mt-1.5 inline-flex items-center gap-1.5 hover:text-white transition-colors ${language === 'ar' ? 'mr-6' : 'ml-6'}`} dir="ltr">
+                <a href="tel:201117311149" className={`text-[#d1ddeb] text-xs mt-1.5 inline-flex items-center gap-1.5 hover:text-white transition-colors ${language === 'ar' ? 'mr-6' : 'ml-6'}`} dir="ltr">
                   <Phone className="w-3 h-3" />
-                  2011731149
+                  201117311149
                 </a>
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function Footer() {
                   <p className="text-[10px] text-[#7a8da8] mb-0.5">
                     {language === 'ar' ? 'هاتف جدة' : 'Jeddah Phone'}
                   </p>
-                  <a href="tel:920028911" className="text-sm hover:text-white transition-colors" dir="ltr">920028911</a>
+                  <a href="tel:966543272271" className="text-sm hover:text-white transition-colors" dir="ltr">966543272271</a>
                 </div>
               </div>
               <div className="flex items-center gap-3 text-[#a8b8d1]">
@@ -196,7 +196,7 @@ export default function Footer() {
                   <p className="text-[10px] text-[#7a8da8] mb-0.5">
                     {language === 'ar' ? 'هاتف القاهرة' : 'Cairo Phone'}
                   </p>
-                  <a href="tel:2011731149" className="text-sm hover:text-white transition-colors" dir="ltr">2011731149</a>
+                  <a href="tel:201117311149" className="text-sm hover:text-white transition-colors" dir="ltr">201117311149</a>
                 </div>
               </div>
             </div>
