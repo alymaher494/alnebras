@@ -536,7 +536,7 @@ export default function AboutPage() {
 
                 <div>
                   <p className="text-white font-bold text-xl">
-                    {language === 'ar' ? 'م. محمد المقبلي' : 'Eng. Mohammed Almogbly'}
+                    {language === 'ar' ? 'محمد المقبلي' : 'MOHAMMED ALMOGBLY'}
                   </p>
                   <p className="text-white/60 text-sm mt-1">
                     {t('ceo_title')} | {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'النبراس لإدارة المرافق'}

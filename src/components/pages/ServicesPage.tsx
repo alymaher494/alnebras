@@ -193,6 +193,57 @@ function ContractingTeaser({ language }: { language: 'ar' | 'en' }) {
   )
 }
 
+const contractingServices = [
+  {
+    id: 'gc-1',
+    titleAr: 'الترميم وإعادة التأهيل',
+    titleEn: 'Restoration & Rehabilitation',
+    descriptionAr: 'نقدم خدمات ترميم متكاملة للمباني والمنشآت القائمة لرفع كفاءتها وإطالة عمرها الافتراضي.',
+    descriptionEn: 'We provide integrated restoration services for existing buildings and facilities to increase their efficiency and lifespan.',
+    image: '/images/services/page3_img14.jpg'
+  },
+  {
+    id: 'gc-2',
+    titleAr: 'التشطيبات والديكور',
+    titleEn: 'Finishing & Decoration',
+    descriptionAr: 'تنفيذ أعمال التشطيبات الداخلية والخارجية الفاخرة بأعلى معايير الدقة والجمالية.',
+    descriptionEn: 'Execution of luxurious interior and exterior finishing works with the highest standards of accuracy and aesthetics.',
+    image: '/images/services/page3_img16.jpg'
+  },
+  {
+    id: 'gc-3',
+    titleAr: 'الأعمال الإنشائية',
+    titleEn: 'Construction Works',
+    descriptionAr: 'تنفيذ كافة المشاريع الإنشائية وتشييد المباني السكنية والتجارية تحت إشراف هندسي متكامل.',
+    descriptionEn: 'Execution of all construction projects and residential and commercial buildings under integrated engineering supervision.',
+    image: '/images/services/page3_img17.jpg'
+  },
+  {
+    id: 'gc-4',
+    titleAr: 'العزل المائي والحراري',
+    titleEn: 'Water & Thermal Insulation',
+    descriptionAr: 'حلول عزل متكاملة لحماية المنشآت من تسربات المياه وتقلبات درجات الحرارة.',
+    descriptionEn: 'Integrated insulation solutions to protect facilities from water leaks and temperature fluctuations.',
+    image: '/images/services/page3_img9.jpg'
+  },
+  {
+    id: 'gc-5',
+    titleAr: 'أعمال الطرق والأسفلت',
+    titleEn: 'Roads & Asphalt Works',
+    descriptionAr: 'تمهيد وسفلتة الطرق والساحات للمشاريع السكنية والصناعية والتجارية بدقة متناهية.',
+    descriptionEn: 'Paving and asphalting roads and yards for residential, industrial, and commercial projects with extreme accuracy.',
+    image: '/images/services/page3_img12.jpg'
+  },
+  {
+    id: 'gc-6',
+    titleAr: 'الأنظمة الكهروميكانيكية',
+    titleEn: 'Electromechanical Systems',
+    descriptionAr: 'تصميم وتركيب وصيانة شبكات التكييف والتبريد، والأنظمة الكهربائية والصحية.',
+    descriptionEn: 'Design, installation, and maintenance of HVAC networks, electrical, and plumbing systems.',
+    image: '/images/services/page3_img21.jpg'
+  }
+]
+
 /* ═══════════════════════════════════════════
    MAIN PAGE COMPONENT
    ═══════════════════════════════════════════ */
@@ -200,6 +251,7 @@ export default function ServicesPage() {
   const { language } = useNavigationStore()
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<'fm' | 'gc'>('fm')
 
   useEffect(() => {
     fetch('/api/services')
@@ -216,28 +268,76 @@ export default function ServicesPage() {
       {/* 1 ── Hero Banner */}
       <HeroBanner language={language} />
 
-      {/* 2 ── Services Grid */}
+      {/* 2 ── Services Tab & Grid */}
       <section className="py-16 md:py-24 bg-[#f9fafb]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
-            title={language === 'ar' ? 'خدماتنا المتخصصة' : 'Our Specialized Services'}
+            title={language === 'ar' ? 'خدماتنا المتنوعة' : 'Our Diverse Services'}
             subtitle={language === 'ar' 
-              ? 'نقدم مجموعة شاملة من خدمات إدارة المرافق المصممة لتلبية احتياجات عملائنا بأعلى معايير الجودة'
-              : 'We provide a comprehensive range of facilities management services designed to meet our clients\' needs with the highest quality standards.'}
+              ? 'حلول متكاملة تضمن تشغيل وصيانة منشآتكم بالإضافة إلى تنفيذ أعمال المقاولات العامة بأعلى معايير الجودة الكفاءة'
+              : 'Integrated solutions that ensure the operation and maintenance of your facilities, in addition to general contracting works with the highest standards.'}
           />
 
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <ServiceSkeleton key={i} />
-              ))}
+          {/* Dynamic Tabs */}
+          <div className="flex justify-center mb-12">
+            <div className="inline-flex bg-white border border-[#e5e7eb] p-1.5 rounded-2xl shadow-sm">
+              <button
+                onClick={() => setActiveTab('fm')}
+                className={`px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 ${
+                  activeTab === 'fm'
+                    ? 'bg-[#012b67] text-white shadow-md'
+                    : 'text-[#6b7280] hover:text-[#012b67]'
+                }`}
+              >
+                {language === 'ar' ? 'إدارة المرافق والتشغيل' : 'Facilities Management'}
+              </button>
+              <button
+                onClick={() => setActiveTab('gc')}
+                className={`px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 ${
+                  activeTab === 'gc'
+                    ? 'bg-[#012b67] text-white shadow-md'
+                    : 'text-[#6b7280] hover:text-[#012b67]'
+                }`}
+              >
+                {language === 'ar' ? 'المقاولات العامة والإنشاءات' : 'General Contracting'}
+              </button>
             </div>
+          </div>
+
+          {activeTab === 'fm' ? (
+            loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <ServiceSkeleton key={i} />
+                ))}
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {services.map((service, i) => (
+                  <ServiceCard
+                    key={service.id}
+                    service={service}
+                    index={i}
+                    language={language}
+                  />
+                ))}
+              </div>
+            )
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {services.map((service, i) => (
+              {contractingServices.map((service, i) => (
                 <ServiceCard
                   key={service.id}
-                  service={service}
+                  service={{
+                    id: service.id,
+                    titleAr: service.titleAr,
+                    titleEn: service.titleEn,
+                    descriptionAr: service.descriptionAr,
+                    descriptionEn: service.descriptionEn,
+                    image: service.image,
+                    icon: 'Building2',
+                    order: i
+                  }}
                   index={i}
                   language={language}
                 />
@@ -249,9 +349,6 @@ export default function ServicesPage() {
 
       {/* 3 ── Visual Break */}
       <VisualBreak language={language} />
-
-      {/* 4 ── Contracting Teaser */}
-      <ContractingTeaser language={language} />
     </main>
   )
 }

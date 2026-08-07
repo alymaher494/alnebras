@@ -80,86 +80,84 @@ export default function PartnersPage() {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Filters */}
-          <div className="flex justify-center gap-3 mb-12">
-            <button
-              onClick={() => setFilter('all')}
-              className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
-                filter === 'all'
-                  ? 'bg-[#012b67] text-white shadow-md'
-                  : 'bg-[#f3f4f6] text-gray-600 hover:bg-[#e5e7eb]'
-              }`}
-            >
-              {language === 'ar' ? 'الكل' : 'All'}
-            </button>
-            <button
-              onClick={() => setFilter('KSA')}
-              className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                filter === 'KSA'
-                  ? 'bg-[#012b67] text-white shadow-md'
-                  : 'bg-[#f3f4f6] text-gray-600 hover:bg-[#e5e7eb]'
-              }`}
-            >
-              <Globe className="w-4 h-4" />
-              {language === 'ar' ? 'المملكة العربية السعودية' : 'Saudi Arabia'}
-            </button>
-            <button
-              onClick={() => setFilter('Egypt')}
-              className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                filter === 'Egypt'
-                  ? 'bg-[#012b67] text-white shadow-md'
-                  : 'bg-[#f3f4f6] text-gray-600 hover:bg-[#e5e7eb]'
-              }`}
-            >
-              <Globe className="w-4 h-4" />
-              {language === 'ar' ? 'جمهورية مصر العربية' : 'Egypt'}
-            </button>
-          </div>
-
-          {/* Grid */}
           {loading ? (
             <div className="text-center py-20 text-gray-400">
               {language === 'ar' ? 'جاري تحميل الشركاء...' : 'Loading partners...'}
             </div>
-          ) : filteredPartners.length === 0 ? (
-            <div className="text-center py-20 text-gray-400">
-              {language === 'ar' ? 'لا يوجد شركاء في هذا التصنيف حالياً' : 'No partners in this category currently.'}
-            </div>
           ) : (
-            <motion.div
-              layout
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8"
-            >
-              <AnimatePresence mode="popLayout">
-                {filteredPartners.map((partner) => (
-                  <motion.div
-                    layout
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3 }}
-                    key={partner.id}
-                    className="bg-white border border-[#e5e7eb]/80 rounded-2xl p-6 flex flex-col items-center justify-center h-40 shadow-sm hover:shadow-md hover:border-[#012b67]/20 transition-all duration-300 group"
-                  >
-                    {partner.logo ? (
-                      <div className="relative w-full h-full">
-                        <Image
-                          src={partner.logo}
-                          alt={partner.name}
-                          fill
-                          className="object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                        />
+            <div className="space-y-20">
+              {/* KSA Partners */}
+              <div>
+                <h3 className="text-2xl font-bold text-[#012b67] mb-8 border-r-4 border-[#012b67] pr-3 flex items-center gap-3">
+                  <Globe className="w-6 h-6 text-[#012b67]" />
+                  {language === 'ar' ? 'عملاؤنا وشركاؤنا في المملكة العربية السعودية' : 'Our Clients & Partners in Saudi Arabia'}
+                </h3>
+                {partners.filter(p => p.country === 'KSA').length === 0 ? (
+                  <p className="text-gray-400 text-sm">{language === 'ar' ? 'لا يوجد شركاء حالياً' : 'No partners currently.'}</p>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8">
+                    {partners.filter(p => p.country === 'KSA').map((partner) => (
+                      <div
+                        key={partner.id}
+                        className="bg-white border border-[#e5e7eb]/80 rounded-2xl p-6 flex flex-col items-center justify-center h-40 shadow-sm hover:shadow-md hover:border-[#012b67]/20 transition-all duration-300 group"
+                      >
+                        {partner.logo ? (
+                          <div className="relative w-full h-full">
+                            <Image
+                              src={partner.logo}
+                              alt={partner.name}
+                              fill
+                              className="object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center text-gray-400 gap-2">
+                            <Building2 className="w-8 h-8" />
+                            <span className="text-xs font-semibold text-center">{partner.name}</span>
+                          </div>
+                        )}
                       </div>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center text-gray-400 gap-2">
-                        <Building2 className="w-8 h-8" />
-                        <span className="text-xs font-semibold text-center">{partner.name}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Egypt Partners */}
+              <div>
+                <h3 className="text-2xl font-bold text-[#012b67] mb-8 border-r-4 border-[#012b67] pr-3 flex items-center gap-3">
+                  <Globe className="w-6 h-6 text-[#012b67]" />
+                  {language === 'ar' ? 'عملاؤنا وشركاؤنا في جمهورية مصر العربية' : 'Our Clients & Partners in Egypt'}
+                </h3>
+                {partners.filter(p => p.country?.toLowerCase() === 'egypt').length === 0 ? (
+                  <p className="text-gray-400 text-sm">{language === 'ar' ? 'لا يوجد شركاء حالياً' : 'No partners currently.'}</p>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8">
+                    {partners.filter(p => p.country?.toLowerCase() === 'egypt').map((partner) => (
+                      <div
+                        key={partner.id}
+                        className="bg-white border border-[#e5e7eb]/80 rounded-2xl p-6 flex flex-col items-center justify-center h-40 shadow-sm hover:shadow-md hover:border-[#012b67]/20 transition-all duration-300 group"
+                      >
+                        {partner.logo ? (
+                          <div className="relative w-full h-full">
+                            <Image
+                              src={partner.logo}
+                              alt={partner.name}
+                              fill
+                              className="object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center text-gray-400 gap-2">
+                            <Building2 className="w-8 h-8" />
+                            <span className="text-xs font-semibold text-center">{partner.name}</span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           )}
 
         </div>

@@ -13,7 +13,6 @@ const ServicesPage = lazy(() => import('@/components/pages/ServicesPage'))
 const ContractingPage = lazy(() => import('@/components/pages/ContractingPage'))
 const MediaCenterPage = lazy(() => import('@/components/pages/MediaCenterPage'))
 const CareersPage = lazy(() => import('@/components/pages/CareersPage'))
-const EventsPage = lazy(() => import('@/components/pages/EventsPage'))
 const SupplierPortalPage = lazy(() => import('@/components/pages/SupplierPortalPage'))
 const ContactPage = lazy(() => import('@/components/pages/ContactPage'))
 const AboutPage = lazy(() => import('@/components/pages/AboutPage'))
@@ -39,7 +38,6 @@ const pageComponents: Record<string, React.LazyExoticComponent<React.ComponentTy
   contracting: ContractingPage,
   'media-center': MediaCenterPage,
   careers: CareersPage,
-  events: EventsPage,
   'supplier-portal': SupplierPortalPage,
   contact: ContactPage,
   about: AboutPage,

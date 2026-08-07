@@ -20,7 +20,6 @@ const navItems: { label: TranslationKey; page: PageName }[] = [
   { label: 'partners_page', page: 'partners' },
   { label: 'media-center', page: 'media-center' },
   { label: 'careers', page: 'careers' },
-  { label: 'events', page: 'events' },
   { label: 'supplier-portal', page: 'supplier-portal' },
   { label: 'contact', page: 'contact' },
 ]

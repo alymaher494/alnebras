@@ -5,7 +5,7 @@ export const translations = {
     // Navigation
     home: 'الرئيسية',
     about: 'من نحن',
-    services: 'إدارة المرافق',
+    services: 'خدماتنا',
     contracting: 'المقاولات العامة',
     'media-center': 'المركز الإعلامي',
     careers: 'الوظائف',
@@ -81,7 +81,7 @@ export const translations = {
     // Navigation
     home: 'Home',
     about: 'About Us',
-    services: 'Facility Management',
+    services: 'Our Services',
     contracting: 'General Contracting',
     'media-center': 'Media Center',
     careers: 'Careers',
