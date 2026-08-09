@@ -87,8 +87,8 @@ function HeroBanner({ language }: { language: 'ar' | 'en' }) {
           className="text-white/85 text-lg md:text-xl max-w-2xl leading-relaxed"
         >
           {language === 'ar'
-            ? 'تابع آخر الأخبار والفعاليات والصور من عالم النبراس'
-            : 'Follow the latest news, events, and photos from the Alnebras world.'}
+            ? 'تابع آخر الأخبار والصور من عالم النبراس'
+            : 'Follow the latest news and photos from the Alnebras world.'}
         </motion.p>
       </div>
     </section>
@@ -359,15 +359,12 @@ export default function MediaCenterPage() {
     { value: 'all', label: language === 'ar' ? 'الكل' : 'All' },
     { value: 'news', label: language === 'ar' ? 'الأخبار' : 'News' },
     { value: 'photos', label: language === 'ar' ? 'الصور' : 'Photos' },
-    { value: 'events', label: language === 'ar' ? 'الفعاليات' : 'Events' },
   ]
 
   const showNews = isMediaSubPage === 'all' || isMediaSubPage === 'news'
-  const showEvents = isMediaSubPage === 'all' || isMediaSubPage === 'events'
   const showPhotos = isMediaSubPage === 'photos'
 
-  const hasContent =
-    news.length > 0 || events.length > 0
+  const hasContent = news.length > 0
 
   return (
     <div className="pt-20" dir={language === 'ar' ? 'rtl' : 'ltr'}>
@@ -414,22 +411,7 @@ export default function MediaCenterPage() {
                 </div>
               )}
 
-              {/* Events */}
-              {showEvents && events.length > 0 && (
-                <div className="mb-14">
-                  {isMediaSubPage === 'all' && (
-                    <TabSectionHeading
-                      icon={CalendarDays}
-                      title={language === 'ar' ? 'الفعاليات' : 'Events'}
-                    />
-                  )}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {events.map((event, i) => (
-                      <EventCard key={event.id} event={event} index={i} language={language} />
-                    ))}
-                  </div>
-                </div>
-              )}
+
 
               {/* Photos Grid */}
               {showPhotos && (
@@ -443,34 +425,21 @@ export default function MediaCenterPage() {
                 </div>
               )}
 
-              {/* Empty States */}
               {!showPhotos && !loading && !hasContent && (
                 <EmptyState
                   icon={Newspaper}
                   title={language === 'ar' ? 'لا يوجد محتوى متاح حالياً' : 'No content available currently'}
-                  subtitle={language === 'ar' ? 'يرجى متابعة هذه الصفحة لمعرفة آخر الأخبار والفعاليات' : 'Please watch this page for future updates, news and events.'}
+                  subtitle={language === 'ar' ? 'يرجى متابعة هذه الصفحة لمعرفة آخر الأخبار' : 'Please watch this page for future updates and news.'}
                 />
               )}
 
               {showNews &&
                 !loading &&
-                news.length === 0 &&
-                !showEvents && (
+                news.length === 0 && (
                   <EmptyState
                     icon={Newspaper}
                     title={language === 'ar' ? 'لا توجد أخبار متاحة حالياً' : 'No news articles available currently'}
                     subtitle={language === 'ar' ? 'يرجى متابعة هذه الصفحة لمعرفة آخر الأخبار' : 'Please check back later for Alnebras news updates.'}
-                  />
-                )}
-
-              {showEvents &&
-                !loading &&
-                events.length === 0 &&
-                !showNews && (
-                  <EmptyState
-                    icon={CalendarDays}
-                    title={language === 'ar' ? 'لا توجد فعاليات متاحة حالياً' : 'No events scheduled currently'}
-                    subtitle={language === 'ar' ? 'يرجى متابعة هذه الصفحة لمعرفة آخر الفعاليات' : 'Please check back later for upcoming company events.'}
                   />
                 )}
             </>

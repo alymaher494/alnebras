@@ -129,7 +129,6 @@ export default function HomePage() {
   const [partners, setPartners] = useState<Partner[]>([])
   const [branches, setBranches] = useState<Branch[]>([])
   const [loading, setLoading] = useState(true)
-  const [isPlayingVideo, setIsPlayingVideo] = useState(false)
 
   useEffect(() => {
     async function fetchData() {
@@ -197,32 +196,11 @@ export default function HomePage() {
         <div className="absolute inset-0 hero-overlay" />
 
         {/* Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center">
-          {/* Circular pulsing Play Button */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.3 }}
-            className="mb-8"
-          >
-            <button
-              onClick={() => setIsPlayingVideo(true)}
-              className="relative w-20 h-20 bg-white/95 text-[#012b67] rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 group"
-              aria-label="Play Video"
-            >
-              {/* Pulsing ring */}
-              <span className="absolute inset-0 rounded-full bg-white/30 animate-ping group-hover:animate-none" />
-              {/* Play Icon */}
-              <svg className="w-8 h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </button>
-          </motion.div>
-
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.5, ease: 'easeOut' }}
+            transition={{ duration: 0.9, delay: 0.3, ease: 'easeOut' }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 drop-shadow-[0_4px_6px_rgba(0,0,0,0.4)]"
           >
             {heroTitle}
@@ -231,7 +209,7 @@ export default function HomePage() {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.7, ease: 'easeOut' }}
+            transition={{ duration: 0.9, delay: 0.6, ease: 'easeOut' }}
             className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]"
           >
             {heroSubtitle}
@@ -251,29 +229,6 @@ export default function HomePage() {
             </button>
           </motion.div>
         </div>
-
-        {/* Fullscreen Video Modal (Lightbox) */}
-        {isPlayingVideo && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md">
-            <button
-              onClick={() => setIsPlayingVideo(false)}
-              className="absolute top-6 right-6 text-white/70 hover:text-white p-3 rounded-full hover:bg-white/10 transition-colors z-55"
-              aria-label="Close"
-            >
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-            <div className="relative w-full max-w-5xl aspect-video px-4">
-              <video
-                src="/video/hero.mp4"
-                controls
-                autoPlay
-                className="w-full h-full rounded-2xl shadow-2xl border border-white/10"
-              />
-            </div>
-          </div>
-        )}
 
         {/* Scroll Down Indicator */}
         <motion.div
