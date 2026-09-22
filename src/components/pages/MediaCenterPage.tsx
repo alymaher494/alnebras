@@ -396,15 +396,12 @@ export default function MediaCenterPage() {
   }, [])
 
   const tabs: { value: MediaSubPage; label: string }[] = [
-    { value: 'all', label: language === 'ar' ? 'الكل' : 'All' },
     { value: 'news', label: language === 'ar' ? 'الأخبار' : 'News' },
     { value: 'photos', label: language === 'ar' ? 'الصور' : 'Photos' },
   ]
 
-  const showNews = isMediaSubPage === 'all' || isMediaSubPage === 'news'
+  const showNews = isMediaSubPage === 'news'
   const showPhotos = isMediaSubPage === 'photos'
-
-  const hasContent = news.length > 0
 
   return (
     <div className="pt-20" dir={language === 'ar' ? 'rtl' : 'ltr'}>
@@ -440,9 +437,6 @@ export default function MediaCenterPage() {
               {/* News */}
               {showNews && news.length > 0 && (
                 <div className="mb-14">
-                  {isMediaSubPage === 'all' && (
-                    <TabSectionHeading icon={Newspaper} title={language === 'ar' ? 'الأخبار' : 'News'} />
-                  )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {news.map((article, i) => (
                       <NewsCard key={article.id} article={article} index={i} language={language} />
@@ -463,14 +457,6 @@ export default function MediaCenterPage() {
                     ))}
                   </div>
                 </div>
-              )}
-
-              {!showPhotos && !loading && !hasContent && (
-                <EmptyState
-                  icon={Newspaper}
-                  title={language === 'ar' ? 'لا يوجد محتوى متاح حالياً' : 'No content available currently'}
-                  subtitle={language === 'ar' ? 'يرجى متابعة هذه الصفحة لمعرفة آخر الأخبار' : 'Please watch this page for future updates and news.'}
-                />
               )}
 
               {showNews &&

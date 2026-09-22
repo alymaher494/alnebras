@@ -12,7 +12,7 @@ export type PageName =
   | 'contact'
   | 'partners'
 
-export type MediaSubPage = 'all' | 'news' | 'photos' | 'events'
+export type MediaSubPage = 'news' | 'photos' | 'events'
 
 interface NavigationState {
   currentPage: PageName
@@ -31,7 +31,7 @@ interface NavigationState {
 export const useNavigationStore = create<NavigationState>((set) => ({
   currentPage: 'home',
   isMobileMenuOpen: false,
-  isMediaSubPage: 'all',
+  isMediaSubPage: 'news',
   isHeroTransparent: true,
   language: 'ar',
   setCurrentPage: (page) => {

@@ -90,18 +90,17 @@ const certifications = [
   { name: 'ISO 45001', labelAr: 'الصحة والسلامة المهنية', labelEn: 'Occupational Health & Safety', logo: '/images/certificate/WhatsApp Image 2026-05-13 at 12.27.33 PM.jpeg' },
 ]
 
-/* ──────────── Gallery Images ──────────── */
+/* ──────────── Gallery Images (company photo strip) ──────────── */
 const galleryImages = [
-  '/images/gallery/page4_img10.jpg',
-  '/images/gallery/page5_img20.jpg',
-  '/images/gallery/page5_img4.jpg',
-  '/images/gallery/page6_img1.jpg',
-  '/images/gallery/page6_img2.jpg',
+  '/images/gallery/gallery-20.jpg',
+  '/images/gallery/gallery-22.jpg',
+  '/images/gallery/gallery-26.jpg',
+  '/images/gallery/gallery-31.jpg',
 ]
 
 /* ──────────── Component ──────────── */
 export default function AboutPage() {
-  const { language } = useNavigationStore()
+  const { language, setCurrentPage, setMediaSubPage } = useNavigationStore()
   const { t } = useTranslation(language)
   const [settings, setSettings] = useState<Settings | null>(null)
   const [loading, setLoading] = useState(true)
@@ -446,33 +445,39 @@ export default function AboutPage() {
             subtitle={language === 'ar' ? 'لمحة من أعمالنا ومنشآتنا التي نديرها' : 'A glimpse of our work and the facilities we manage'}
           />
         </div>
-        {/* Horizontal Scrollable Row */}
-        <div className="overflow-x-auto pb-4">
-          <div className="flex gap-4 md:gap-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-w-max">
+        {/* 4-photo grid */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {galleryImages.map((img, i) => (
               <AnimatedSection key={i} delay={i * 0.06}>
-                <div className="relative group w-[280px] md:w-[320px] h-[200px] md:h-[240px] flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer">
+                <div className="relative group w-full h-[220px] md:h-[260px] rounded-2xl overflow-hidden cursor-pointer">
                   <Image
                     src={img}
                     alt={`صورة من أعمال النبراس ${i + 1}`}
                     fill
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                   <div className="absolute inset-0 bg-[#012b67]/0 group-hover:bg-[#012b67]/20 transition-colors duration-500 rounded-2xl" />
                 </div>
               </AnimatedSection>
             ))}
           </div>
-        </div>
-        {/* Scroll indicator */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 flex items-center justify-center gap-2 text-[#6b7280] text-sm">
-          <svg className={`w-4 h-4 ${language === 'en' ? '' : 'rotate-180'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-          <span>{language === 'ar' ? 'اسحب لعرض المزيد' : 'Swipe to view more'}</span>
-          <svg className={`w-4 h-4 ${language === 'en' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
+          {/* CTA to full photo gallery */}
+          <div className="mt-10 flex justify-center">
+            <button
+              onClick={() => {
+                setMediaSubPage('photos')
+                setCurrentPage('media-center')
+              }}
+              className="inline-flex items-center gap-2 bg-[#012b67] hover:bg-[#01409a] text-white font-bold px-8 py-3.5 rounded-full transition-colors duration-300 shadow-[0_8px_24px_rgba(1,43,103,0.25)]"
+            >
+              <span>{language === 'ar' ? 'عرض معرض الصور' : 'View Photo Gallery'}</span>
+              <svg className={`w-5 h-5 ${language === 'ar' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
 
