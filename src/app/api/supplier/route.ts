@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { checkAuth } from '@/lib/auth'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
+import { supplierSchema } from '@/lib/validation'
 
 export async function GET(request: NextRequest) {
   if (!checkAuth(request)) {
@@ -20,23 +22,28 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
+    const ip = getClientIp(request)
+    if (!checkRateLimit(`supplier:${ip}`, 20, 10 * 60_000)) {
+      return NextResponse.json({ error: 'طلبات كثيرة، حاول لاحقاً' }, { status: 429 })
+    }
 
-    if (!body.name || !body.company || !body.phone || !body.email) {
+    const body = await request.json().catch(() => null)
+    const parsed = supplierSchema.safeParse(body)
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'name, company, phone, and email are required' },
+        { error: 'بيانات الطلب غير صالحة' },
         { status: 400 }
       )
     }
 
     const supplierRequest = await db.supplierRequest.create({
       data: {
-        name: body.name,
-        company: body.company,
-        phone: body.phone,
-        email: body.email,
-        message: body.message,
-        fileUrl: body.fileUrl,
+        name: parsed.data.name,
+        company: parsed.data.company,
+        phone: parsed.data.phone,
+        email: parsed.data.email,
+        message: parsed.data.message ?? undefined,
+        fileUrl: parsed.data.fileUrl ?? undefined,
       },
     })
 

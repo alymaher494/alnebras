@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { checkAuth } from '@/lib/auth'
-import { checkAndAutoSeed } from '@/lib/auto-seed'
+import { partnerWriteSchema } from '@/lib/validation'
 
 export async function GET(request: NextRequest) {
   try {
-    // Run auto-seed check
-    await checkAndAutoSeed()
-
     const { searchParams } = new URL(request.url)
     const showAll = searchParams.get('all') === 'true'
 
@@ -29,17 +26,18 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json()
-
-    if (!body.name) {
+    const raw = await request.json().catch(() => null)
+    const parsed = partnerWriteSchema.safeParse(raw)
+    if (!parsed.success) {
       return NextResponse.json({ error: 'name is required' }, { status: 400 })
     }
 
     const partner = await db.partner.create({
       data: {
-        name: body.name,
-        logo: body.logo,
-        order: body.order ?? 0,
+        name: parsed.data.name,
+        logo: parsed.data.logo ?? undefined,
+        country: parsed.data.country ?? 'KSA',
+        order: parsed.data.order ?? 0,
       },
     })
 

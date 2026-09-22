@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { checkAuth } from '@/lib/auth'
+import { jobWriteSchema } from '@/lib/validation'
 
 export async function GET(request: NextRequest) {
   try {
@@ -25,25 +26,26 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json()
-
-    if (!body.titleAr) {
+    const raw = await request.json().catch(() => null)
+    const parsed = jobWriteSchema.safeParse(raw)
+    if (!parsed.success) {
       return NextResponse.json({ error: 'titleAr is required' }, { status: 400 })
     }
+    const data = parsed.data
 
     const job = await db.jobListing.create({
       data: {
-        titleAr: body.titleAr,
-        titleEn: body.titleEn,
-        departmentAr: body.departmentAr,
-        departmentEn: body.departmentEn,
-        locationAr: body.locationAr,
-        locationEn: body.locationEn,
-        type: body.type,
-        descriptionAr: body.descriptionAr,
-        descriptionEn: body.descriptionEn,
-        requirementsAr: body.requirementsAr,
-        requirementsEn: body.requirementsEn,
+        titleAr: data.titleAr,
+        titleEn: data.titleEn ?? undefined,
+        departmentAr: data.departmentAr ?? undefined,
+        departmentEn: data.departmentEn ?? undefined,
+        locationAr: data.locationAr ?? undefined,
+        locationEn: data.locationEn ?? undefined,
+        type: data.type ?? undefined,
+        descriptionAr: data.descriptionAr ?? undefined,
+        descriptionEn: data.descriptionEn ?? undefined,
+        requirementsAr: data.requirementsAr ?? undefined,
+        requirementsEn: data.requirementsEn ?? undefined,
       },
     })
 

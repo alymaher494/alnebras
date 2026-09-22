@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { checkAuth } from '@/lib/auth'
+import { serviceWriteSchema } from '@/lib/validation'
 
 export async function PUT(
   request: NextRequest,
@@ -12,20 +13,24 @@ export async function PUT(
 
   try {
     const { id } = await params
-    const body = await request.json()
-    const { titleAr, titleEn, descriptionAr, descriptionEn, icon, image, order, isActive } = body
+    const raw = await request.json().catch(() => null)
+    const parsed = serviceWriteSchema.partial().safeParse(raw)
+    if (!parsed.success) {
+      return NextResponse.json({ error: 'الاسم العربي والوصف العربي مطلوبان' }, { status: 400 })
+    }
+    const data = parsed.data
 
     const service = await db.service.update({
       where: { id },
       data: {
-        titleAr,
-        titleEn,
-        descriptionAr,
-        descriptionEn,
-        icon,
-        image,
-        order: order !== undefined ? Number(order) : undefined,
-        isActive: isActive !== undefined ? Boolean(isActive) : undefined,
+        titleAr: data.titleAr,
+        titleEn: data.titleEn ?? undefined,
+        descriptionAr: data.descriptionAr,
+        descriptionEn: data.descriptionEn ?? undefined,
+        icon: data.icon ?? undefined,
+        image: data.image ?? undefined,
+        order: data.order,
+        isActive: data.isActive,
       },
     })
 

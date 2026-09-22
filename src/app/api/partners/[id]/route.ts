@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { checkAuth } from '@/lib/auth'
+import { partnerWriteSchema } from '@/lib/validation'
 
 export async function PUT(
   request: NextRequest,
@@ -12,16 +13,21 @@ export async function PUT(
 
   try {
     const { id } = await params
-    const body = await request.json()
-    const { name, logo, order, isActive } = body
+    const raw = await request.json().catch(() => null)
+    const parsed = partnerWriteSchema.partial().safeParse(raw)
+    if (!parsed.success) {
+      return NextResponse.json({ error: 'name is required' }, { status: 400 })
+    }
+    const data = parsed.data
 
     const partner = await db.partner.update({
       where: { id },
       data: {
-        name,
-        logo,
-        order: order !== undefined ? Number(order) : undefined,
-        isActive: isActive !== undefined ? Boolean(isActive) : undefined,
+        name: data.name,
+        logo: data.logo ?? undefined,
+        country: data.country,
+        order: data.order,
+        isActive: data.isActive,
       },
     })
 

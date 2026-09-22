@@ -55,6 +55,10 @@ server.log
 
 # upload temp folder
 /upload/
+# raw WhatsApp media sources (do not commit)
+/public/new media/
+# deploy artifacts
+deploy.zip
 *.pdf
 *.mp4
 *.db

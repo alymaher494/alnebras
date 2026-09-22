@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { checkAuth } from '@/lib/auth'
+import { newsWriteSchema } from '@/lib/validation'
 
 export async function GET(request: NextRequest) {
   try {
@@ -25,22 +26,23 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json()
-
-    if (!body.titleAr) {
+    const raw = await request.json().catch(() => null)
+    const parsed = newsWriteSchema.safeParse(raw)
+    if (!parsed.success) {
       return NextResponse.json({ error: 'titleAr is required' }, { status: 400 })
     }
+    const data = parsed.data
 
     const article = await db.newsArticle.create({
       data: {
-        titleAr: body.titleAr,
-        titleEn: body.titleEn,
-        contentAr: body.contentAr,
-        contentEn: body.contentEn,
-        summaryAr: body.summaryAr,
-        summaryEn: body.summaryEn,
-        image: body.image,
-        publishDate: body.publishDate ? new Date(body.publishDate) : undefined,
+        titleAr: data.titleAr,
+        titleEn: data.titleEn ?? undefined,
+        contentAr: data.contentAr ?? undefined,
+        contentEn: data.contentEn ?? undefined,
+        summaryAr: data.summaryAr ?? undefined,
+        summaryEn: data.summaryEn ?? undefined,
+        image: data.image ?? undefined,
+        publishDate: data.publishDate ? new Date(data.publishDate) : undefined,
       },
     })
 

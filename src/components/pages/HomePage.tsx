@@ -288,7 +288,7 @@ export default function HomePage() {
               <div className="relative">
                 <div className="rounded-2xl overflow-hidden shadow-2xl">
                   <Image
-                    src="/images/about/page1_img1.jpg"
+                    src="/images/about/about-team-1.jpg"
                     alt={language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
                     width={700}
                     height={500}

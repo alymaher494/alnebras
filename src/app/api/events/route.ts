@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { checkAuth } from '@/lib/auth'
+import { eventWriteSchema } from '@/lib/validation'
 
 export async function GET(request: NextRequest) {
   try {
@@ -25,22 +26,23 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json()
-
-    if (!body.titleAr) {
+    const raw = await request.json().catch(() => null)
+    const parsed = eventWriteSchema.safeParse(raw)
+    if (!parsed.success) {
       return NextResponse.json({ error: 'titleAr is required' }, { status: 400 })
     }
+    const data = parsed.data
 
     const event = await db.event.create({
       data: {
-        titleAr: body.titleAr,
-        titleEn: body.titleEn,
-        descriptionAr: body.descriptionAr,
-        descriptionEn: body.descriptionEn,
-        image: body.image,
-        eventDate: body.eventDate ? new Date(body.eventDate) : undefined,
-        locationAr: body.locationAr,
-        locationEn: body.locationEn,
+        titleAr: data.titleAr,
+        titleEn: data.titleEn ?? undefined,
+        descriptionAr: data.descriptionAr ?? undefined,
+        descriptionEn: data.descriptionEn ?? undefined,
+        image: data.image ?? undefined,
+        eventDate: data.eventDate ? new Date(data.eventDate) : undefined,
+        locationAr: data.locationAr ?? undefined,
+        locationEn: data.locationEn ?? undefined,
       },
     })
 

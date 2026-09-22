@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { checkAuth } from '@/lib/auth'
 
 export async function GET(request: NextRequest) {
-  const session = request.cookies.get('admin_session')
-  
-  if (session && session.value === 'nebras_admin_authorized') {
+  if (checkAuth(request)) {
     return NextResponse.json({ authenticated: true })
   }
 

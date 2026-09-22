@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { checkAuth } from '@/lib/auth'
-import { checkAndAutoSeed } from '@/lib/auto-seed'
+import { settingsWriteSchema } from '@/lib/validation'
 
 export async function GET() {
   try {
-    // Run auto-seed check
-    await checkAndAutoSeed()
-
     const settings = await db.siteSetting.findMany()
     const kv: Record<string, string> = {}
     for (const s of settings) {
@@ -26,13 +23,13 @@ export async function PUT(request: NextRequest) {
   }
 
   try {
-    const body: Record<string, string> = await request.json()
-
-    if (!body || typeof body !== 'object') {
+    const raw = await request.json().catch(() => null)
+    const parsed = settingsWriteSchema.safeParse(raw)
+    if (!parsed.success) {
       return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
     }
 
-    const entries = Object.entries(body)
+    const entries = Object.entries(parsed.data)
 
     await db.$transaction(
       entries.map(([key, value]) =>

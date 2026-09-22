@@ -1,23 +1,23 @@
-:81 {
-	@transform_port_query {
-		query XTransformPort=*
-	}
+# Production reverse proxy for the Hostinger VPS.
+#
+# 1) Quick start (works immediately on the server IP over HTTP):
+#      :80 {
+#        reverse_proxy localhost:3000 { ... }
+#      }
+# 2) When your domain points to this VPS, replace ":80" with your domain
+#    to get automatic HTTPS, e.g.:
+#      al-nebras.com {
+#        reverse_proxy localhost:3000 { ... }
+#      }
+#
+# NOTE: the old XTransformPort handler was removed on purpose — it let any
+# client proxy to arbitrary local ports (SSRF/open-proxy). Do not re-add it.
 
-	handle @transform_port_query {
-		reverse_proxy localhost:{query.XTransformPort} {
-			header_up Host {host}
-			header_up X-Forwarded-For {remote_host}
-			header_up X-Forwarded-Proto {scheme}
-			header_up X-Real-IP {remote_host}
-		}
-	}
-
-	handle {
-		reverse_proxy localhost:3000 {
-			header_up Host {host}
-			header_up X-Forwarded-For {remote_host}
-			header_up X-Forwarded-Proto {scheme}
-			header_up X-Real-IP {remote_host}
-		}
+:80 {
+	reverse_proxy localhost:3000 {
+		header_up Host {host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Real-IP {remote_host}
 	}
 }

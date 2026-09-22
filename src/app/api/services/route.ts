@@ -1,13 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { checkAuth } from '@/lib/auth'
-import { checkAndAutoSeed } from '@/lib/auto-seed'
+import { serviceWriteSchema } from '@/lib/validation'
 
 export async function GET(request: NextRequest) {
   try {
-    // Run auto-seed check
-    await checkAndAutoSeed()
-
     const { searchParams } = new URL(request.url)
     const showAll = searchParams.get('all') === 'true'
 
@@ -29,22 +26,22 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const body = await request.json()
-    const { titleAr, titleEn, descriptionAr, descriptionEn, icon, image, order } = body
-
-    if (!titleAr || !descriptionAr) {
+    const raw = await request.json().catch(() => null)
+    const parsed = serviceWriteSchema.safeParse(raw)
+    if (!parsed.success) {
       return NextResponse.json({ error: 'الاسم العربي والوصف العربي مطلوبان' }, { status: 400 })
     }
+    const { titleAr, titleEn, descriptionAr, descriptionEn, icon, image, order } = parsed.data
 
     const service = await db.service.create({
       data: {
         titleAr,
-        titleEn,
+        titleEn: titleEn ?? undefined,
         descriptionAr,
-        descriptionEn,
+        descriptionEn: descriptionEn ?? undefined,
         icon: icon || 'Sparkles',
-        image,
-        order: Number(order) || 0,
+        image: image ?? undefined,
+        order: order ?? 0,
       },
     })
 

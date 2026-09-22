@@ -210,7 +210,7 @@ export default function AboutPage() {
                 {/* Top Image */}
                 <div className="relative z-10 rounded-2xl overflow-hidden shadow-lg">
                   <Image
-                    src="/images/about/page1_img1.jpg"
+                    src="/images/about/about-team-1.jpg"
                     alt="النبراس - إدارة المرافق"
                     width={600}
                     height={400}
@@ -220,7 +220,7 @@ export default function AboutPage() {
                 {/* Bottom Image - Offset */}
                 <div className={`relative z-20 -mt-16 rounded-2xl overflow-hidden shadow-xl border-4 border-white ${language === 'ar' ? 'mr-8 md:mr-16' : 'ml-8 md:ml-16'}`}>
                   <Image
-                    src="/images/about/page1_img2.jpg"
+                    src="/images/about/about-team-2.jpg"
                     alt="فريق النبراس"
                     width={400}
                     height={260}
