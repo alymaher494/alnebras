@@ -223,7 +223,7 @@ async function main() {
       descriptionAr: 'نستخدم تقنيات التصوير الحراري المتقدمة لاكتشاف الأعطال الخفية في الأنظمة الكهربائية والميكانيكية قبل تفاقمها.',
       descriptionEn: 'We use advanced thermal imaging technologies to detect hidden faults in electrical and mechanical systems before they escalate.',
       icon: 'Thermometer',
-      image: '/images/services/page3_img19.jpg',
+      image: '/images/services/thermal_inspection.jpg',
       order: 12,
     },
     {
@@ -241,7 +241,7 @@ async function main() {
       descriptionAr: 'ننفذ أعمال الحديد والنجارة بمهارة عالية تشمل التصنيع والتركيب والإصلاح لجميع متطلبات المنشأة.',
       descriptionEn: 'We perform steel and carpentry works with high skill, including fabrication, installation, and repair for all facility requirements.',
       icon: 'Hammer',
-      image: '/images/services/page3_img23.jpg',
+      image: '/images/services/metal_carpentry.jpg',
       order: 14,
     },
     {
