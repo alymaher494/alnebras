@@ -93,7 +93,7 @@ const certifications = [
 /* ──────────── Gallery Images (company photo strip) ──────────── */
 const galleryImages = [
   '/images/gallery/gallery-20.jpg',
-  '/images/gallery/gallery-22.jpg',
+  '/images/gallery/gallery-about.jpg',
   '/images/gallery/gallery-26.jpg',
   '/images/gallery/gallery-31.jpg',
 ]
