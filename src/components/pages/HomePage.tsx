@@ -179,7 +179,7 @@ export default function HomePage() {
       {/* ════════════════════════════════════════════════════
            1. VIDEO HERO SECTION
           ════════════════════════════════════════════════════ */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[88svh] flex items-center justify-center overflow-hidden">
         {/* Video Background */}
         <video
           autoPlay
@@ -187,7 +187,7 @@ export default function HomePage() {
           loop
           playsInline
           poster="/video/poster.jpg"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover object-center"
         >
           <source src="/video/hero.mp4" type="video/mp4" />
         </video>
