@@ -92,10 +92,10 @@ const certifications = [
 
 /* ──────────── Gallery Images (company photo strip) ──────────── */
 const galleryImages = [
-  '/images/gallery/gallery-20.jpg',
-  '/images/gallery/gallery-about.jpg',
-  '/images/gallery/gallery-26.jpg',
-  '/images/gallery/gallery-31.jpg',
+  '/images/gallery/gallery-20.webp',
+  '/images/gallery/gallery-about.webp',
+  '/images/gallery/gallery-26.webp',
+  '/images/gallery/gallery-31.webp',
 ]
 
 /* ──────────── Component ──────────── */
@@ -209,7 +209,7 @@ export default function AboutPage() {
                 {/* Top Image */}
                 <div className="relative z-10 rounded-2xl overflow-hidden shadow-lg">
                   <Image
-                    src="/images/about/about-team-1.jpg"
+                    src="/images/about/about-team-1.webp"
                     alt="النبراس - إدارة المرافق"
                     width={600}
                     height={400}
@@ -219,7 +219,7 @@ export default function AboutPage() {
                 {/* Bottom Image - Offset */}
                 <div className={`relative z-20 -mt-16 rounded-2xl overflow-hidden shadow-xl border-4 border-white ${language === 'ar' ? 'mr-8 md:mr-16' : 'ml-8 md:ml-16'}`}>
                   <Image
-                    src="/images/about/about-team-2.jpg"
+                    src="/images/about/about-team-2.webp"
                     alt="فريق النبراس"
                     width={400}
                     height={260}

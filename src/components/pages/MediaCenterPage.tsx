@@ -42,53 +42,53 @@ interface EventItem {
 
 /* ──────────── Gallery Images ──────────── */
 const GALLERY_IMAGES = [
-  'gallery-01.jpg',
-  'gallery-02.jpg',
-  'gallery-03.jpg',
-  'gallery-04.jpg',
-  'gallery-05.jpg',
-  'gallery-06.jpg',
-  'gallery-07.jpg',
-  'gallery-08.jpg',
-  'gallery-09.jpg',
-  'gallery-10.jpg',
-  'gallery-11.jpg',
-  'gallery-12.jpg',
-  'gallery-13.jpg',
-  'gallery-14.jpg',
-  'gallery-15.jpg',
-  'gallery-16.jpg',
-  'gallery-17.jpg',
-  'gallery-18.jpg',
-  'gallery-19.jpg',
-  'gallery-20.jpg',
-  'gallery-21.jpg',
-  'gallery-about.jpg',
-  'gallery-23.jpg',
-  'gallery-24.jpg',
-  'gallery-25.jpg',
-  'gallery-26.jpg',
-  'gallery-27.jpg',
-  'gallery-28.jpg',
-  'gallery-29.jpg',
-  'gallery-30.jpg',
-  'gallery-31.jpg',
-  'gallery-32.jpg',
-  'gallery-33.jpg',
-  'gallery-34.jpg',
-  'gallery-35.jpg',
-  'gallery-36.jpg',
-  'gallery-37.jpg',
-  'gallery-38.jpg',
-  'gallery-39.jpg',
-  'gallery-40.jpg',
-  'gallery-41.jpg',
-  'gallery-42.jpg',
-  'gallery-43.jpg',
-  'gallery-44.jpg',
-  'gallery-45.jpg',
-  'gallery-46.jpg',
-  'gallery-47.jpg',
+  'gallery-01.webp',
+  'gallery-02.webp',
+  'gallery-03.webp',
+  'gallery-04.webp',
+  'gallery-05.webp',
+  'gallery-06.webp',
+  'gallery-07.webp',
+  'gallery-08.webp',
+  'gallery-09.webp',
+  'gallery-10.webp',
+  'gallery-11.webp',
+  'gallery-12.webp',
+  'gallery-13.webp',
+  'gallery-14.webp',
+  'gallery-15.webp',
+  'gallery-16.webp',
+  'gallery-17.webp',
+  'gallery-18.webp',
+  'gallery-19.webp',
+  'gallery-20.webp',
+  'gallery-21.webp',
+  'gallery-about.webp',
+  'gallery-23.webp',
+  'gallery-24.webp',
+  'gallery-25.webp',
+  'gallery-26.webp',
+  'gallery-27.webp',
+  'gallery-28.webp',
+  'gallery-29.webp',
+  'gallery-30.webp',
+  'gallery-31.webp',
+  'gallery-32.webp',
+  'gallery-33.webp',
+  'gallery-34.webp',
+  'gallery-35.webp',
+  'gallery-36.webp',
+  'gallery-37.webp',
+  'gallery-38.webp',
+  'gallery-39.webp',
+  'gallery-40.webp',
+  'gallery-41.webp',
+  'gallery-42.webp',
+  'gallery-43.webp',
+  'gallery-44.webp',
+  'gallery-45.webp',
+  'gallery-46.webp',
+  'gallery-47.webp',
 ]
 
 /* ──────────── Hero Banner ──────────── */
@@ -307,13 +307,9 @@ function PhotoCard({
   const isTall = index % 3 === 1
 
   return (
-    <AnimatedSection delay={index * 0.06}>
-      <div
-        className={`group card-modern overflow-hidden bg-white shadow-[0_4px_24px_rgba(1,43,103,0.08)] ${
-          isTall ? 'row-span-2' : ''
-        }`}
-      >
-        <div className={`relative ${isTall ? 'h-full min-h-[320px] md:min-h-[420px]' : 'h-56 md:h-64'} overflow-hidden`}>
+    <AnimatedSection delay={index * 0.06} className={isTall ? 'row-span-2' : ''}>
+      <div className="group card-modern overflow-hidden bg-white shadow-[0_4px_24px_rgba(1,43,103,0.08)] h-full">
+        <div className={`relative ${isTall ? 'h-full min-h-[420px] md:min-h-[544px]' : 'h-60 md:h-[260px]'} overflow-hidden`}>
           <Image
             src={`/images/gallery/${src}`}
             alt={`صورة ${index + 1}`}
@@ -451,7 +447,7 @@ export default function MediaCenterPage() {
               {showPhotos && (
                 <div>
                   <TabSectionHeading icon={ImageIcon} title={language === 'ar' ? 'معرض الصور' : 'Photo Gallery'} />
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[240px] md:auto-rows-[260px]">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 md:gap-6 auto-rows-[260px] md:auto-rows-[280px]">
                     {GALLERY_IMAGES.map((img, i) => (
                       <PhotoCard key={img} src={img} index={i} />
                     ))}
