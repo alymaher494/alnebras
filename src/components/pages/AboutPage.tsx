@@ -82,12 +82,9 @@ const valueDescriptionsEn: Record<string, string> = {
   'Sustainability': 'We work to achieve a balance between quality and environment.',
 }
 
-/* ──────────── Certifications ──────────── */
+/* ──────────── Certifications (single) ──────────── */
 const certifications = [
-  { name: 'BICSc', labelAr: 'معهد التنظيف البريطاني', labelEn: 'British Institute of Cleaning Science', logo: '/images/certificate/WhatsApp Image 2026-05-13 at 12.19.30 PM.jpeg' },
   { name: 'ISO 9001', labelAr: 'إدارة الجودة', labelEn: 'Quality Management', logo: '/images/certificate/WhatsApp Image 2026-05-13 at 12.20.22 PM (1).jpeg' },
-  { name: 'ISO 14001', labelAr: 'إدارة البيئة', labelEn: 'Environmental Management', logo: '/images/certificate/WhatsApp Image 2026-05-13 at 12.20.22 PM (2).jpeg' },
-  { name: 'ISO 45001', labelAr: 'الصحة والسلامة المهنية', labelEn: 'Occupational Health & Safety', logo: '/images/certificate/WhatsApp Image 2026-05-13 at 12.27.33 PM.jpeg' },
 ]
 
 /* ──────────── Gallery Images (company photo strip) ──────────── */
@@ -148,7 +145,7 @@ export default function AboutPage() {
         {/* Background Image */}
         <Image
           src="/images/about_hero.png"
-          alt="من نحن - النبراس لإدارة المرافق"
+          alt="من نحن - شركة النبراس لإدارة المرافق"
           fill
           className="object-cover scale-105"
           priority
@@ -189,7 +186,7 @@ export default function AboutPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-lg md:text-xl text-[#d1ddeb] mt-6 max-w-xl mx-auto leading-relaxed"
           >
-            {language === 'ar' ? 'تعرف على النبراس لإدارة المرافق' : 'Get to know Alnebras Facilities Management'}
+            {language === 'ar' ? 'تعرف على شركة النبراس لإدارة المرافق' : 'Get to know Alnebras Facilities Management'}
           </motion.p>
         </div>
 
@@ -210,7 +207,7 @@ export default function AboutPage() {
                 <div className="relative z-10 rounded-2xl overflow-hidden shadow-lg">
                   <Image
                     src="/images/about/about-team-1.webp"
-                    alt="النبراس - إدارة المرافق"
+                    alt="شركة النبراس - إدارة المرافق"
                     width={600}
                     height={400}
                     className="w-full h-[280px] md:h-[360px] object-cover"
@@ -220,7 +217,7 @@ export default function AboutPage() {
                 <div className={`relative z-20 -mt-16 rounded-2xl overflow-hidden shadow-xl border-4 border-white ${language === 'ar' ? 'mr-8 md:mr-16' : 'ml-8 md:ml-16'}`}>
                   <Image
                     src="/images/about/about-team-2.webp"
-                    alt="فريق النبراس"
+                    alt="فريق شركة النبراس"
                     width={400}
                     height={260}
                     className="w-full h-[180px] md:h-[240px] object-cover"
@@ -235,7 +232,7 @@ export default function AboutPage() {
             <AnimatedSection delay={0.2}>
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-[#012b67] mb-4">
-                  {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'النبراس لإدارة المرافق'}
+                  {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'شركة النبراس لإدارة المرافق'}
                 </h2>
                 <div className="accent-line mb-6" />
                 <p className="text-[#374151] text-base md:text-lg leading-[2] mb-6">
@@ -365,7 +362,7 @@ export default function AboutPage() {
                 <div className="relative rounded-2xl overflow-hidden shadow-xl sticky top-28">
                   <Image
                     src="/images/gallery/page5_img4.jpg"
-                    alt="أهداف النبراس"
+                    alt="أهداف شركة النبراس"
                     width={500}
                     height={650}
                     className="w-full h-[400px] md:h-[550px] object-cover"
@@ -376,7 +373,7 @@ export default function AboutPage() {
                       <div className="flex items-center gap-3 mb-2">
                         <Building2 className="w-6 h-6 text-[#012b67]" />
                         <h4 className="text-[#012b67] font-bold text-lg">
-                          {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'النبراس'}
+                          {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'شركة النبراس'}
                         </h4>
                       </div>
                       <p className="text-[#6b7280] text-sm leading-relaxed">
@@ -453,7 +450,7 @@ export default function AboutPage() {
                 <div className="relative group w-full h-[220px] md:h-[260px] rounded-2xl overflow-hidden cursor-pointer">
                   <Image
                     src={img}
-                    alt={`صورة من أعمال النبراس ${i + 1}`}
+                    alt={`صورة من أعمال شركة النبراس ${i + 1}`}
                     fill
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -533,7 +530,7 @@ export default function AboutPage() {
                   {loading
                     ? ''
                     : (language === 'ar' ? settings?.ceo_message_ar : settings?.ceo_message_en) ||
-                      'في النبراس لإدارة المرافق، نؤمن بأن رضا عملائنا هو مقياس نجاحنا الحقيقي. نلتزم بتقديم خدمات عالية الجودة تجمع بين الكفاءة المهنية والابتكار المستمر، ونسعى لأن نكون الشريك الأمثل في إدارة منشآتكم وضمان استمرارية أعمالكم بأعلى المعايير.'}
+                      'في شركة النبراس لإدارة المرافق، نؤمن بأن رضا عملائنا هو مقياس نجاحنا الحقيقي. نلتزم بتقديم خدمات عالية الجودة تجمع بين الكفاءة المهنية والابتكار المستمر، ونسعى لأن نكون الشريك الأمثل في إدارة منشآتكم وضمان استمرارية أعمالكم بأعلى المعايير.'}
                 </p>
 
                 {/* Divider */}
@@ -544,7 +541,7 @@ export default function AboutPage() {
                     {language === 'ar' ? 'محمد المقبلي' : 'MOHAMMED ALMOGBLY'}
                   </p>
                   <p className="text-white/60 text-sm mt-1">
-                    {t('ceo_title')} | {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'النبراس لإدارة المرافق'}
+                    {t('ceo_title')} | {loading ? '' : (language === 'ar' ? settings?.company_name_ar : settings?.company_name_en) || 'شركة النبراس لإدارة المرافق'}
                   </p>
                 </div>
               </AnimatedSection>

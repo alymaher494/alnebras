@@ -20,7 +20,7 @@ async function main() {
 
   // ─── Site Settings ───────────────────────────────────────────────
   const settings = [
-    { key: 'company_name_ar', value: 'النبراس لإدارة المرافق', label: 'اسم الشركة (عربي)' },
+    { key: 'company_name_ar', value: 'شركة النبراس لإدارة المرافق', label: 'اسم الشركة (عربي)' },
     { key: 'company_name_en', value: 'Alnebras Facilities Management', label: 'Company Name (English)' },
     {
       key: 'about_text_ar',
@@ -124,7 +124,7 @@ async function main() {
       descriptionAr: 'نقدم خدمات تنظيف شاملة ومتخصصة للمنشآت التجارية والصناعية باستخدام أحدث المعدات والمنظفات البيئية لضمان بيئة نظيفة وصحية.',
       descriptionEn: 'We provide comprehensive and specialized cleaning services for commercial and industrial facilities using the latest equipment and eco-friendly detergents to ensure a clean and healthy environment.',
       icon: 'Sparkles',
-      image: '/images/services/facade_cleaning.png',
+      image: '/images/services/real-fm-01.webp',
       order: 1,
     },
     {
@@ -133,7 +133,7 @@ async function main() {
       descriptionAr: 'نوفر فرق ضيافة محترفة ومدربة لتقديم خدمات استقبال وتنظيم متكاملة تعكس صورة احترافية لعملائنا وزوارهم.',
       descriptionEn: 'We provide professional and trained hospitality teams to deliver integrated reception and organization services that reflect a professional image for our clients and their visitors.',
       icon: 'Users',
-      image: '/images/services/hospitality_reception.png',
+      image: '/images/services/real-fm-02.webp',
       order: 2,
     },
     {
@@ -142,7 +142,7 @@ async function main() {
       descriptionAr: 'نصمم وننفذ حلول البستنة وتنسيق الحدائق الداخلية والخارجية لتحسين المظهر الجمالي والبيئة المحيطة بالمنشآت.',
       descriptionEn: 'We design and implement indoor and outdoor landscaping and gardening solutions to enhance the aesthetic appearance and environment surrounding the facilities.',
       icon: 'TreePine',
-      image: '/images/services/landscaping_irrigation.png',
+      image: '/images/services/real-fm-03.webp',
       order: 3,
     },
     {
@@ -151,7 +151,7 @@ async function main() {
       descriptionAr: 'نطبق برامج متكاملة لمكافحة الآفات والقوارض باستخدام أحدث التقنيات والمبيدات الآمنة بيئياً لحماية المنشآت.',
       descriptionEn: 'We apply integrated pest and rodent control programs using the latest technologies and environmentally safe pesticides to protect facilities.',
       icon: 'Bug',
-      image: '/images/services/pest_control.png',
+      image: '/images/services/real-fm-04.webp',
       order: 4,
     },
     {
@@ -160,7 +160,7 @@ async function main() {
       descriptionAr: 'نقدم خدمات تنظيف الواجهات الزجاجية والخرسانية باستخدام تقنيات الوصول المتخصص لضمان مظهر لامع ونظيف للمباني.',
       descriptionEn: 'We offer glass and concrete facade cleaning services using specialized access techniques to ensure a shiny and clean appearance for buildings.',
       icon: 'Building2',
-      image: '/images/services/facade_cleaning.png',
+      image: '/images/services/real-fm-05.webp',
       order: 5,
     },
     {
@@ -169,7 +169,7 @@ async function main() {
       descriptionAr: 'نوفر صيانة وإصلاح الأنظمة الكهربائية الوقائية والطارئة لضمان استمرارية التشغيل وسلامة المنشأة.',
       descriptionEn: 'We provide preventive and emergency electrical systems maintenance and repair to ensure operation continuity and facility safety.',
       icon: 'Zap',
-      image: '/images/services/integrated_facility.png',
+      image: '/images/services/real-fm-06.webp',
       order: 6,
     },
     {
@@ -178,7 +178,7 @@ async function main() {
       descriptionAr: 'نقدم صيانة شاملة لأنظمة التدفئة والتهوية وتكييف الهواء لتحسين جودة الهواء الداخلي وكفاءة استهلاك الطاقة.',
       descriptionEn: 'We offer comprehensive maintenance for HVAC systems to improve indoor air quality and energy consumption efficiency.',
       icon: 'Wind',
-      image: '/images/services/technical_maintenance.png',
+      image: '/images/services/real-fm-07.webp',
       order: 7,
     },
     {
@@ -187,7 +187,7 @@ async function main() {
       descriptionAr: 'نتعامل مع جميع أعمال السباكة من صيانة وإصلاح وتركيب لضمان تشغيل سلس للأنظمة المائية والصرف الصحي.',
       descriptionEn: 'We handle all plumbing works from maintenance, repair, and installation to ensure smooth operation of water and sanitation systems.',
       icon: 'Droplets',
-      image: '/images/services/plumbing.png',
+      image: '/images/services/real-fm-08.webp',
       order: 8,
     },
     {
@@ -196,7 +196,7 @@ async function main() {
       descriptionAr: 'نوفر صيانة دورية لأنظمة السلامة والمصاعد والسلالم المتحركة وفقاً للمعايير والمتطلبات الفنية المعتمدة.',
       descriptionEn: 'We provide regular maintenance for safety systems, elevators, and escalators in accordance with approved standards and technical requirements.',
       icon: 'Shield',
-      image: '/images/services/page3_img16.jpg',
+      image: '/images/services/real-fm-09.webp',
       order: 9,
     },
     {
@@ -205,7 +205,7 @@ async function main() {
       descriptionAr: 'نقدم خدمات صيانة وتنظيف حمامات السباحة ومعالجة المياه للحفاظ على نظافة وسلامة البيئة المائية.',
       descriptionEn: 'We offer swimming pools maintenance, cleaning, and water treatment services to preserve the cleanliness and safety of the aquatic environment.',
       icon: 'Waves',
-      image: '/images/services/page3_img17.jpg',
+      image: '/images/services/real-fm-10.webp',
       order: 10,
     },
     {
@@ -214,7 +214,7 @@ async function main() {
       descriptionAr: 'نقوم بتركيب وصيانة أنظمة المراقبة بالكاميرات وشبكات الاتصالات لضمان الأمن والحماية الشاملة للمنشآت.',
       descriptionEn: 'We install and maintain CCTV surveillance systems and communication networks to ensure security and comprehensive protection for facilities.',
       icon: 'Camera',
-      image: '/images/services/security_surveillance.png',
+      image: '/images/services/real-fm-11.webp',
       order: 11,
     },
     {
@@ -223,7 +223,7 @@ async function main() {
       descriptionAr: 'نستخدم تقنيات التصوير الحراري المتقدمة لاكتشاف الأعطال الخفية في الأنظمة الكهربائية والميكانيكية قبل تفاقمها.',
       descriptionEn: 'We use advanced thermal imaging technologies to detect hidden faults in electrical and mechanical systems before they escalate.',
       icon: 'Thermometer',
-      image: '/images/services/thermal_inspection.jpg',
+      image: '/images/services/real-fm-12.webp',
       order: 12,
     },
     {
@@ -232,7 +232,7 @@ async function main() {
       descriptionAr: 'نقدم حلول متكاملة لصيانة الهياكل الإنشائية والدهانات والأرضيات والأسقف مع استخدام مواد عالية الجودة.',
       descriptionEn: 'We offer integrated solutions for the maintenance of structures, painting, flooring, and ceilings using high-quality materials.',
       icon: 'Paintbrush',
-      image: '/images/services/structure_finishing.png',
+      image: '/images/services/real-gc-2.webp',
       order: 13,
     },
     {
@@ -241,7 +241,7 @@ async function main() {
       descriptionAr: 'ننفذ أعمال الحديد والنجارة بمهارة عالية تشمل التصنيع والتركيب والإصلاح لجميع متطلبات المنشأة.',
       descriptionEn: 'We perform steel and carpentry works with high skill, including fabrication, installation, and repair for all facility requirements.',
       icon: 'Hammer',
-      image: '/images/services/metal_carpentry.jpg',
+      image: '/images/services/real-gc-3.webp',
       order: 14,
     },
     {
@@ -250,7 +250,7 @@ async function main() {
       descriptionAr: 'نصمم ونثبت ونصنع أنظمة الري الذكية والآلية لضمان الري الفعال والموفر للمياه في المساحات الخضراء.',
       descriptionEn: 'We design, install, and construct smart and automatic irrigation systems to ensure efficient and water-saving irrigation in green spaces.',
       icon: 'Droplet',
-      image: '/images/services/landscaping_irrigation.png',
+      image: '/images/services/real-fm-03.webp',
       order: 15,
     },
     {
@@ -259,7 +259,7 @@ async function main() {
       descriptionAr: 'نوفر حلول تعطير احترافية للمنشآت التجارية والفندقية لخلق بيئة مريحة ومرحبة للزوار والموظفين.',
       descriptionEn: 'We provide professional scenting solutions for commercial and hospitality facilities to create a comfortable and welcoming environment for visitors and employees.',
       icon: 'SprayCan',
-      image: '/images/services/facade_cleaning.png',
+      image: '/images/services/real-fm-02.webp',
       order: 16,
     },
   ]

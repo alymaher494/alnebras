@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import {
   ArrowLeft,
   Award,
@@ -17,7 +16,6 @@ import {
   Phone,
   Mail,
   Eye,
-  ChevronDown,
   Calendar,
   Building2,
   Quote,
@@ -103,14 +101,14 @@ const valueIconMap: Record<string, LucideIcon> = {
 }
 
 const fallbackServiceImages = [
-  '/images/services/page3_img3.jpg',
-  '/images/services/page3_img4.jpg',
-  '/images/services/page3_img5.jpg',
-  '/images/services/page3_img7.jpg',
-  '/images/services/page3_img9.jpg',
-  '/images/services/page3_img10.jpg',
-  '/images/services/page3_img12.jpg',
-  '/images/services/page3_img14.jpg',
+  '/images/services/real-fm-01.webp',
+  '/images/services/real-fm-03.webp',
+  '/images/services/real-fm-05.webp',
+  '/images/services/real-fm-07.webp',
+  '/images/services/real-fm-10.webp',
+  '/images/services/real-fm-11.webp',
+  '/images/services/real-gc-1.webp',
+  '/images/services/real-gc-3.webp',
 ]
 
 const stats = [
@@ -164,23 +162,13 @@ export default function HomePage() {
     ? (settings?.values_ar?.split('|') || [])
     : (settings?.values_en?.split('|') || [])
 
-  const heroTitle = !loading
-    ? (language === 'ar' ? (settings?.hero_title_ar || 'حلول ذكية لإدارة المرافق') : (settings?.hero_title_en || 'Smart Facilities Management Solutions'))
-    : ''
-
-  const heroSubtitle = !loading
-    ? (language === 'ar' 
-        ? (settings?.hero_subtitle_ar || 'نرفع كفاءة منشأتك ونضمن استمرارية أعمالك بأعلى معايير الجودة والاحترافية')
-        : (settings?.hero_subtitle_en || 'We elevate the efficiency of your facility and ensure your business continuity with the highest standards of quality and professionalism.'))
-    : ''
-
   return (
     <>
       {/* ════════════════════════════════════════════════════
            1. VIDEO HERO SECTION
           ════════════════════════════════════════════════════ */}
       <section className="relative min-h-[88svh] flex items-center justify-center overflow-hidden">
-        {/* Video Background */}
+        {/* Video Background (clean — no overlay text) */}
         <video
           autoPlay
           muted
@@ -191,60 +179,6 @@ export default function HomePage() {
         >
           <source src="/video/hero.mp4" type="video/mp4" />
         </video>
-
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 hero-overlay" />
-
-        {/* Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: 'easeOut' }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6 drop-shadow-[0_4px_6px_rgba(0,0,0,0.4)]"
-          >
-            {heroTitle}
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6, ease: 'easeOut' }}
-            className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-12 leading-relaxed drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]"
-          >
-            {heroSubtitle}
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.9, ease: 'easeOut' }}
-          >
-            <button
-              onClick={() => setCurrentPage('services')}
-              className="inline-flex items-center gap-3 bg-white text-[#012b67] font-semibold text-base sm:text-lg px-8 sm:px-10 py-4 sm:py-5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-2xl hover:bg-[#f0f4f8] hover:scale-[1.03] active:scale-[0.98]"
-            >
-              {t('discover_services')}
-              <ArrowLeft className={`h-5 w-5 ${language === 'en' ? 'rotate-180' : ''}`} />
-            </button>
-          </motion.div>
-        </div>
-
-        {/* Scroll Down Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
-        >
-          <span className="text-white/60 text-sm tracking-wide">{t('discover_more')}</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <ChevronDown className="w-6 h-6 text-white/60" />
-          </motion.div>
-        </motion.div>
       </section>
 
       {/* ════════════════════════════════════════════════════
@@ -289,7 +223,7 @@ export default function HomePage() {
                 <div className="rounded-2xl overflow-hidden shadow-2xl">
                   <Image
                     src="/images/about.webp"
-                    alt={language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
+                    alt={language === 'ar' ? (settings?.company_name_ar || 'شركة النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
                     width={700}
                     height={500}
                     className="w-full h-auto object-cover"
@@ -305,7 +239,7 @@ export default function HomePage() {
             <AnimatedSection delay={0.2}>
               <div>
                 <h2 className="text-3xl md:text-4xl lg:text-[2.5rem] font-bold text-[#012b67] mb-3 leading-tight">
-                  {language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
+                  {language === 'ar' ? (settings?.company_name_ar || 'شركة النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
                 </h2>
                 <div className="accent-line mb-6" />
                 <p className="text-[#374151] text-base md:text-lg leading-[2] mb-8">
@@ -495,56 +429,53 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
             {branches.map((branch, i) => {
-              const branchImg =
-                branch.image ||
-                (i === 0
-                  ? '/images/gallery/page6_img1.jpg'
-                  : '/images/gallery/page6_img1.jpg')
               const bCity = language === 'ar' ? branch.cityAr : branch.city
               const bAddress = language === 'ar' ? branch.addressAr : branch.address
+              const mapQuery = encodeURIComponent(
+                [bCity, bAddress, language === 'ar' ? branch.countryAr : branch.country].filter(Boolean).join(', ')
+              )
               return (
                 <AnimatedSection key={branch.id} delay={i * 0.15}>
-                  <div className="group relative min-h-[380px] md:min-h-[440px] rounded-2xl overflow-hidden cursor-pointer">
-                    {/* Background Image */}
-                    <Image
-                      src={branchImg}
-                      alt={bCity}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#012b67]/90 via-[#012b67]/40 to-transparent" />
-
-                    {/* Content */}
-                    <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                  <div className="bg-[#f9fafb] border border-[#e5e7eb]/70 rounded-2xl overflow-hidden h-full flex flex-col">
+                    {/* Text content */}
+                    <div className="p-6 md:p-8">
+                      <h3 className="text-2xl md:text-3xl font-bold text-[#012b67] mb-4">
                         {bCity}
                       </h3>
                       <div className="space-y-2.5">
-                        <div className="flex items-center gap-3">
-                          <MapPin className="w-4 h-4 text-white/70 flex-shrink-0" />
-                          <p className="text-white/85 text-sm leading-relaxed">
+                        <div className="flex items-start gap-3">
+                          <MapPin className="w-5 h-5 text-[#012b67] flex-shrink-0 mt-0.5" />
+                          <p className="text-[#374151] text-sm leading-relaxed">
                             {bAddress}
                           </p>
                         </div>
                         {branch.phone && (
                           <div className="flex items-center gap-3">
-                            <Phone className="w-4 h-4 text-white/70 flex-shrink-0" />
-                            <p className="text-white/85 text-sm" dir="ltr">
+                            <Phone className="w-5 h-5 text-[#012b67] flex-shrink-0" />
+                            <p className="text-[#374151] text-sm" dir="ltr">
                               {branch.phone}
                             </p>
                           </div>
                         )}
                         {branch.email && (
                           <div className="flex items-center gap-3">
-                            <Mail className="w-4 h-4 text-white/70 flex-shrink-0" />
-                            <p className="text-white/85 text-sm">
+                            <Mail className="w-5 h-5 text-[#012b67] flex-shrink-0" />
+                            <p className="text-[#374151] text-sm">
                               {branch.email}
                             </p>
                           </div>
                         )}
                       </div>
+                    </div>
+                    {/* Map */}
+                    <div className="mt-auto px-6 pb-6 md:px-8 md:pb-8">
+                      <iframe
+                        title={`${language === 'ar' ? 'خريطة' : 'Map'} - ${bCity}`}
+                        src={`https://maps.google.com/maps?q=${mapQuery}&z=15&output=embed`}
+                        className="w-full h-64 rounded-xl border border-[#e5e7eb]"
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      />
                     </div>
                   </div>
                 </AnimatedSection>
@@ -660,7 +591,7 @@ export default function HomePage() {
                   {loading
                     ? ''
                     : (language === 'ar' ? settings?.ceo_message_ar : settings?.ceo_message_en) ||
-                      'في النبراس، نؤمن بأن إدارة المرافق ليست مجرد خدمة تُقدَّم، بل هي شراكة حقيقية نبنيها مع عملائنا نحو التميز والاستدامة. نسعى دائماً لتقديم أعلى معايير الجودة والابتكار في كل مشروع نتولاه.'}
+                      'في شركة النبراس، نؤمن بأن إدارة المرافق ليست مجرد خدمة تُقدَّم، بل هي شراكة حقيقية نبنيها مع عملائنا نحو التميز والاستدامة. نسعى دائماً لتقديم أعلى معايير الجودة والابتكار في كل مشروع نتولاه.'}
                 </p>
 
                 {/* Divider */}
@@ -671,7 +602,7 @@ export default function HomePage() {
                     {language === 'ar' ? 'محمد المقبلي' : 'MOHAMMED ALMOGBLY'}
                   </p>
                   <p className="text-white/60 text-sm mt-1">
-                    {t('ceo_title')} | {language === 'ar' ? (settings?.company_name_ar || 'النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
+                    {t('ceo_title')} | {language === 'ar' ? (settings?.company_name_ar || 'شركة النبراس لإدارة المرافق') : (settings?.company_name_en || 'Alnebras Facilities Management')}
                   </p>
                 </div>
               </AnimatedSection>

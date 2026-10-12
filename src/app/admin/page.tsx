@@ -92,11 +92,17 @@ interface EventItem {
   isActive: boolean
 }
 
+interface Department {
+  id: string
+  nameEn: string
+  email: string
+}
+
 export default function AdminDashboard() {
   const router = useRouter()
   const [authenticated, setAuthenticated] = useState(false)
   const [authChecking, setAuthChecking] = useState(true)
-  const [activeTab, setActiveTab] = useState<'overview' | 'services' | 'settings' | 'contacts' | 'suppliers' | 'jobs' | 'events'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'services' | 'settings' | 'contacts' | 'suppliers' | 'jobs' | 'events' | 'departments'>('overview')
 
   // Data states
   const [services, setServices] = useState<Service[]>([])
@@ -106,6 +112,7 @@ export default function AdminDashboard() {
   const [jobs, setJobs] = useState<JobListing[]>([])
   const [events, setEvents] = useState<EventItem[]>([])
   const [partners, setPartners] = useState<Partner[]>([])
+  const [departments, setDepartments] = useState<Department[]>([])
 
   // Modal / Form States
   const [showServiceModal, setShowServiceModal] = useState(false)
@@ -144,14 +151,15 @@ export default function AdminDashboard() {
 
   const fetchDashboardData = async () => {
     try {
-      const [srvRes, setRes, conRes, supRes, jobRes, evtRes, partRes] = await Promise.all([
+      const [srvRes, setRes, conRes, supRes, jobRes, evtRes, partRes, depRes] = await Promise.all([
         fetch('/api/services?all=true'),
         fetch('/api/settings'),
         fetch('/api/contact'),
         fetch('/api/supplier'),
         fetch('/api/jobs?all=true'),
         fetch('/api/events?all=true'),
-        fetch('/api/partners?all=true')
+        fetch('/api/partners?all=true'),
+        fetch('/api/departments')
       ])
 
       if (srvRes.ok) setServices(await srvRes.json())
@@ -161,8 +169,26 @@ export default function AdminDashboard() {
       if (jobRes.ok) setJobs(await jobRes.json())
       if (evtRes.ok) setEvents(await evtRes.json())
       if (partRes.ok) setPartners(await partRes.json())
+      if (depRes.ok) setDepartments(await depRes.json())
     } catch (err) {
       triggerAlert('حدث خطأ أثناء تحميل البيانات', 'error')
+    }
+  }
+
+  const saveDepartments = async () => {
+    try {
+      const res = await fetch('/api/departments', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(departments.map(d => ({ id: d.id, email: d.email }))),
+      })
+      if (res.ok) {
+        triggerAlert('تم حفظ إيميلات الأقسام بنجاح', 'success')
+      } else {
+        triggerAlert('تعذر حفظ الإيميلات — تحقق من صيغة البريد', 'error')
+      }
+    } catch {
+      triggerAlert('حدث خطأ أثناء الحفظ', 'error')
     }
   }
 
@@ -362,7 +388,7 @@ export default function AdminDashboard() {
         <div className="flex items-center gap-3 mb-8 pb-5 border-b border-white/10 select-none">
           <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center text-[#011a45] font-bold text-lg">ن</div>
           <div>
-            <h1 className="font-bold text-sm tracking-wide">النبراس لإدارة المرافق</h1>
+            <h1 className="font-bold text-sm tracking-wide">شركة النبراس لإدارة المرافق</h1>
             <span className="text-[10px] text-gray-400">لوحة الإدارة والمحتوى</span>
           </div>
         </div>
@@ -446,6 +472,16 @@ export default function AdminDashboard() {
           >
             <Calendar className="w-5 h-5" />
             <span>الفعاليات والأخبار</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('departments')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+              activeTab === 'departments' ? 'bg-[#012b67] text-white shadow-md' : 'text-gray-300 hover:bg-white/5'
+            }`}
+          >
+            <Mail className="w-5 h-5" />
+            <span>إيميلات الأقسام</span>
           </button>
         </nav>
 
@@ -1049,6 +1085,47 @@ export default function AdminDashboard() {
           </div>
         )}
 
+        {activeTab === 'departments' && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-[#012b67]">إيميلات الأقسام</h2>
+              <button
+                onClick={saveDepartments}
+                className="flex items-center gap-2 px-6 py-3 bg-[#012b67] hover:bg-[#002150] text-white text-sm font-semibold rounded-xl transition-all shadow-md"
+              >
+                حفظ الإيميلات
+              </button>
+            </div>
+            <p className="text-gray-500 text-sm">طلبات التوظيف تُرسل تلقائياً إلى إيميل القسم المرتبط بالوظيفة.</p>
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gray-50 text-gray-400 text-xs font-semibold border-b border-gray-100">
+                    <th className="p-4 text-right">القسم</th>
+                    <th className="p-4 text-right">البريد الإلكتروني</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {departments.map(d => (
+                    <tr key={d.id} className="border-b border-gray-50 hover:bg-gray-50/50">
+                      <td className="p-4 font-bold text-[#012b67] whitespace-nowrap" dir="ltr">{d.nameEn}</td>
+                      <td className="p-4">
+                        <input
+                          type="email"
+                          dir="ltr"
+                          value={d.email}
+                          onChange={(e) => setDepartments(departments.map(x => x.id === d.id ? { ...x, email: e.target.value } : x))}
+                          className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#012b67]"
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
       </main>
 
       {/* ──────────────── MODALS ──────────────── */}
@@ -1205,25 +1282,18 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-500">القسم (عربي)</label>
-                  <input
-                    type="text"
-                    value={editingJob.departmentAr || ''}
-                    onChange={(e) => setEditingJob({ ...editingJob, departmentAr: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-500">القسم (إنجليزي)</label>
-                  <input
-                    type="text"
-                    value={editingJob.departmentEn || ''}
-                    onChange={(e) => setEditingJob({ ...editingJob, departmentEn: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm"
-                  />
-                </div>
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-gray-500">القسم (بالإنجليزية)</label>
+                <select
+                  value={editingJob.departmentEn || ''}
+                  onChange={(e) => setEditingJob({ ...editingJob, departmentEn: e.target.value, departmentAr: e.target.value })}
+                  className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm"
+                >
+                  <option value="">— اختر القسم —</option>
+                  {departments.map(d => (
+                    <option key={d.id} value={d.nameEn}>{d.nameEn}</option>
+                  ))}
+                </select>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

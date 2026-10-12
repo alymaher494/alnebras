@@ -11,6 +11,7 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet'
 import { useNavigationStore, type PageName } from '@/lib/store'
+import LanguageSwitcher from '@/components/shared/LanguageSwitcher'
 import { useTranslation, type TranslationKey } from '@/lib/translations'
 
 const navItems: { label: TranslationKey; page: PageName }[] = [
@@ -32,7 +33,6 @@ export default function Header() {
     closeMobileMenu,
     toggleMobileMenu,
     language,
-    setLanguage,
   } = useNavigationStore()
   const { t } = useTranslation(language)
   const [scrolled, setScrolled] = useState(false)
@@ -56,14 +56,14 @@ export default function Header() {
           <button
             onClick={() => setCurrentPage('home')}
             className="flex-shrink-0 transition-opacity duration-300"
-            aria-label="النبراس لإدارة المرافق"
+            aria-label="شركة النبراس لإدارة المرافق"
           >
             <Image
               src="/logo.png"
-              alt="النبراس"
-              width={140}
-              height={48}
-              className="h-10 md:h-11 w-auto object-contain"
+              alt="شركة النبراس"
+              width={180}
+              height={62}
+              className="h-12 md:h-14 w-auto object-contain"
               priority
             />
           </button>
@@ -87,26 +87,7 @@ export default function Header() {
 
           {/* Desktop: Language Switch */}
           <div className="hidden lg:flex items-center gap-1.5">
-            <button
-              onClick={() => setLanguage('ar')}
-              className={`text-xs font-bold px-3 py-1.5 rounded-md transition-all duration-300 ${
-                language === 'ar'
-                  ? 'bg-[#012b67] text-white hover:bg-[#011d47]'
-                  : 'text-[#6b7280] hover:bg-[#f3f4f6]'
-              }`}
-            >
-              AR
-            </button>
-            <button
-              onClick={() => setLanguage('en')}
-              className={`text-xs font-bold px-3 py-1.5 rounded-md transition-all duration-300 ${
-                language === 'en'
-                  ? 'bg-[#012b67] text-white hover:bg-[#011d47]'
-                  : 'text-[#6b7280] hover:bg-[#f3f4f6]'
-              }`}
-            >
-              EN
-            </button>
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile Menu */}
@@ -131,7 +112,7 @@ export default function Header() {
                 <div className="flex items-center justify-between p-5 border-b border-[#e5e7eb]">
                   <Image
                     src="/logo.png"
-                    alt="النبراس"
+                    alt="شركة النبراس"
                     width={120}
                     height={40}
                     className="h-10 w-auto object-contain"
@@ -166,27 +147,8 @@ export default function Header() {
                 </nav>
 
                 {/* Mobile Footer: Language */}
-                <div className="p-5 border-t border-[#e5e7eb] flex items-center gap-2">
-                  <button
-                    onClick={() => setLanguage('ar')}
-                    className={`text-sm font-bold px-5 py-2.5 rounded-lg w-1/2 ${
-                      language === 'ar'
-                        ? 'text-[#012b67] bg-[#e8eef5]'
-                        : 'text-[#6b7280] hover:bg-[#f3f4f6]'
-                    }`}
-                  >
-                    AR
-                  </button>
-                  <button
-                    onClick={() => setLanguage('en')}
-                    className={`text-sm font-bold px-5 py-2.5 rounded-lg w-1/2 ${
-                      language === 'en'
-                        ? 'text-[#012b67] bg-[#e8eef5]'
-                        : 'text-[#6b7280] hover:bg-[#f3f4f6]'
-                    }`}
-                  >
-                    EN
-                  </button>
+                <div className="p-5 border-t border-[#e5e7eb] flex justify-center">
+                  <LanguageSwitcher />
                 </div>
               </div>
             </SheetContent>

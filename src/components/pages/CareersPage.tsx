@@ -63,22 +63,37 @@ export default function CareersPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.name || !formData.email || !formData.phone || !formData.specialization || !cvFile) {
       toast.error(language === 'ar' ? 'يرجى ملء جميع الحقول وإرفاق السيرة الذاتية' : 'Please fill all fields and attach your CV.')
       return
     }
-    
+
     setSubmitting(true)
-    // Simulate API upload
-    setTimeout(() => {
-      setSubmitting(false)
+    try {
+      const payload = new FormData()
+      payload.append('name', formData.name)
+      payload.append('email', formData.email)
+      payload.append('phone', formData.phone)
+      payload.append('specialization', formData.specialization)
+      if (selectedJob) payload.append('jobId', selectedJob.id)
+      payload.append('cv', cvFile)
+
+      const res = await fetch('/api/applications', { method: 'POST', body: payload })
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error || 'submit failed')
+      }
       toast.success(language === 'ar' ? 'تم تقديم طلبك بنجاح وسنتواصل معك قريباً!' : 'Your application was submitted successfully! We will contact you soon.')
       setSelectedJob(null)
       setFormData({ name: '', email: '', phone: '', specialization: '' })
       setCvFile(null)
-    }, 1500)
+    } catch {
+      toast.error(language === 'ar' ? 'تعذر إرسال الطلب، حاول لاحقاً' : 'Failed to submit, please try later.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (

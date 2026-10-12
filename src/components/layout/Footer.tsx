@@ -66,7 +66,7 @@ export default function Footer() {
           <div>
             <Image
               src="/logo-white.png"
-              alt="النبراس"
+              alt="شركة النبراس"
               width={140}
               height={48}
               className="h-11 w-auto object-contain mb-5 filter brightness-0 invert"
@@ -209,7 +209,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[#7a8da8] text-xs">
             {language === 'ar' 
-              ? `© ${new Date().getFullYear()} النبراس لإدارة المرافق. جميع الحقوق محفوظة.`
+              ? `© ${new Date().getFullYear()} شركة النبراس لإدارة المرافق. جميع الحقوق محفوظة.`
               : `© ${new Date().getFullYear()} Alnebras Facilities Management. All rights reserved.`}
           </p>
           <div className="flex items-center gap-4">

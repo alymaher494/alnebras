@@ -200,7 +200,7 @@ const contractingServices = [
     titleEn: 'Restoration & Rehabilitation',
     descriptionAr: 'نقدم خدمات ترميم متكاملة للمباني والمنشآت القائمة لرفع كفاءتها وإطالة عمرها الافتراضي.',
     descriptionEn: 'We provide integrated restoration services for existing buildings and facilities to increase their efficiency and lifespan.',
-    image: '/images/services/page3_img14.jpg'
+    image: '/images/services/real-gc-1.webp'
   },
   {
     id: 'gc-2',
@@ -208,7 +208,7 @@ const contractingServices = [
     titleEn: 'Finishing & Decoration',
     descriptionAr: 'تنفيذ أعمال التشطيبات الداخلية والخارجية الفاخرة بأعلى معايير الدقة والجمالية.',
     descriptionEn: 'Execution of luxurious interior and exterior finishing works with the highest standards of accuracy and aesthetics.',
-    image: '/images/services/page3_img16.jpg'
+    image: '/images/services/real-gc-2.webp'
   },
   {
     id: 'gc-3',
@@ -216,7 +216,7 @@ const contractingServices = [
     titleEn: 'Construction Works',
     descriptionAr: 'تنفيذ كافة المشاريع الإنشائية وتشييد المباني السكنية والتجارية تحت إشراف هندسي متكامل.',
     descriptionEn: 'Execution of all construction projects and residential and commercial buildings under integrated engineering supervision.',
-    image: '/images/services/page3_img17.jpg'
+    image: '/images/services/real-gc-3.webp'
   },
   {
     id: 'gc-4',
@@ -224,7 +224,7 @@ const contractingServices = [
     titleEn: 'Water & Thermal Insulation',
     descriptionAr: 'حلول عزل متكاملة لحماية المنشآت من تسربات المياه وتقلبات درجات الحرارة.',
     descriptionEn: 'Integrated insulation solutions to protect facilities from water leaks and temperature fluctuations.',
-    image: '/images/services/page3_img9.jpg'
+    image: '/images/services/real-gc-4.webp'
   },
   {
     id: 'gc-5',
@@ -232,7 +232,7 @@ const contractingServices = [
     titleEn: 'Roads & Asphalt Works',
     descriptionAr: 'تمهيد وسفلتة الطرق والساحات للمشاريع السكنية والصناعية والتجارية بدقة متناهية.',
     descriptionEn: 'Paving and asphalting roads and yards for residential, industrial, and commercial projects with extreme accuracy.',
-    image: '/images/services/page3_img12.jpg'
+    image: '/images/services/real-gc-5.webp'
   },
   {
     id: 'gc-6',
@@ -240,7 +240,7 @@ const contractingServices = [
     titleEn: 'Electromechanical Systems',
     descriptionAr: 'تصميم وتركيب وصيانة شبكات التكييف والتبريد، والأنظمة الكهربائية والصحية.',
     descriptionEn: 'Design, installation, and maintenance of HVAC networks, electrical, and plumbing systems.',
-    image: '/images/services/page3_img21.jpg'
+    image: '/images/services/real-gc-6.webp'
   }
 ]
 

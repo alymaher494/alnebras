@@ -127,7 +127,7 @@ function HeroBanner({ language }: { language: 'ar' | 'en' }) {
           className="text-white/85 text-lg md:text-xl max-w-2xl leading-relaxed"
         >
           {language === 'ar'
-            ? 'تابع آخر الأخبار والصور من عالم النبراس'
+            ? 'تابع آخر الأخبار والصور من عالم شركة النبراس'
             : 'Follow the latest news and photos from the Alnebras world.'}
         </motion.p>
       </div>
