@@ -65,7 +65,7 @@ export default function Footer() {
           {/* Column 1: Company Info */}
           <div>
             <Image
-              src="/logo-white.png"
+              src="/logo-white.webp"
               alt="شركة النبراس"
               width={140}
               height={48}
@@ -214,7 +214,7 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-4">
             <Image
-              src="/images/logo/vision-2030.png"
+              src="/images/logo/vision-2030.webp"
               alt="رؤية السعودية 2030"
               width={70}
               height={30}

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -97,7 +97,7 @@ function HeroBanner({ language }: { language: 'ar' | 'en' }) {
   return (
     <section className="relative w-full h-[45vh] min-h-[340px] md:min-h-[400px] overflow-hidden">
       <Image
-        src="/images/media_hero.png"
+        src="/images/media_hero.webp"
         alt="المركز الإعلامي"
         fill
         className="object-cover"
@@ -185,7 +185,7 @@ function NewsCard({
       <div className="group card-modern bg-white shadow-[0_4px_24px_rgba(1,43,103,0.08)] h-full">
         <div className="relative h-52 overflow-hidden">
           <Image
-            src={article.image || '/images/office.jpg'}
+            src={article.image || '/images/office.webp'}
             alt={aTitle}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -247,7 +247,7 @@ function EventCard({
       <div className="group card-modern bg-white shadow-[0_4px_24px_rgba(1,43,103,0.08)] h-full">
         <div className="relative h-52 overflow-hidden">
           <Image
-            src={event.image || '/images/facility.jpg'}
+            src={event.image || '/images/facility.webp'}
             alt={eTitle}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"

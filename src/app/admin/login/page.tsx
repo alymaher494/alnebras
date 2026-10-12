@@ -54,7 +54,7 @@ export default function AdminLogin() {
           <div className="mb-8 select-none flex justify-center">
             <div className="relative w-48 h-16">
               <Image 
-                src="/images/logo/logo.png" 
+                src="/logo.webp" 
                 alt="Alnebras Logo" 
                 fill 
                 className="object-contain"

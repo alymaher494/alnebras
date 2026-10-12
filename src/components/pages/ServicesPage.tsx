@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -19,12 +19,21 @@ interface Service {
   image: string | null
 }
 
-/* Available service image numbers (from /images/services/) */
-const SERVICE_IMG_NUMBERS = [3, 4, 5, 7, 9, 10, 12, 14, 16, 17, 18, 19, 21, 23, 24]
+/* Fallback service images (real photos) */
+const SERVICE_FALLBACK_IMAGES = [
+  '/images/services/real-fm-01.webp',
+  '/images/services/real-fm-03.webp',
+  '/images/services/real-fm-05.webp',
+  '/images/services/real-fm-07.webp',
+  '/images/services/real-fm-10.webp',
+  '/images/services/real-fm-11.webp',
+  '/images/services/real-gc-1.webp',
+  '/images/services/real-gc-3.webp',
+  '/images/services/real-gc-5.webp',
+]
 
 function getServiceImage(index: number): string {
-  const num = SERVICE_IMG_NUMBERS[index % SERVICE_IMG_NUMBERS.length]
-  return `/images/services/page3_img${num}.jpg`
+  return SERVICE_FALLBACK_IMAGES[index % SERVICE_FALLBACK_IMAGES.length]
 }
 
 /* ─── Loading Skeleton ─── */
@@ -48,7 +57,7 @@ function HeroBanner({ language }: { language: 'ar' | 'en' }) {
     <section className="relative w-full h-[46vh] min-h-[360px] md:min-h-[420px] overflow-hidden">
       {/* Background Image */}
       <Image
-        src="/images/services_hero.png"
+        src="/images/services_hero.webp"
         alt="إدارة المرافق"
         fill
         className="object-cover"
@@ -130,7 +139,7 @@ function VisualBreak({ language }: { language: 'ar' | 'en' }) {
     <section className="relative w-full h-[40vh] min-h-[300px] overflow-hidden">
       {/* Background */}
       <Image
-        src="/images/services_hero.png"
+        src="/images/services_hero.webp"
         alt="حلول متكاملة لإدارة المرافق"
         fill
         className="object-cover"
@@ -161,7 +170,7 @@ function ContractingTeaser({ language }: { language: 'ar' | 'en' }) {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/services/page3_img21.jpg"
+          src="/images/services/real-gc-3.webp"
           alt="المقاولات العامة"
           fill
           className="object-cover"

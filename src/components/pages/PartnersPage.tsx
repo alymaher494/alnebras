@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
@@ -51,7 +51,7 @@ export default function PartnersPage() {
       {/* Hero Banner */}
       <section className="relative w-full h-[40vh] min-h-[300px] overflow-hidden">
         <Image
-          src="/images/services_hero.png"
+          src="/images/services_hero.webp"
           alt="شركاؤنا"
           fill
           className="object-cover"
@@ -107,7 +107,7 @@ export default function PartnersPage() {
                               src={partner.logo}
                               alt={partner.name}
                               fill
-                              className="object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                              className="object-contain transition-all duration-300"
                             />
                           </div>
                         ) : (
@@ -143,7 +143,7 @@ export default function PartnersPage() {
                               src={partner.logo}
                               alt={partner.name}
                               fill
-                              className="object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                              className="object-contain transition-all duration-300"
                             />
                           </div>
                         ) : (

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, type FormEvent } from 'react'
 import Image from 'next/image'
@@ -19,7 +19,7 @@ function HeroBanner({ language }: { language: 'ar' | 'en' }) {
   return (
     <section className="relative w-full h-[45vh] min-h-[340px] md:min-h-[400px] overflow-hidden">
       <Image
-        src="/images/contact_hero.png"
+        src="/images/contact_hero.webp"
         alt="تواصل معنا"
         fill
         className="object-cover"
@@ -286,7 +286,7 @@ function MapSection({ language }: { language: 'ar' | 'en' }) {
     <AnimatedSection>
       <section className="relative w-full py-24 md:py-32 overflow-hidden">
         <Image
-          src="/images/contact_hero.png"
+          src="/images/contact_hero.webp"
           alt="موقعنا"
           fill
           className="object-cover"

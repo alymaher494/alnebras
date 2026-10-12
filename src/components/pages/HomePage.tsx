@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -174,6 +174,7 @@ export default function HomePage() {
           muted
           loop
           playsInline
+          preload="auto"
           poster="/video/poster.jpg"
           className="absolute inset-0 w-full h-full object-cover object-center"
         >
@@ -323,7 +324,7 @@ export default function HomePage() {
           5. FULL-WIDTH VISUAL BREAK
           ════════════════════════════════════════════════════ */}
       <section className="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center overflow-hidden parallax-section"
-        style={{ backgroundImage: "url('/images/services_hero.png')" }}
+        style={{ backgroundImage: "url('/images/services_hero.webp')" }}
       >
         <div className="absolute inset-0 bg-[#012b67]/75" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -508,11 +509,11 @@ export default function HomePage() {
                 >
                   <div className="w-36 h-24 md:w-44 md:h-28 bg-white rounded-xl border border-[#e5e7eb] flex items-center justify-center p-4 transition-all duration-300 hover:shadow-md hover:border-[#012b67]/20">
                     <Image
-                      src={partner.logo || '/logo.png'}
+                      src={partner.logo || '/logo.webp'}
                       alt={partner.name}
                       width={120}
                       height={50}
-                      className="max-h-12 w-auto object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                      className="max-h-12 w-auto object-contain transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -525,11 +526,11 @@ export default function HomePage() {
                 >
                   <div className="w-36 h-24 md:w-44 md:h-28 bg-white rounded-xl border border-[#e5e7eb] flex items-center justify-center p-4 transition-all duration-300 hover:shadow-md hover:border-[#012b67]/20">
                     <Image
-                      src={partner.logo || '/logo.png'}
+                      src={partner.logo || '/logo.webp'}
                       alt={partner.name}
                       width={120}
                       height={50}
-                      className="max-h-12 w-auto object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                      className="max-h-12 w-auto object-contain transition-all duration-300"
                     />
                   </div>
                 </div>
@@ -561,12 +562,11 @@ export default function HomePage() {
             <div className="lg:col-span-4 flex justify-center order-first lg:order-last">
               <div className="relative w-72 h-80 sm:w-80 sm:h-96 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 border-white/20 group">
                 <Image
-                  src="/images/ceo.jpg"
+                  src="/images/ceo.webp"
                   alt={t('ceo_title')}
                   fill
                   className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, 320px"
-                  priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#012b67]/40 via-transparent to-transparent" />
               </div>

@@ -1,17 +1,16 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Check, ChevronDown, Globe } from 'lucide-react'
+import { Check, ChevronDown } from 'lucide-react'
 import { useNavigationStore } from '@/lib/store'
 
 function SaudiFlag({ className = 'w-5 h-4' }: { className?: string }) {
   return (
     <svg viewBox="0 0 20 14" className={`${className} rounded-[2px] flex-shrink-0`} aria-hidden="true">
       <rect width="20" height="14" fill="#006c35" />
-      <text x="10" y="7.2" textAnchor="middle" fontSize="4.2" fill="#fff" fontFamily="sans-serif">
-        لا إله إلا الله
-      </text>
-      <rect x="6" y="10" width="8" height="0.9" rx="0.45" fill="#fff" />
+      <path d="M4 4.6h12" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" />
+      <path d="M6.5 7.2h7" stroke="#fff" strokeWidth="1.1" strokeLinecap="round" opacity="0.9" />
+      <path d="M5 10.4h10l-1.2-1 1.2-1H5z" fill="#fff" />
     </svg>
   )
 }
@@ -63,7 +62,6 @@ export default function LanguageSwitcher() {
         aria-label={language === 'ar' ? 'تغيير اللغة' : 'Change language'}
         className="flex items-center gap-2 text-xs font-bold px-3 py-2 rounded-lg text-[#012b67] hover:bg-[#f3f4f6] border border-[#e5e7eb] transition-colors"
       >
-        <Globe className="w-4 h-4 text-[#6b7280]" />
         {current.flag}
         <span>{current.label}</span>
         <ChevronDown className={`w-3.5 h-3.5 text-[#6b7280] transition-transform ${open ? 'rotate-180' : ''}`} />

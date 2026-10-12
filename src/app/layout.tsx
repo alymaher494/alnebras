@@ -6,12 +6,16 @@ import WhatsAppButton from '@/components/shared/WhatsAppButton'
 const cairo = Cairo({
   variable: '--font-cairo',
   subsets: ['arabic', 'latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '600', '700'],
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'شركة النبراس لإدارة المرافق',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://alnebras.com'),
+  title: {
+    default: 'شركة النبراس لإدارة المرافق',
+    template: '%s | شركة النبراس لإدارة المرافق',
+  },
   description:
     'شركة النبراس لإدارة المرافق - حلول ذكية ومتخصصة في إدارة المرافق وعملياتها وصيانتها عبر مجموعة واسعة من القطاعات في المملكة العربية السعودية ومصر.',
   keywords: [
@@ -28,6 +32,16 @@ export const metadata: Metadata = {
     description:
       'حلول ذكية ومتخصصة في إدارة المرافق وعملياتها وصيانتها',
     type: 'website',
+    locale: 'ar_SA',
+    siteName: 'شركة النبراس لإدارة المرافق',
+    images: ['/logo.webp'],
+  },
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 }
 

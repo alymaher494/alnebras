@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -144,7 +144,7 @@ export default function AboutPage() {
       <section className="relative h-[50vh] min-h-[360px] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <Image
-          src="/images/about_hero.png"
+          src="/images/about_hero.webp"
           alt="من نحن - شركة النبراس لإدارة المرافق"
           fill
           className="object-cover scale-105"
@@ -499,14 +499,13 @@ export default function AboutPage() {
             {/* CEO Image Column */}
             <div className="lg:col-span-4 flex justify-center order-first lg:order-last">
               <div className="relative w-72 h-80 sm:w-80 sm:h-96 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] border-4 border-white/20 group">
-                <Image
-                  src="/images/ceo.jpg"
-                  alt={t('ceo_title')}
-                  fill
-                  className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, 320px"
-                  priority
-                />
+                  <Image
+                    src="/images/ceo.webp"
+                    alt={t('ceo_title')}
+                    fill
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, 320px"
+                  />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#012b67]/40 via-transparent to-transparent" />
               </div>
             </div>

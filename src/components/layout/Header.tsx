@@ -59,7 +59,7 @@ export default function Header() {
             aria-label="شركة النبراس لإدارة المرافق"
           >
             <Image
-              src="/logo.png"
+              src="/logo.webp"
               alt="شركة النبراس"
               width={180}
               height={62}
@@ -111,7 +111,7 @@ export default function Header() {
                 {/* Mobile Header */}
                 <div className="flex items-center justify-between p-5 border-b border-[#e5e7eb]">
                   <Image
-                    src="/logo.png"
+                    src="/logo.webp"
                     alt="شركة النبراس"
                     width={120}
                     height={40}

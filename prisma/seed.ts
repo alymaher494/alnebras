@@ -272,24 +272,24 @@ async function main() {
   // ─── Partners ────────────────────────────────────────────────────
   const partners = [
     // Saudi Partners
-    { name: 'وزارة الدفاع', logo: '/images/partners/الشركة السعودية.png', country: 'KSA', order: 1 },
-    { name: 'أرامكو السعودية', logo: '/images/partners/الرياض.png', country: 'KSA', order: 2 },
-    { name: 'اليمامة', logo: '/images/partners/اليمامة.png', country: 'KSA', order: 3 },
-    { name: 'دار الرياض', logo: '/images/partners/دار الرياض.png', country: 'KSA', order: 4 },
-    { name: 'فقيه', logo: '/images/partners/فقيه.png', country: 'KSA', order: 5 },
-    { name: 'الزيني', logo: '/images/partners/الزيني.png', country: 'KSA', order: 6 },
-    { name: 'عبد اللطيف جميل', logo: '/images/partners/عبد اللطيف جميل .png', country: 'KSA', order: 7 },
-    { name: 'جمعية البر', logo: '/images/partners/حمعية البر.png', country: 'KSA', order: 8 },
+    { name: 'وزارة الدفاع', logo: '/images/partners/الشركة السعودية.webp', country: 'KSA', order: 1 },
+    { name: 'أرامكو السعودية', logo: '/images/partners/الرياض.webp', country: 'KSA', order: 2 },
+    { name: 'اليمامة', logo: '/images/partners/اليمامة.webp', country: 'KSA', order: 3 },
+    { name: 'دار الرياض', logo: '/images/partners/دار الرياض.webp', country: 'KSA', order: 4 },
+    { name: 'فقيه', logo: '/images/partners/فقيه.webp', country: 'KSA', order: 5 },
+    { name: 'الزيني', logo: '/images/partners/الزيني.webp', country: 'KSA', order: 6 },
+    { name: 'عبد اللطيف جميل', logo: '/images/partners/عبد اللطيف جميل .webp', country: 'KSA', order: 7 },
+    { name: 'جمعية البر', logo: '/images/partners/حمعية البر.webp', country: 'KSA', order: 8 },
     
     // Egypt Partners
-    { name: 'Developer X', logo: '/images/partners/DEVLOPER X.png', country: 'Egypt', order: 9 },
-    { name: 'Living Yards', logo: '/images/partners/LIVING YARDS.png', country: 'Egypt', order: 10 },
-    { name: 'A B M', logo: '/images/partners/A B M.png', country: 'Egypt', order: 11 },
-    { name: 'Lexus', logo: '/images/partners/LEXUS.png', country: 'Egypt', order: 12 },
-    { name: 'King\'s', logo: '/images/partners/KING\'S.png', country: 'Egypt', order: 13 },
-    { name: 'RG Fit', logo: '/images/partners/RG FIT.png', country: 'Egypt', order: 14 },
-    { name: 'Saba', logo: '/images/partners/SABA.png', country: 'Egypt', order: 15 },
-    { name: 'RPC', logo: '/images/partners/RPC.png', country: 'Egypt', order: 16 },
+    { name: 'Developer X', logo: '/images/partners/DEVLOPER X.webp', country: 'Egypt', order: 9 },
+    { name: 'Living Yards', logo: '/images/partners/LIVING YARDS.webp', country: 'Egypt', order: 10 },
+    { name: 'A B M', logo: '/images/partners/A B M.webp', country: 'Egypt', order: 11 },
+    { name: 'Lexus', logo: '/images/partners/LEXUS.webp', country: 'Egypt', order: 12 },
+    { name: 'King\'s', logo: '/images/partners/KING\'S.webp', country: 'Egypt', order: 13 },
+    { name: 'RG Fit', logo: '/images/partners/RG FIT.webp', country: 'Egypt', order: 14 },
+    { name: 'Saba', logo: '/images/partners/SABA.webp', country: 'Egypt', order: 15 },
+    { name: 'RPC', logo: '/images/partners/RPC.webp', country: 'Egypt', order: 16 },
   ]
 
   for (const partner of partners) {
@@ -308,7 +308,7 @@ async function main() {
       addressAr: 'حي الرويس، طريق المدينة، مبني المحمدية بلازا 31، الطابق الثالث، مكتب رقم 4963',
       phone: '920028911',
       email: 'info@alnebras.com.sa',
-      image: '/images/branches/jeddah_branch.png',
+      image: '/images/branches/jeddah_branch.webp',
       latitude: 21.5433,
       longitude: 39.1728,
       order: 1,
@@ -322,7 +322,7 @@ async function main() {
       addressAr: '٨ شارع الهداية - حي السفارات - مدينة نصر',
       phone: '2011731149',
       email: 'info@alnebras.com.sa',
-      image: '/images/branches/cairo_branch.png',
+      image: '/images/branches/cairo_branch.webp',
       latitude: 30.0444,
       longitude: 31.2357,
       order: 2,
