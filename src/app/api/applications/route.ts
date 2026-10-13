@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
     const email = str('email').slice(0, 200)
     const phone = str('phone').slice(0, 40)
     const specialization = str('specialization').slice(0, 200)
+    const departmentName = str('department').slice(0, 120)
     const jobId = str('jobId').slice(0, 60)
     const file = formData.get('cv')
 
@@ -77,8 +78,17 @@ export async function POST(request: NextRequest) {
     const filename = `cv-${Date.now()}-${randomBytes(8).toString('hex')}.${ext}`
     await writeFile(join(uploadsDir, filename), buffer)
 
-    // Resolve the responsible department email
+    // Resolve the responsible department email:
+    // explicit choice > job's department > Recruitment fallback
     let department: { nameEn: string; email: string } | null = null
+    if (departmentName) {
+      department = await db.department.findFirst({
+        where: { nameEn: departmentName, isActive: true },
+      })
+      if (!department) {
+        return NextResponse.json({ error: 'القسم المختار غير متاح' }, { status: 400 })
+      }
+    }
     if (job?.departmentEn) {
       department = await db.department.findFirst({
         where: { nameEn: job.departmentEn, isActive: true },
