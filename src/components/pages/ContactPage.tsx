@@ -3,7 +3,7 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { MapPin, Phone, Mail, Send, Loader2, ArrowLeft } from 'lucide-react'
+import { MapPin, Phone, Mail, Send, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -224,7 +224,7 @@ function ContactForm({ language }: { language: 'ar' | 'en' }) {
   )
 }
 
-/* ──────────── Branch Card ──────────── */
+/* ──────────── Branch Card (info + embedded map) ──────────── */
 function BranchCard({
   branch,
   delay,
@@ -234,104 +234,48 @@ function BranchCard({
   delay: number
   language: 'ar' | 'en'
 }) {
+  const mapSrc = `https://maps.google.com/maps?q=${branch.latitude},${branch.longitude}&z=15&output=embed`
   return (
-    <AnimatedSection delay={delay}>
-      <div className={`group bg-white rounded-2xl shadow-[0_4px_24px_rgba(1,43,103,0.08)] p-6 transition-all duration-300 hover:shadow-[0_8px_32px_rgba(1,43,103,0.14)] hover:-translate-y-1 ${language === 'ar' ? 'border-r-4 border-r-[#012b67]' : 'border-l-4 border-l-[#012b67]'}`}>
-        <h3 className="text-xl font-bold text-[#012b67] mb-1">{branch.city}</h3>
-        <p className="text-[#6b7280] text-sm mb-5">{branch.country}</p>
-        <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#e8eef5] flex items-center justify-center flex-shrink-0 mt-0.5">
-              <MapPin className="w-4.5 h-4.5 text-[#012b67]" />
+    <AnimatedSection delay={delay} className="h-full">
+      <div className="bg-white rounded-2xl shadow-[0_4px_24px_rgba(1,43,103,0.08)] overflow-hidden h-full flex flex-col transition-all duration-300 hover:shadow-[0_8px_32px_rgba(1,43,103,0.14)]">
+        <div className="p-6 md:p-8">
+          <h3 className="text-xl font-bold text-[#012b67] mb-1">{branch.city}</h3>
+          <p className="text-[#6b7280] text-sm mb-5">{branch.country}</p>
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <div className="w-9 h-9 rounded-lg bg-[#e8eef5] flex items-center justify-center flex-shrink-0 mt-0.5">
+                <MapPin className="w-4.5 h-4.5 text-[#012b67]" />
+              </div>
+              <p className="text-[#374151] text-sm leading-relaxed">
+                {branch.address}
+              </p>
             </div>
-            <p className="text-[#374151] text-sm leading-relaxed">
-              {branch.address}
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#e8eef5] flex items-center justify-center flex-shrink-0">
-              <Phone className="w-4.5 h-4.5 text-[#012b67]" />
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-[#e8eef5] flex items-center justify-center flex-shrink-0">
+                <Phone className="w-4.5 h-4.5 text-[#012b67]" />
+              </div>
+              <p className="text-[#374151] text-sm" dir="ltr">
+                {branch.phone}
+              </p>
             </div>
-            <p className="text-[#374151] text-sm" dir="ltr">
-              {branch.phone}
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#e8eef5] flex items-center justify-center flex-shrink-0">
-              <Mail className="w-4.5 h-4.5 text-[#012b67]" />
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-[#e8eef5] flex items-center justify-center flex-shrink-0">
+                <Mail className="w-4.5 h-4.5 text-[#012b67]" />
+              </div>
+              <p className="text-[#374151] text-sm">{branch.email}</p>
             </div>
-            <p className="text-[#374151] text-sm">{branch.email}</p>
           </div>
-          {/* Google Maps link */}
-          <div className="pt-2">
-            <a
-              href={branch.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center text-xs font-bold text-[#012b67] hover:underline"
-            >
-              {language === 'ar' ? 'عرض على خريطة جوجل ←' : 'View on Google Maps ←'}
-            </a>
-          </div>
+        </div>
+        <div className="mt-auto px-6 pb-6 md:px-8 md:pb-8">
+          <iframe
+            title={`${language === 'ar' ? 'خريطة' : 'Map'} - ${branch.city}`}
+            src={mapSrc}
+            className="w-full h-64 rounded-xl border border-[#e5e7eb]"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </div>
       </div>
-    </AnimatedSection>
-  )
-}
-
-/* ──────────── Map Section ──────────── */
-function MapSection({ language }: { language: 'ar' | 'en' }) {
-  const branches = getBranchesList(language)
-  return (
-    <AnimatedSection>
-      <section className="relative w-full py-24 md:py-32 overflow-hidden">
-        <Image
-          src="/images/contact_hero.webp"
-          alt="موقعنا"
-          fill
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-[#012b67]/75" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              {language === 'ar' ? 'نحن هنا لخدمتك' : 'We are here to serve you'}
-            </h2>
-            <div className="h-[3px] w-20 bg-white/70 rounded-full mx-auto mb-8" />
-            <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              {language === 'ar' ? 'تواصل معنا في أي من فروعنا ونحن سعداء بخدمتك' : 'Contact us at any of our branches and we are happy to serve you.'}
-            </p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {branches.map((branch, i) => (
-              <motion.div
-                key={branch.city}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: i * 0.15, ease: 'easeOut' }}
-                className="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-6 text-center"
-              >
-                <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center mx-auto mb-4">
-                  <MapPin className="w-6 h-6 text-white" />
-                </div>
-                <h4 className="text-white font-bold text-lg mb-1">
-                  {branch.city} - {branch.country}
-                </h4>
-                <p className="text-white/70 text-sm leading-relaxed">
-                  {branch.address}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
     </AnimatedSection>
   )
 }
@@ -345,26 +289,21 @@ export default function ContactPage() {
     <div className="pt-20" dir={language === 'ar' ? 'rtl' : 'ltr'}>
       <HeroBanner language={language} />
 
-      {/* Main Content */}
+      {/* Main Content: branches side-by-side full width, form below */}
       <section className="py-16 md:py-24 bg-[#f8f9fb]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14">
-            {/* Form - 3/5 */}
-            <AnimatedSection className="lg:col-span-3">
-              <ContactForm language={language} />
-            </AnimatedSection>
-
-            {/* Branches - 2/5 */}
-            <div className="lg:col-span-2 space-y-6">
-              <BranchCard branch={branches[0]} delay={0.1} language={language} />
-              <BranchCard branch={branches[1]} delay={0.2} language={language} />
-            </div>
+          {/* Branches row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-16">
+            <BranchCard branch={branches[0]} delay={0.1} language={language} />
+            <BranchCard branch={branches[1]} delay={0.2} language={language} />
           </div>
+
+          {/* Form full width below */}
+          <AnimatedSection className="max-w-4xl mx-auto">
+            <ContactForm language={language} />
+          </AnimatedSection>
         </div>
       </section>
-
-      {/* Map Section */}
-      <MapSection language={language} />
     </div>
   )
 }

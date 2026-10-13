@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
-  Eye,
   Target,
   Award,
   ShieldCheck,
@@ -294,10 +293,17 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {/* Vision Card */}
             <AnimatedSection>
-              <div className="bg-white rounded-2xl shadow-md p-8 md:p-10 h-full card-modern border border-[#e5e7eb]/50">
-                <div className="w-16 h-16 bg-[#e8eef5] rounded-2xl flex items-center justify-center mb-6">
-                  <Eye className="w-8 h-8 text-[#012b67]" />
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden h-full card-modern border border-[#e5e7eb]/50">
+                <div className="relative h-52 md:h-60">
+                  <Image
+                    src="/images/gallery/gallery-26.webp"
+                    alt={language === 'ar' ? 'رؤية شركة النبراس' : 'Alnebras vision'}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
+                <div className="p-8 md:p-10">
                 <h3 className="text-2xl font-bold text-[#012b67] mb-4">{t('vision')}</h3>
                 <div className="accent-line mb-5" />
                 <p className="text-[#374151] text-base md:text-lg leading-[2]">
@@ -306,15 +312,23 @@ export default function AboutPage() {
                     : (language === 'ar' ? settings?.vision_ar : settings?.vision_en) ||
                       'أن نكون الخيار الأول والموثوق لإدارة المرافق على مستوى المملكة العربية السعودية، ونساهم في رفع معايير الجودة والكفاءة في هذا القطاع الحيوي.'}
                 </p>
+                </div>
               </div>
             </AnimatedSection>
 
             {/* Mission Card */}
             <AnimatedSection delay={0.15}>
-              <div className="bg-white rounded-2xl shadow-md p-8 md:p-10 h-full card-modern border border-[#e5e7eb]/50">
-                <div className="w-16 h-16 bg-[#e8eef5] rounded-2xl flex items-center justify-center mb-6">
-                  <Target className="w-8 h-8 text-[#012b67]" />
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden h-full card-modern border border-[#e5e7eb]/50">
+                <div className="relative h-52 md:h-60">
+                  <Image
+                    src="/images/gallery/gallery-04.webp"
+                    alt={language === 'ar' ? 'رسالة شركة النبراس' : 'Alnebras mission'}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
+                <div className="p-8 md:p-10">
                 <h3 className="text-2xl font-bold text-[#012b67] mb-4">{t('mission')}</h3>
                 <div className="accent-line mb-5" />
                 <p className="text-[#374151] text-base md:text-lg leading-[2]">
@@ -323,6 +337,7 @@ export default function AboutPage() {
                     : (language === 'ar' ? settings?.mission_ar : settings?.mission_en) ||
                       'تقديم خدمات إدارة مرافق متكاملة ومبتكرة تتجاوز توقعات عملائنا، من خلال فريق عمل محترف وشراكات استراتيجية فعالة، مع الالتزام بأعلى معايير الجودة والسلامة والاستدامة.'}
                 </p>
+                </div>
               </div>
             </AnimatedSection>
           </div>
