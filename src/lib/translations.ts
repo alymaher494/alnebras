@@ -31,6 +31,7 @@ export const translations = {
     sending: 'جاري الإرسال...',
     upload_file: 'رفع ملف بروفايل الشركة',
     select_file: 'اختر ملفاً',
+    download_profile: 'تحميل بروفايل الشركة',
 
     // Titles
     vision: 'الرؤية',
@@ -107,6 +108,7 @@ export const translations = {
     sending: 'Sending...',
     upload_file: 'Upload Company Profile',
     select_file: 'Select a file',
+    download_profile: 'Download Company Profile',
 
     // Titles
     vision: 'Vision',

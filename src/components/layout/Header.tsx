@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Menu, X } from 'lucide-react'
+import { Download, Menu, X } from 'lucide-react'
 import {
   Sheet,
   SheetContent,
@@ -85,9 +85,18 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Desktop: Language Switch */}
+          {/* Desktop: Language Switch + Profile Download */}
           <div className="hidden lg:flex items-center gap-1.5">
             <LanguageSwitcher />
+            <a
+              href={language === 'ar' ? '/company-profile-ar.pdf' : '/company-profile-en.pdf'}
+              download
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold text-[#012b67] hover:bg-[#f3f4f6] border border-[#e5e7eb] transition-colors"
+              aria-label={language === 'ar' ? 'حميل بروفايل الشركة' : 'Download Company Profile'}
+            >
+              <Download className="w-4 h-4" />
+              <span>{t('download_profile')}</span>
+            </a>
           </div>
 
           {/* Mobile Menu */}
@@ -146,9 +155,18 @@ export default function Header() {
                   ))}
                 </nav>
 
-                {/* Mobile Footer: Language */}
-                <div className="p-5 border-t border-[#e5e7eb] flex justify-center">
+                {/* Mobile Footer: Language + Profile */}
+                <div className="p-5 border-t border-[#e5e7eb] flex flex-col gap-3">
                   <LanguageSwitcher />
+                  <a
+                    href={language === 'ar' ? '/company-profile-ar.pdf' : '/company-profile-en.pdf'}
+                    download
+                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold text-[#012b67] bg-[#e8eef5] hover:bg-[#d4e0ee] transition-colors"
+                    aria-label={language === 'ar' ? 'حميل بروفايل الشركة' : 'Download Company Profile'}
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>{t('download_profile')}</span>
+                  </a>
                 </div>
               </div>
             </SheetContent>
