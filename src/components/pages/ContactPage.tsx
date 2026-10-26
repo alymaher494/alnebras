@@ -132,7 +132,7 @@ function ContactForm({ language }: { language: 'ar' | 'en' }) {
       <h3 className="text-2xl font-bold text-[#012b67] mb-6">
         {language === 'ar' ? 'أرسل لنا رسالة' : 'Send us a message'}
       </h3>
-      <form onSubmit={handleSubmit} className="space-y-5 text-right">
+      <form onSubmit={handleSubmit} className="space-y-5 text-start">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="space-y-2">
             <Label htmlFor="name">

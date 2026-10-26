@@ -16,7 +16,7 @@ export default function SectionTitle({
   const isCenter = align === 'center'
 
   return (
-    <AnimatedSection className={`mb-12 ${isCenter ? 'text-center' : 'text-right'}`}>
+    <AnimatedSection className={`mb-12 ${isCenter ? 'text-center' : 'text-start'}`}>
       <h2 className="text-3xl md:text-4xl font-bold text-[#012b67] mb-4">
         {title}
       </h2>

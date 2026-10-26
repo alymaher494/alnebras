@@ -59,8 +59,8 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Toaster position="top-center" richColors dir="rtl" />
-      <div className="flex-1">
+      <Toaster position="top-center" richColors dir={language === 'ar' ? 'rtl' : 'ltr'} />
+      <div className="flex-1" dir={language === 'ar' ? 'rtl' : 'ltr'}>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentPage}
