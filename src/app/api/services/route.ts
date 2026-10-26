@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     if (!parsed.success) {
       return NextResponse.json({ error: 'الاسم العربي والوصف العربي مطلوبان' }, { status: 400 })
     }
-    const { titleAr, titleEn, descriptionAr, descriptionEn, icon, image, order } = parsed.data
+    const { titleAr, titleEn, descriptionAr, descriptionEn, icon, image, category, order } = parsed.data
 
     const service = await db.service.create({
       data: {
@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
         descriptionEn: descriptionEn ?? undefined,
         icon: icon || 'Sparkles',
         image: image ?? undefined,
+        category: category ?? 'facilities-management',
         order: order ?? 0,
       },
     })

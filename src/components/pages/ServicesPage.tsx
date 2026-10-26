@@ -7,6 +7,7 @@ import AnimatedSection from '@/components/shared/AnimatedSection'
 import SectionTitle from '@/components/shared/SectionTitle'
 import { useNavigationStore } from '@/lib/store'
 import { useTranslation } from '@/lib/translations'
+import { getServiceIcon } from '@/lib/service-icons'
 
 interface Service {
   id: string
@@ -15,6 +16,7 @@ interface Service {
   descriptionAr: string
   descriptionEn: string | null
   icon: string
+  category: 'facilities-management' | 'general-contracting'
   order: number
   image: string | null
 }
@@ -103,6 +105,7 @@ function ServiceCard({ service, index, language }: { service: Service; index: nu
   const imgSrc = service.image || getServiceImage(index)
   const sTitle = language === 'ar' ? service.titleAr : (service.titleEn || service.titleAr)
   const sDesc = language === 'ar' ? service.descriptionAr : (service.descriptionEn || service.descriptionAr)
+  const Icon = getServiceIcon(service.icon)
 
   return (
     <AnimatedSection delay={index * 0.05}>
@@ -117,6 +120,9 @@ function ServiceCard({ service, index, language }: { service: Service; index: nu
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           <div className="img-overlay" />
+          <div className="absolute right-3 top-3 rounded-xl bg-white/95 p-2 text-[#012b67] shadow-sm" aria-hidden="true">
+            <Icon className="h-5 w-5" />
+          </div>
         </div>
 
         {/* Content */}
@@ -322,7 +328,7 @@ export default function ServicesPage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {services.map((service, i) => (
+                {services.filter((service) => service.category === 'facilities-management').map((service, i) => (
                   <ServiceCard
                     key={service.id}
                     service={service}
@@ -334,7 +340,10 @@ export default function ServicesPage() {
             )
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {contractingServices.map((service, i) => (
+              {[
+                ...contractingServices.map((service) => ({ ...service, category: 'general-contracting' as const, icon: 'Building2' })),
+                ...services.filter((service) => service.category === 'general-contracting'),
+              ].map((service, i) => (
                 <ServiceCard
                   key={service.id}
                   service={{
@@ -344,7 +353,8 @@ export default function ServicesPage() {
                     descriptionAr: service.descriptionAr,
                     descriptionEn: service.descriptionEn,
                     image: service.image,
-                    icon: 'Building2',
+                    icon: service.icon,
+                    category: service.category,
                     order: i
                   }}
                   index={i}

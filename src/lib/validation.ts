@@ -46,6 +46,7 @@ export const serviceWriteSchema = z.object({
   descriptionEn: optionalText(20000),
   image: imageRef,
   icon: shortText(60).optional().nullable(),
+  category: z.enum(['facilities-management', 'general-contracting']).optional(),
   order: z.coerce.number().int().min(0).max(100000).optional(),
   isActive: z.coerce.boolean().optional(),
 })

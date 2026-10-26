@@ -21,6 +21,7 @@ import {
   Quote,
   type LucideIcon,
 } from 'lucide-react'
+import { getServiceIcon } from '@/lib/service-icons'
 import AnimatedSection from '@/components/shared/AnimatedSection'
 import SectionTitle from '@/components/shared/SectionTitle'
 import { useNavigationStore } from '@/lib/store'
@@ -54,6 +55,7 @@ interface Service {
   descriptionAr: string
   descriptionEn: string | null
   icon: string
+  category: 'facilities-management' | 'general-contracting'
   order: number
   image: string | null
 }
@@ -273,12 +275,13 @@ export default function HomePage() {
           />
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {services.slice(0, 8).map((service, i) => {
+            {services.filter((service) => service.category === 'facilities-management').slice(0, 8).map((service, i) => {
               const imgSrc =
                 service.image ||
                 fallbackServiceImages[i % fallbackServiceImages.length]
               const sTitle = language === 'ar' ? service.titleAr : (service.titleEn || service.titleAr)
               const sDesc = language === 'ar' ? service.descriptionAr : (service.descriptionEn || service.descriptionAr)
+              const ServiceIcon = getServiceIcon(service.icon)
               return (
                 <AnimatedSection key={service.id} delay={i * 0.06}>
                   <div className="group card-modern bg-white h-full flex flex-col cursor-pointer">
@@ -292,6 +295,9 @@ export default function HomePage() {
                         className="object-cover service-img-zoom"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#012b67]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute right-3 top-3 rounded-xl bg-white/95 p-2 text-[#012b67] shadow-sm" aria-hidden="true">
+                        <ServiceIcon className="h-4 w-4" />
+                      </div>
                     </div>
                     {/* Text */}
                     <div className="p-4 md:p-5 flex-1 flex flex-col">

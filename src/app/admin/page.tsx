@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import ServiceIconPicker from '@/components/admin/ServiceIconPicker'
 import {
   LayoutDashboard,
   ConciergeBell,
@@ -31,6 +32,7 @@ interface Service {
   descriptionAr: string
   descriptionEn: string
   icon: string
+  category: 'facilities-management' | 'general-contracting'
   image: string
   order: number
   isActive: boolean
@@ -598,6 +600,7 @@ export default function AdminDashboard() {
                     descriptionAr: '',
                     descriptionEn: '',
                     icon: 'Sparkles',
+                    category: 'facilities-management',
                     image: '',
                     order: services.length + 1,
                     isActive: true
@@ -618,6 +621,7 @@ export default function AdminDashboard() {
                     <th className="p-4 w-16">الترتيب</th>
                     <th className="p-4">الخدمة (عربي)</th>
                     <th className="p-4">الخدمة (إنجليزي)</th>
+                    <th className="p-4">التصنيف</th>
                     <th className="p-4">الحالة</th>
                     <th className="p-4 text-left">التحكم</th>
                   </tr>
@@ -628,6 +632,9 @@ export default function AdminDashboard() {
                       <td className="p-4 font-semibold text-gray-500">{s.order}</td>
                       <td className="p-4 font-bold text-[#012b67]">{s.titleAr}</td>
                       <td className="p-4 text-gray-600">{s.titleEn || '-'}</td>
+                      <td className="p-4 text-gray-600">
+                        {s.category === 'general-contracting' ? 'المقاولات العامة' : 'إدارة المرافق'}
+                      </td>
                       <td className="p-4">
                         <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
                           s.isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-gray-100 text-gray-600'
@@ -1187,15 +1194,23 @@ export default function AdminDashboard() {
                 />
               </div>
 
+              <ServiceIconPicker
+                value={editingService.icon || 'Sparkles'}
+                onChange={(icon) => setEditingService({ ...editingService, icon })}
+              />
+
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-gray-500">أيقونة الخدمة</label>
-                  <input
-                    type="text"
-                    value={editingService.icon || 'Sparkles'}
-                    onChange={(e) => setEditingService({ ...editingService, icon: e.target.value })}
+                  <label htmlFor="service-category" className="text-xs font-bold text-gray-500">تصنيف الخدمة</label>
+                  <select
+                    id="service-category"
+                    value={editingService.category || 'facilities-management'}
+                    onChange={(e) => setEditingService({ ...editingService, category: e.target.value as Service['category'] })}
                     className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm"
-                  />
+                  >
+                    <option value="facilities-management">إدارة المرافق والتشغيل</option>
+                    <option value="general-contracting">المقاولات العامة والإنشاءات</option>
+                  </select>
                 </div>
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-gray-500">رابط صورة الخدمة</label>

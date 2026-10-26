@@ -12,6 +12,10 @@ const cairo = Cairo({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://alnebras.com'),
+  icons: {
+    icon: '/favicon.png',
+    apple: '/apple-icon.png',
+  },
   title: {
     default: 'شركة النبراس لإدارة المرافق',
     template: '%s | شركة النبراس لإدارة المرافق',

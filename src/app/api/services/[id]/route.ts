@@ -29,6 +29,7 @@ export async function PUT(
         descriptionEn: data.descriptionEn ?? undefined,
         icon: data.icon ?? undefined,
         image: data.image ?? undefined,
+        category: data.category ?? undefined,
         order: data.order,
         isActive: data.isActive,
       },
